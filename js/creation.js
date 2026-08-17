@@ -62,7 +62,7 @@
         '2.png': 'AMVs sorted by views.',
         '3.png': 'AMVs sorted by views.',
         '4.png': 'The Madara AMV before going viral.',
-        '6.png': 'An average editing timeline for an AMV.'
+        '5.png': 'An average editing timeline for an AMV.'
       };
 
       if (captions[file]) {

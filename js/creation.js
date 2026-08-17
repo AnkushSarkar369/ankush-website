@@ -42,14 +42,13 @@
   }
 
   function repairAsenpaiCaptions() {
-    var asenpai = document.querySelector('.creation-card .creation-card__title');
     var cardsWithTitle = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
-    var asenpaiCard = cardsWithTitle.find(function (title) {
-      return title.textContent.trim() === 'ASenpai';
+    var asenpaiTitle = cardsWithTitle.find(function (title) {
+      return title.querySelector('.creation-card__title') && title.querySelector('.creation-card__title').textContent.trim() === 'ASenpai';
     });
-    if (!asenpaiCard) return;
+    if (!asenpaiTitle) return;
 
-    var card = asenpaiCard.closest('.creation-card');
+    var card = asenpaiTitle;
     var figures = Array.prototype.slice.call(card.querySelectorAll('.creation-entry__material figure.creation-entry__image'));
 
     figures.forEach(function (figure) {
@@ -59,16 +58,12 @@
       var file = src.split('/').pop();
 
       var captions = {
+        '1.png': 'ASenpai.',
         '2.png': 'AMVs sorted by views.',
         '3.png': 'AMVs sorted by views.',
         '4.png': 'The Madara AMV before going viral.',
         '6.png': 'An average editing timeline for an AMV.'
       };
-
-      if (file === '5.png') {
-        figure.remove();
-        return;
-      }
 
       if (captions[file]) {
         var caption = figure.querySelector('figcaption');

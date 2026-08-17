@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/site.css" />
+  <link rel="stylesheet" href="css/creation.css" />
 
   <!-- If scripts are off, never leave display or reveal text hidden. -->
   <noscript>
@@ -53,6 +54,7 @@
 
   <!-- non-critical script -->
   <script src="js/main.js" defer></script>
+  <script src="js/creation.js" defer></script>
 </head>
 
 <body>
@@ -162,7 +164,7 @@
     <div class="threshold threshold__glyph" aria-hidden="true">· · ·</div>
 
     <!-- ============================ CREATION ============================ -->
-    <section class="section" id="creation" data-nav-target="creation">
+    <section class="section creation" id="creation" data-nav-target="creation">
       <div class="container">
         <header class="section__head">
           <span class="section__index">ii.</span>
@@ -176,39 +178,331 @@
           </div>
         </header>
 
-        <div role="list">
-          <div class="index-row" role="listitem">
-            <div>
-              <p class="index-row__title">Current YouTube channel</p>
-              <p class="index-row__meta">Ongoing</p>
+        <div class="creation__categories" data-creation-archive>
+          <section class="creation-category" aria-labelledby="creation-content-title">
+            <header class="creation-category__head">
+              <p class="creation-category__index">01.</p>
+              <h3 id="creation-content-title">Content</h3>
+            </header>
+            <div class="creation-grid" role="list">
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-01">
+                  <span class="creation-card__number" aria-hidden="true">01.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Timekeeper Gaming</span>
+                    <span class="creation-card__classification">Gaming · YouTube</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-01" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">01. · Gaming · YouTube</p>
+                      <h4>Timekeeper Gaming</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p class="creation-entry__placeholder">Archive material to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-02">
+                  <span class="creation-card__number" aria-hidden="true">02.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Allrounder Buddy</span>
+                    <span class="creation-card__classification">Collaborative · YouTube</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-02" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">02. · Collaborative · YouTube</p>
+                      <h4>Allrounder Buddy</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>A channel made with a friend during COVID.</p>
+                      <p class="creation-entry__placeholder">Link and archive material to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-03">
+                  <span class="creation-card__number" aria-hidden="true">03.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">ASenpai</span>
+                    <span class="creation-card__classification">Anime editing · YouTube</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-03" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">03. · Anime editing · YouTube</p>
+                      <h4>ASenpai</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>Third YouTube channel.</p>
+                      <p class="creation-entry__placeholder">Screenshots, surviving artifacts, and story to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-04">
+                  <span class="creation-card__number" aria-hidden="true">04.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Ankush Sarkar</span>
+                    <span class="creation-card__classification">Self-development · YouTube</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-04" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">04. · Self-development · YouTube</p>
+                      <h4>Ankush Sarkar</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>Current/fourth YouTube channel.</p>
+                      <p class="creation-entry__placeholder">Archive material to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-05">
+                  <span class="creation-card__number" aria-hidden="true">05.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Beyond The Boundaries</span>
+                    <span class="creation-card__classification">Intellectual discussion · YouTube</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-05" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">05. · Intellectual discussion · YouTube</p>
+                      <h4>Beyond The Boundaries</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>A project with a friend intended around shared intellectualism and podcast-style discussion.</p>
+                      <p class="creation-entry__placeholder">Archive material to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-06">
+                  <span class="creation-card__number" aria-hidden="true">06.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Substack</span>
+                    <span class="creation-card__classification">Journal · Writing</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-06" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">06. · Journal · Writing</p>
+                      <h4>Substack</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>Journal-style posts.</p>
+                      <p class="creation-entry__placeholder">Posts and links to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-07">
+                  <span class="creation-card__number" aria-hidden="true">07.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Self-help Instagram</span>
+                    <span class="creation-card__classification">Self-development · Instagram</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-content-07" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">07. · Self-development · Instagram</p>
+                      <h4>Self-help Instagram</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>The Instagram account where I publish self-help/reel content.</p>
+                      <p class="creation-entry__placeholder">Archive material and link to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
             </div>
-            <p class="index-row__desc">The video work I am making now, where my present thinking lives in the open.</p>
-            <p class="index-row__meta">— to be linked</p>
-          </div>
-          <div class="index-row" role="listitem">
-            <div>
-              <p class="index-row__title">Earlier channels</p>
-              <p class="index-row__meta">Ended · since removed</p>
+          </section>
+
+          <section class="creation-category" aria-labelledby="creation-science-title">
+            <header class="creation-category__head">
+              <p class="creation-category__index">02.</p>
+              <h3 id="creation-science-title">Science &amp; Ideas</h3>
+            </header>
+            <div class="creation-grid" role="list">
+              <article class="creation-card" role="listitem" data-creation-card data-speculative>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-science-01">
+                  <span class="creation-card__number" aria-hidden="true">01.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">The Coherent Theory of Internal Consciousness</span>
+                    <span class="creation-card__classification">Speculative theory</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-science-01" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">01. · Science &amp; Ideas</p>
+                      <h4>The Coherent Theory of Internal Consciousness</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>A speculative/theoretical exploration involving consciousness, entropy, the universe, least action, IIT, and related ideas.</p>
+                      <p class="creation-entry__placeholder">Source material: Markdown.</p>
+                    </div>
+                    <aside class="creation-disclaimer" aria-label="Speculative work disclaimer">Speculative / experimental work. Not established scientific fact.</aside>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card data-speculative>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-science-02">
+                  <span class="creation-card__number" aria-hidden="true">02.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">A Computational Model of The Almighty</span>
+                    <span class="creation-card__classification">Speculative · Computational</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-science-02" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">02. · Science &amp; Ideas</p>
+                      <h4>A Computational Model of The Almighty</h4>
+                      <p class="creation-entry__subtitle">Bounded Optimization Over Infinite Future State Spaces</p>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>A computational/probabilistic exploration inspired by Bleach's Yhwach and his power scaling.</p>
+                      <p class="creation-entry__placeholder">Source material: Markdown.</p>
+                    </div>
+                    <aside class="creation-disclaimer" aria-label="Speculative work disclaimer">Speculative / experimental work. Not established scientific fact.</aside>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
+
+              <article class="creation-card" role="listitem" data-creation-card data-speculative>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-science-03">
+                  <span class="creation-card__number" aria-hidden="true">03.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">A Toy Model for Engineered Spacetime Contraction</span>
+                    <span class="creation-card__classification">Speculative · Spacetime model</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-science-03" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">03. · Science &amp; Ideas</p>
+                      <h4>A Toy Model for Engineered Spacetime Contraction</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>To investigate whether, assuming spacetime itself can be engineered, distant star systems could be brought closer by contracting the intervening spacetime rather than moving the spacecraft.</p>
+                      <p class="creation-entry__placeholder">Source material: Markdown.</p>
+                    </div>
+                    <aside class="creation-disclaimer" aria-label="Speculative work disclaimer">Speculative / experimental work. Not established scientific fact.</aside>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
             </div>
-            <p class="index-row__desc">Three older channels, now gone, recorded here as part of how the current work came to be.</p>
-            <p class="index-row__meta">archived</p>
-          </div>
-          <div class="index-row" role="listitem">
-            <div>
-              <p class="index-row__title">Newsletters</p>
-              <p class="index-row__meta">Substack</p>
+          </section>
+
+          <section class="creation-category" aria-labelledby="creation-projects-title">
+            <header class="creation-category__head">
+              <p class="creation-category__index">03.</p>
+              <h3 id="creation-projects-title">Projects</h3>
+            </header>
+            <div class="creation-grid" role="list">
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-project-01">
+                  <span class="creation-card__number" aria-hidden="true">01.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Music Collection</span>
+                    <span class="creation-card__classification">FLAC/Opus archive · Python · GitHub</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-project-01" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">01. · Projects</p>
+                      <h4>Music Collection</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>Personal FLAC/Opus music archival and metadata project.</p>
+                      <p>It includes the archive itself, metadata organization/canonicalization, and Python tooling/scripts used to manage it.</p>
+                      <p class="creation-entry__placeholder">GitHub repository link to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
             </div>
-            <p class="index-row__desc">Longer-form writing — the slower, more deliberate companion to the video work.</p>
-            <p class="index-row__meta">— to be linked</p>
-          </div>
-          <div class="index-row" role="listitem">
-            <div>
-              <p class="index-row__title">A course, a product</p>
-              <p class="index-row__meta">In progress</p>
+          </section>
+
+          <section class="creation-category" aria-labelledby="creation-products-title">
+            <header class="creation-category__head">
+              <p class="creation-category__index">04.</p>
+              <h3 id="creation-products-title">Products</h3>
+            </header>
+            <div class="creation-grid" role="list">
+              <article class="creation-card" role="listitem" data-creation-card>
+                <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-product-01">
+                  <span class="creation-card__number" aria-hidden="true">01.</span>
+                  <span class="creation-card__heading">
+                    <span class="creation-card__title">Prioritas</span>
+                    <span class="creation-card__classification">Course · In development</span>
+                  </span>
+                  <span class="creation-card__state" aria-hidden="true">+</span>
+                </button>
+                <div class="creation-card__body" id="creation-product-01" hidden>
+                  <div class="creation-entry">
+                    <div class="creation-entry__intro">
+                      <p class="creation-entry__eyebrow">01. · Products</p>
+                      <h4>Prioritas</h4>
+                    </div>
+                    <div class="creation-entry__material">
+                      <p>A Gumroad course about deciding between priorities.</p>
+                      <p>It has been presold but the course itself is not yet completed.</p>
+                      <p class="creation-entry__placeholder">Product link and further archive material to be added.</p>
+                    </div>
+                    <button class="creation-entry__close" type="button">Collapse entry</button>
+                  </div>
+                </div>
+              </article>
             </div>
-            <p class="index-row__desc">Something more structured, distilling what I keep returning to.</p>
-            <p class="index-row__meta">coming</p>
-          </div>
+          </section>
         </div>
       </div>
     </section>

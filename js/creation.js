@@ -86,26 +86,11 @@
     });
   }
 
-  var classifications = {
-    'Timekeeper Gaming YT': 'YouTube · Gaming',
-    'Allrounder Buddy': 'YouTube · Collaborative',
-    'ASenpai': 'YouTube · Anime editing',
-    'Ankush Sarkar': 'YouTube · Self-development',
-    'Beyond The Boundaries': 'YouTube · Intellectual discussion',
-    "Ankush's Substack": 'Substack · Journal',
-    '@ankush369sarkar': 'Instagram · Self-development'
-  };
-
   var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
   cards.forEach(function (card) {
     var trigger = card.querySelector('.creation-card__trigger');
     if (!trigger) return;
     card.setAttribute('data-creation-card', '');
-    var title = card.querySelector('.creation-card__title');
-    var classification = card.querySelector('.creation-card__classification');
-    if (title && classification && classifications[title.textContent.trim()]) {
-      classification.textContent = classifications[title.textContent.trim()];
-    }
     if (card.hasAttribute('data-speculative')) {
       var entry = card.querySelector('.creation-entry');
       if (entry && !entry.querySelector('.creation-disclaimer')) {

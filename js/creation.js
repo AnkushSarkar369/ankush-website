@@ -24,19 +24,12 @@
 
   cards.forEach(function (card) {
     var trigger = card.querySelector('.creation-card__trigger');
-    var close = card.querySelector('.creation-entry__close');
     if (!trigger) return;
 
     trigger.addEventListener('click', function () {
       var open = trigger.getAttribute('aria-expanded') === 'true';
       setOpen(card, !open, false);
     });
-
-    if (close) {
-      close.addEventListener('click', function () {
-        setOpen(card, false, true);
-      });
-    }
 
     card.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {

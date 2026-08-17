@@ -86,6 +86,18 @@
     });
   }
 
+  function moveExternalLinks() {
+    Array.prototype.slice.call(document.querySelectorAll('.creation-entry__material > p > a')).forEach(function (link) {
+      var entry = link.closest('.creation-entry');
+      var logo = entry && entry.querySelector(':scope > .creation-entry__image');
+      var wrapper = link.parentElement;
+      if (!entry || !logo || !wrapper) return;
+      link.classList.add('creation-entry__external-link');
+      logo.insertAdjacentElement('afterend', link);
+      wrapper.remove();
+    });
+  }
+
   var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
   cards.forEach(function (card) {
     var trigger = card.querySelector('.creation-card__trigger');
@@ -113,4 +125,5 @@
   });
 
   normalizeAsenpaiMedia();
+  moveExternalLinks();
 })();

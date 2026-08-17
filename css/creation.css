@@ -132,6 +132,21 @@
   min-width: 0;
 }
 
+.creation-entry__image {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.creation-entry__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  max-width: 400px;
+}
+
 .creation-entry__eyebrow {
   color: var(--oxblood);
   font-size: var(--step--1);

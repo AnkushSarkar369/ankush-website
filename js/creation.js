@@ -2,8 +2,17 @@
 (function () {
   'use strict';
 
+  var archive = document.querySelector('[data-creation-archive]');
+  if (!archive) return;
+
+  /* The source HTML has had a few malformed closing tags over time. Re-parent
+     every category explicitly so one broken card cannot swallow the categories
+     that follow it. */
+  Array.prototype.slice.call(document.querySelectorAll('.creation-category')).forEach(function (category) {
+    archive.appendChild(category);
+  });
+
   var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
-  if (!cards.length) return;
 
   var classifications = {
     'Timekeeper Gaming YT': 'YouTube · Gaming',
@@ -30,6 +39,46 @@
       body.hidden = true;
       if (restoreFocus) trigger.focus();
     }
+  }
+
+  function repairAsenpaiCaptions() {
+    var asenpai = document.querySelector('.creation-card .creation-card__title');
+    var cardsWithTitle = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
+    var asenpaiCard = cardsWithTitle.find(function (title) {
+      return title.textContent.trim() === 'ASenpai';
+    });
+    if (!asenpaiCard) return;
+
+    var card = asenpaiCard.closest('.creation-card');
+    var figures = Array.prototype.slice.call(card.querySelectorAll('.creation-entry__material figure.creation-entry__image'));
+
+    figures.forEach(function (figure) {
+      var image = figure.querySelector('img');
+      if (!image) return;
+      var src = image.getAttribute('src') || '';
+      var file = src.split('/').pop();
+
+      var captions = {
+        '2.png': 'AMVs sorted by views.',
+        '3.png': 'AMVs sorted by views.',
+        '4.png': 'The Madara AMV before going viral.',
+        '6.png': 'An average editing timeline for an AMV.'
+      };
+
+      if (file === '5.png') {
+        figure.remove();
+        return;
+      }
+
+      if (captions[file]) {
+        var caption = figure.querySelector('figcaption');
+        if (!caption) {
+          caption = document.createElement('figcaption');
+          figure.appendChild(caption);
+        }
+        caption.textContent = captions[file];
+      }
+    });
   }
 
   cards.forEach(function (card) {
@@ -67,4 +116,6 @@
       }
     });
   });
+
+  repairAsenpaiCaptions();
 })();

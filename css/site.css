@@ -11,7 +11,7 @@
 * { margin: 0; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
-  overflow-x: clip;            /* backstop — the §4 gate. clip, not hidden.   */
+  overflow-x: clip;
   background: var(--surface-base);
   color: var(--ink-primary);
   font-family: var(--font-body);
@@ -27,7 +27,6 @@ img, picture, svg, video { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; border-radius: 1px; }
-
 ::selection { background: var(--oxblood); color: var(--ink-on-dark); }
 
 /* =========================================================================
@@ -44,7 +43,6 @@ h1 { font-size: var(--step-4); font-weight: 300; letter-spacing: -0.022em; }
 h2 { font-size: var(--step-3); font-weight: 400; letter-spacing: -0.016em; }
 h3 { font-size: var(--step-2); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; }
 h4 { font-size: var(--step-1); font-weight: 600; line-height: 1.25; }
-
 p { max-width: var(--measure); }
 .lead {
   font-size: var(--step-1);
@@ -53,8 +51,6 @@ p { max-width: var(--measure); }
   color: var(--ink-secondary);
   max-width: 34rem;
 }
-
-/* Metadata / captions — small caps ink, never fake mono (design-system §2) */
 .meta {
   font-size: var(--step--1);
   letter-spacing: 0.14em;
@@ -69,7 +65,6 @@ p { max-width: var(--measure); }
   font-weight: 600;
   color: var(--oxblood);
 }
-
 .serif-italic { font-family: var(--font-display); font-style: italic; font-weight: 500; }
 .num { font-variant-numeric: tabular-nums lining-nums; }
 
@@ -86,9 +81,7 @@ p { max-width: var(--measure); }
 .measure-prose { max-width: var(--measure-narrow); }
 
 /* =========================================================================
-   THEME TOGGLE — a quiet control, same material as the nav around it.
-   The active glyph is the theme you would switch TO; the current theme is
-   the inverse glyph (shown faint), as a label of present state, not future.
+   THEME TOGGLE
    ========================================================================= */
 .theme-toggle {
   display: inline-flex;
@@ -105,24 +98,18 @@ p { max-width: var(--measure); }
               border-color var(--dur-trans) var(--ease-out-soft),
               background var(--dur-trans) var(--ease-out-soft);
 }
-.theme-toggle:hover {
-  color: var(--ink-primary);
-  border-color: var(--rule-strong);
-}
+.theme-toggle:hover { color: var(--ink-primary); border-color: var(--rule-strong); }
 .theme-toggle:active { transform: translateY(0.5px); }
 .theme-toggle:focus-visible { outline-offset: 2px; }
 .no-js-hidden { display: none; }
 .theme-toggle__icon { display: none; }
-
-/* In light mode, show the moon (switch to dark) — the night option. */
 [data-theme="light"] .theme-toggle__icon--moon { display: block; }
 [data-theme="light"] .theme-toggle__icon--sun { display: none; }
-/* In dark mode, show the sun (switch to light) — the day option. */
 [data-theme="dark"] .theme-toggle__icon--sun { display: block; }
 [data-theme="dark"] .theme-toggle__icon--moon { display: none; }
 
 /* =========================================================================
-   NAVIGATION — centered top, no sidebar, flex-wrap to defuse overflow
+   NAVIGATION
    ========================================================================= */
 .site-header {
   position: sticky;
@@ -185,8 +172,6 @@ p { max-width: var(--measure); }
 .nav__links a:hover::after { right: 0; }
 .nav__links a[aria-current="page"] { color: var(--oxblood); }
 .nav__links a[aria-current="page"]::after { right: 0; }
-
-/* Skip link */
 .skip {
   position: absolute;
   left: 1rem; top: -3rem;
@@ -200,8 +185,7 @@ p { max-width: var(--measure); }
 .skip:focus { top: 0.5rem; }
 
 /* =========================================================================
-   THE OPENING — the identity / hero beat
-   A book bound, a room at evening. The first thing read = the thesis.
+   THE OPENING
    ========================================================================= */
 .opening {
   position: relative;
@@ -227,21 +211,13 @@ p { max-width: var(--measure); }
   width: 2.2rem; height: 1px; background: var(--oxblood);
 }
 .opening__intro { max-width: 30rem; }
-.opening h1 {
-  margin-bottom: var(--space-4);
-}
+.opening h1 { margin-bottom: var(--space-4); }
 .opening h1 .accent {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
   color: var(--oxblood);
 }
-
-/* "coherent" — a subtle editorial underline, coaxed slightly below the word.
-   It uses the accent (oxblood/teal via the theme), so it reads in both light
-   and dark, and the word's own type/size/weight/colour are untouched — the
-   highlight stays secondary to the red italic name above it. A gentle
-   decoration reads as a hand-marked editorial note, not a default link line. */
 .underline {
   text-decoration: underline solid;
   text-decoration-color: var(--oxblood);
@@ -258,7 +234,6 @@ p { max-width: var(--measure); }
   font-size: var(--step--1);
   color: var(--ink-muted);
 }
-/* Hero image — cinematic, treated, warm. duotone toward parchment+oxblood. */
 .hero-figure {
   position: relative;
   border-radius: 2px;
@@ -283,7 +258,7 @@ p { max-width: var(--measure); }
 }
 
 /* =========================================================================
-   SECTIONS — the bound volumes, plus the Technology counterpoint
+   SECTIONS
    ========================================================================= */
 .section {
   position: relative;
@@ -312,8 +287,6 @@ p { max-width: var(--measure); }
   max-width: var(--measure);
   margin-top: var(--space-3);
 }
-
-/* The transition beat: a quiet bench/stool between volumes */
 .threshold {
   position: relative;
   display: grid;
@@ -328,8 +301,6 @@ p { max-width: var(--measure); }
   letter-spacing: 0.3em;
   font-size: var(--step--1);
 }
-
-/* About — preview, mostly identity echo */
 .about__body { max-width: var(--measure-narrow); }
 .about__body p + p { margin-top: var(--space-3); }
 .about__pullquote {
@@ -344,8 +315,6 @@ p { max-width: var(--measure); }
   margin-block: var(--space-5);
   max-width: 36rem;
 }
-
-/* Creation / Support — index rows, not cards-as-decoration */
 .index-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -358,8 +327,6 @@ p { max-width: var(--measure); }
 .index-row__title { font-size: var(--step-1); font-weight: 600; }
 .index-row__meta { color: var(--ink-muted); font-size: var(--step--1); }
 .index-row__desc { color: var(--ink-secondary); margin-top: var(--space-1); max-width: var(--measure); }
-
-/* Technology — the dark threshold/counterpoint, ink-teal accent only here */
 .section--technology {
   background: var(--surface-underside);
   color: var(--ink-on-dark);
@@ -374,8 +341,6 @@ p { max-width: var(--measure); }
 .section--technology .index-row:last-of-type { border-color: var(--rule-dark); }
 .section--technology .index-row__meta { color: color-mix(in srgb, var(--ink-on-dark) 60%, transparent); }
 .section--technology .threshold { border-color: transparent; }
-
-/* Support — warm close */
 .support__ways {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
@@ -393,7 +358,7 @@ p { max-width: var(--measure); }
 .support__way p { font-size: var(--step--1); color: var(--ink-secondary); max-width: none; }
 
 /* =========================================================================
-   FOOTER — the colophon
+   FOOTER
    ========================================================================= */
 .site-footer {
   position: relative;
@@ -419,32 +384,44 @@ p { max-width: var(--measure); }
 .colophon .legal { font-size: var(--step--1); color: var(--ink-muted); }
 
 /* =========================================================================
-   ENTRANCE — one orchestrated moment (page load), staggered.
+   ENTRANCE
    ========================================================================= */
 [data-reveal] { opacity: 0; transform: translateY(14px); }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; }
 }
-/* fonts-ready (js adds .fonts-ready to <html>) reveals title text gracefully */
 .fonts-pending .display,
 .fonts-pending h1,
 .fonts-pending h2,
-.fonts-pending .opening__signature .name,
 .fonts-pending .brand,
 .fonts-pending .section__index { opacity: 0; }
 
 /* =========================================================================
-   RESPONSIVE — content reflows; the two-column opening at width
+   RESPONSIVE
    ========================================================================= */
 @media (min-width: 46rem) {
   .opening__grid {
-    /* The eyebrow lives above the grid now, so the grid holds only the intro
-       and the figure — both top-aligned, so the figure's top meets the
-       headline's first line exactly. */
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     gap: clamp(2rem, 1rem + 4vw, 4.5rem);
-    align-items: start;
+    align-items: stretch;
   }
+
+  /* The portrait establishes the desktop hero height. The intro stretches
+     to the same row height, so the signature's rule can sit exactly at the
+     portrait's bottom edge. */
+  .hero-figure { height: 100%; }
+
+  /* The signature is visually part of the full hero composition rather than
+     the left text column. Its rule starts exactly where the portrait ends. */
+  .opening__signature {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding-top: var(--space-3);
+    text-align: center;
+  }
+
   .section__head {
     grid-template-columns: minmax(0, auto) minmax(0, 1fr);
     column-gap: var(--space-3);

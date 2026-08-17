@@ -1,0 +1,91 @@
+/* =========================================================================
+   fonts.css — self-hosted faces + no-FOUT fallback tuning
+   WOFF2 (Brotli) self-hosted: no Google Fonts round-trip, no render-blocking
+   third-party stylesheet. Fallback faces tuned with size-adjust / ascents so
+   the swap shifts nothing; title text is gated on fonts.ready (see index.html).
+   ========================================================================= */
+
+/* --- The real, self-hosted faces --- */
+
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-200-normal.woff2') format('woff2');
+  font-weight: 200; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-206F, U+2E00-2E7F;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-300-normal.woff2') format('woff2');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-400-normal.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-500-normal.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-500-italic.woff2') format('woff2');
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-600-normal.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Newsreader';
+  src: url('../assets/fonts/newsreader-700-normal.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('../assets/fonts/hanken-grotesk-400-normal.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('../assets/fonts/hanken-grotesk-500-normal.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('../assets/fonts/hanken-grotesk-600-normal.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('../assets/fonts/hanken-grotesk-700-normal.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* --- Fallback faces: tuned to the webfont's metrics so body text never reflows.
+     Display (Newsreader ~ Georgia) and body (Hanken ~ system-ui) each get a
+     locally-installed fallback with overridden ascent/descent/size-adjust.
+     Values calibrated to keep per-cap-height alignment close. --- */
+
+@font-face {
+  font-family: 'Newsreader Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  font-weight: 100 900; font-style: normal;
+  size-adjust: 100%; ascent-override: 90%; descent-override: 24%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Newsreader Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  font-weight: 100 900; font-style: italic;
+  size-adjust: 100%; ascent-override: 90%; descent-override: 24%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Grotesk Fallback';
+  src: local('system-ui'), local('Helvetica Neue'), local('Arial'), local('sans-serif');
+  font-weight: 100 900; font-style: normal;
+  /* system-ui is wider than Hanken; shrink slightly and lift the ascent */
+  size-adjust: 96%; ascent-override: 95%; descent-override: 25%; line-gap-override: 0%;
+}

@@ -1,0 +1,100 @@
+/* =========================================================================
+   tokens.css — The archive's material system
+   One oxblood accent, one ink-teal counterpoint, warm oat parchment ground.
+   Every value below is referenced in index.html. No stray hex elsewhere.
+   ========================================================================= */
+
+:root {
+  /* --- Surfaces: the parchment, raised papers, and the deep underside --- */
+  --surface-base:    #f3ede2;   /* oat parchment — the page itself            */
+  --surface-raised:  #efe7d8;   /* a paper laid down on the parchment         */
+  --surface-underside:#1e1813;  /* near-black espresso — the dark threshold    */
+
+  /* --- Foreground: ink hierarchy on parchment --- */
+  --ink-primary:   #241c15;    /* full-strength ink                            */
+  --ink-secondary: #5a4c3c;    /* secondary ink, warm umber                    */
+  --ink-muted:     #8a7a66;    /* captions, metadata                           */
+  --ink-on-dark:   #f0e8da;    /* type on the underside                        */
+  --ink-faint-dark:#a89682;    /* muted type on the underside                  */
+
+  /* --- Borders: separation hierarchy (hairlines) --- */
+  --rule-faint:    rgba(36, 28, 20, 0.10);
+  --rule:          rgba(36, 28, 20, 0.18);
+  --rule-strong:   rgba(36, 28, 20, 0.32);
+  --rule-dark:     rgba(240, 232, 218, 0.14);
+
+  /* --- Identity: one brand accent, one quiet counterpoint --- */
+  --oxblood:       #7a2a23;    /* spine leather, the binding                  */
+  --oxblood-deep:  #5e201a;    /* pressed/deeper state                          */
+  --ink-teal:      #35555c;    /* technology counterpoint, used only there     */
+
+  /* --- Typography families --- */
+  --font-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
+  --font-body:    'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, sans-serif;
+
+  /* --- Modular type scale (1.250 major third) on a fluid root --- */
+  --step--1: clamp(0.83rem, 0.79rem + 0.20vw, 0.92rem);  /* meta / captions    */
+  --step-0:  clamp(1.00rem, 0.94rem + 0.30vw, 1.14rem);  /* body                */
+  --step-1:  clamp(1.25rem, 1.15rem + 0.50vw, 1.55rem);  /* subheads            */
+  --step-2:  clamp(1.56rem, 1.38rem + 0.90vw, 2.07rem);  /* section heads        */
+  --step-3:  clamp(2.44rem, 2.02rem + 2.10vw, 3.83rem);  /* display             */
+  --step-4:  clamp(3.05rem, 2.20rem + 4.20vw, 6.10rem);  /* hero display        */
+
+  /* --- Spatial rhythm (an 8-point scale, slightly enlarged for editorial pace) --- */
+  --space-1:  0.5rem;   /* 8 */
+  --space-2:  1rem;     /* 16 */
+  --space-3:  1.5rem;   /* 24 */
+  --space-4:  2rem;     /* 32 */
+  --space-5:  3rem;     /* 48 */
+  --space-6:  4.5rem;   /* 72 */
+  --space-7:  7rem;     /* 112 — internal section padding */
+  --space-8:  10rem;    /* 160 — major threshold padding  */
+
+  /* --- Measure & layout --- */
+  --measure-narrow: 32rem;   /* long-form prose column         */
+  --measure:        42rem;   /* comfortable reading             */
+  --measure-wide:   60rem;   /* editorial spread                */
+  --gutter:         clamp(1.25rem, 0.4rem + 4.0vw, 4.5rem);
+
+  /* --- Motion --- */
+  --ease-out-soft:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-entry: 0.9s;
+  --dur-micro: 0.18s;
+  --dur-trans: 0.28s;
+}
+
+/* =========================================================================
+   DARK THEME — the archive by lamplight.
+   Same design system, untouched in scale/spacing/layout/motion: only the
+   material values swap. Warm surfaces are lifted out of the espresso family,
+   cream ink is lifted out of the parchment, and the oxblood/teal accents are
+   lit just enough to read against dark while keeping the same hue family.
+   The surface ramp deepens from the page toward --surface-underside, so the
+   Technology band stays the deepest threshold (its role in light mode too).
+   Applied on <html data-theme="dark">; set before paint, no flash.
+   ========================================================================= */
+[data-theme="dark"] {
+  /* --- Surfaces: dark roast. Page is warm dark; the underside stays deepest. --- */
+  --surface-base:     #261c14;  /* warm dark walnut — the page ground              */
+  --surface-raised:   #2e231a;  /* a paper lifted against the dark                */
+  --surface-underside:#160f0a;  /* the deepest threshold — Technology, always darkest */
+
+  /* --- Foreground: cream ink on dark, lifted from the same warm family --- */
+  --ink-primary:   #f2eadb;    /* full-strength cream                              */
+  --ink-secondary: #cabdaa;    /* warm taupe secondary                             */
+  --ink-muted:     #9a8b78;    /* muted warm for captions/metadata                 */
+  --ink-on-dark:   #f0e8da;    /* type on the deep underside (stable across themes) */
+  --ink-faint-dark:#a89682;    /* muted type on the underside (stable)             */
+
+  /* --- Borders: hairlines now cream-on-dark, same separation hierarchy --- */
+  --rule-faint:    rgba(240, 232, 218, 0.08);
+  --rule:          rgba(240, 232, 218, 0.14);
+  --rule-strong:   rgba(240, 232, 218, 0.28);
+  --rule-dark:     rgba(240, 232, 218, 0.14);
+
+  /* --- Identity: oxblood & teal lit to read against dark, same hue family --- */
+  --oxblood:      #c15447;     /* oxblood under lamplight                          */
+  --oxblood-deep: #9c4439;     /* the pressed/deeper state                         */
+  --ink-teal:     #6f9aa1;     /* lit ink-teal counterpoint                        */
+}

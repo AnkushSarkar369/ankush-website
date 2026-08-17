@@ -93,7 +93,12 @@
       var wrapper = link.parentElement;
       if (!entry || !logo || !wrapper) return;
       link.classList.add('creation-entry__external-link');
-      logo.insertAdjacentElement('afterend', link);
+
+      var identity = document.createElement('div');
+      identity.className = 'creation-entry__identity';
+      entry.insertBefore(identity, logo);
+      identity.appendChild(logo);
+      identity.appendChild(link);
       wrapper.remove();
     });
   }

@@ -126,6 +126,14 @@
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
   gap: var(--space-5);
   padding: var(--space-5) 0 var(--space-6);
+  align-items: start;
+}
+
+.creation-entry__identity {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
 }
 
 .creation-entry__image {
@@ -134,9 +142,8 @@
   min-width: 0;
 }
 
-/* The first figure is the entry identity/logo; story figures live in the material column. */
-.creation-entry > .creation-entry__image {
-  align-self: start;
+.creation-entry__identity > .creation-entry__image {
+  width: 100%;
 }
 
 .creation-entry__material {
@@ -174,15 +181,17 @@
   text-align: left;
 }
 
-/* External links sit beneath the identity image and use its full rendered width. */
+/* External links sit directly beneath the identity image. */
 .creation-entry__external-link {
-  grid-column: 1;
   width: 100%;
+  min-height: 0;
+  height: auto;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: var(--space-3);
+  align-self: start;
+  margin: 0;
   padding: 0.7rem 1rem;
   border: 1px solid var(--rule);
   color: var(--ink);
@@ -251,7 +260,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* A category with one remaining entry should still use the full editorial width. */
   .creation-grid > .creation-card:only-child {
     grid-column: 1 / -1;
   }
@@ -268,7 +276,7 @@
   }
 
   .creation-entry__external-link {
-    grid-column: 1;
+    width: 100%;
   }
 }
 

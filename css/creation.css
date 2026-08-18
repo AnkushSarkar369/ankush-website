@@ -146,6 +146,32 @@
   margin-top: var(--space-2);
 }
 
+.creation-entry__material > .creation-entry__tree {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-elevated);
+  border: 1px solid var(--rule-faint);
+  border-radius: var(--radius-2);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--ink-secondary);
+}
+
+.creation-entry__picked-song {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-elevated);
+  border: 1px solid var(--rule-faint);
+  border-radius: var(--radius-2);
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--ink-secondary);
+}
+
 /* Story/artifact images use the entire available material column. */
 .creation-entry__material > .creation-entry__image {
   width: 100%;
@@ -208,6 +234,16 @@
 
 .creation-entry__external-link:focus-visible {
   outline-offset: 3px;
+}
+
+.creation-entry__pick-song {
+  cursor: pointer;
+  background: transparent;
+}
+
+.creation-entry__pick-song:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .creation-entry__eyebrow {

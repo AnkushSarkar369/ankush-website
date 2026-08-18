@@ -46,6 +46,7 @@
 .technology-card {
   min-width: 0;
   border-top: 1px solid var(--rule-dark);
+  border-bottom: 1px solid var(--rule-dark);
 }
 
 .technology-card:last-child {

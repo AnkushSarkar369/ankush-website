@@ -453,6 +453,111 @@
     grid-column: 1;
     grid-row: 3;
   }
+  
+  .technology-archive__table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .technology-archive__table th {
+    min-width: 10rem;
+  }
+}
+
+/* Full-width entry for Digital Infrastructure (no images) */
+.technology-entry--full {
+  display: block;
+  padding: var(--space-5) 0 var(--space-6);
+}
+
+.technology-entry--full > .technology-entry__material {
+  grid-column: auto;
+  grid-row: auto;
+  width: 100%;
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+}
+
+/* Archive-style tables for Digital Infrastructure */
+.technology-archive__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step-0);
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  margin: var(--space-4) 0;
+}
+
+.technology-archive__table th,
+.technology-archive__table td {
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+.technology-archive__table th {
+  width: 12rem;
+  min-width: 12rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  font-size: var(--step--1);
+  white-space: nowrap;
+}
+
+.technology-archive__table td {
+  font-family: var(--font-body);
+  padding-left: var(--space-3);
+}
+
+.technology-archive__table tr:not(:last-child) th,
+.technology-archive__table tr:not(:last-child) td {
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.technology-entry__section {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule-faint);
+}
+
+.technology-entry__section:first-of-type {
+  margin-top: var(--space-3);
+  padding-top: 0;
+  border-top: none;
+}
+
+.technology-entry__section-title {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 400;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.technology-entry__meta {
+  color: var(--ink-faint-dark);
+  font-size: var(--step--1);
+  font-style: italic;
+  margin-bottom: var(--space-3);
+}
+
+.technology-entry__note {
+  color: var(--ink-faint-dark);
+  font-size: var(--step--1);
+  font-style: italic;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule-faint);
+}
+
+.technology-entry__closing {
+  color: var(--ink-faint-dark);
+  font-size: var(--step--1);
+  font-style: italic;
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule-faint);
 }
 
 @media (prefers-reduced-motion: reduce) {

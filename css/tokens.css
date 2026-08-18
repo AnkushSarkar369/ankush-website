@@ -69,15 +69,15 @@
    material values swap. Warm surfaces are lifted out of the espresso family,
    cream ink is lifted out of the parchment, and the oxblood accent is
    lit just enough to read against dark while keeping the same hue family.
-   The surface ramp deepens from the page toward --surface-underside, so the
-   Technology band stays the deepest threshold (its role in light mode too).
+   The page surface and text tokens swap together, while Technology remains
+   scoped to the same active theme rather than forcing a separate dark band.
    Applied on <html data-theme="dark">; set before paint, no flash.
    ========================================================================= */
 [data-theme="dark"] {
   /* --- Surfaces: dark roast. Page is warm dark; the underside stays deepest. --- */
   --surface-base:     #261c14;  /* warm dark walnut — the page ground              */
   --surface-raised:   #2e231a;  /* a paper lifted against the dark                */
-  --surface-underside:#160f0a;  /* the deepest threshold — Technology, always darkest */
+  --surface-underside:#160f0a;  /* the deepest threshold — available as a token     */
 
   /* --- Foreground: cream ink on dark, lifted from the same warm family --- */
   --ink-primary:   #f2eadb;    /* full-strength cream                              */

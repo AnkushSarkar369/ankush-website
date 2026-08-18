@@ -25,7 +25,7 @@
 
   /* --- Identity: one brand accent --- */
   --oxblood:       #7a2a23;    /* spine leather, the binding                  */
-  --oxblood-deep:  #5e201a;    /* pressed/deeper state                          */
+  --oxblood-deep:  #5e201a;    /* pressed/deeper state                         */
 
   /* --- Typography families --- */
   --font-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
@@ -94,5 +94,17 @@
 
   /* --- Identity: oxblood lit to read against dark, same hue family --- */
   --oxblood:      #c15447;     /* oxblood under lamplight                          */
-  --oxblood-deep: #9c4439;     /* the pressed/deeper state                         */
+  --oxblood-deep: #9c4439;     /* pressed/deeper state                         */
+}
+
+/* Technology participates in the same light/dark surface system as the rest
+   of the archive. Its component stylesheet historically used the dark-only
+   semantic tokens --surface-underside, --ink-on-dark, --ink-faint-dark and
+   --rule-dark; scope those tokens here so the existing Technology structure
+   follows the active page theme without duplicating its component CSS. */
+.section--technology {
+  --surface-underside: var(--surface-base);
+  --ink-on-dark: var(--ink-primary);
+  --ink-faint-dark: var(--ink-muted);
+  --rule-dark: var(--rule-faint);
 }

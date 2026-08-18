@@ -332,9 +332,7 @@ p { max-width: var(--measure); }
   color: var(--ink-on-dark);
   border-top: none;
 }
-.section--technology .section__index { color: var(--ink-teal); filter: brightness(1.4) saturate(1.1); }
 .section--technology h2 { color: var(--ink-on-dark); }
-.section--technology .eyebrow { color: color-mix(in srgb, var(--ink-teal) 78%, white); }
 .section--technology .section__lede,
 .section--technology .index-row__desc { color: color-mix(in srgb, var(--ink-on-dark) 78%, transparent); }
 .section--technology .index-row { border-color: var(--rule-dark); }

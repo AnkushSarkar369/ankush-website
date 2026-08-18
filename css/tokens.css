@@ -1,6 +1,6 @@
 /* =========================================================================
    tokens.css — The archive's material system
-   One oxblood accent, one ink-teal counterpoint, warm oat parchment ground.
+   One oxblood accent, warm oat parchment ground.
    Every value below is referenced in index.html. No stray hex elsewhere.
    ========================================================================= */
 
@@ -23,10 +23,9 @@
   --rule-strong:   rgba(36, 28, 20, 0.32);
   --rule-dark:     rgba(240, 232, 218, 0.14);
 
-  /* --- Identity: one brand accent, one quiet counterpoint --- */
+  /* --- Identity: one brand accent --- */
   --oxblood:       #7a2a23;    /* spine leather, the binding                  */
   --oxblood-deep:  #5e201a;    /* pressed/deeper state                          */
-  --ink-teal:      #35555c;    /* technology counterpoint, used only there     */
 
   /* --- Typography families --- */
   --font-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
@@ -68,7 +67,7 @@
    DARK THEME — the archive by lamplight.
    Same design system, untouched in scale/spacing/layout/motion: only the
    material values swap. Warm surfaces are lifted out of the espresso family,
-   cream ink is lifted out of the parchment, and the oxblood/teal accents are
+   cream ink is lifted out of the parchment, and the oxblood accent is
    lit just enough to read against dark while keeping the same hue family.
    The surface ramp deepens from the page toward --surface-underside, so the
    Technology band stays the deepest threshold (its role in light mode too).
@@ -93,8 +92,7 @@
   --rule-strong:   rgba(240, 232, 218, 0.28);
   --rule-dark:     rgba(240, 232, 218, 0.14);
 
-  /* --- Identity: oxblood & teal lit to read against dark, same hue family --- */
+  /* --- Identity: oxblood lit to read against dark, same hue family --- */
   --oxblood:      #c15447;     /* oxblood under lamplight                          */
   --oxblood-deep: #9c4439;     /* the pressed/deeper state                         */
-  --ink-teal:     #6f9aa1;     /* lit ink-teal counterpoint                        */
 }

@@ -156,6 +156,45 @@
     }
   }
 
+  function normalizeScienceIdeasOrder() {
+    var categories = Array.prototype.slice.call(document.querySelectorAll('.creation-category'));
+    var science = categories.find(function (category) {
+      var heading = category.querySelector('.creation-category__head h3');
+      return heading && heading.textContent.trim() === 'Science & Ideas';
+    });
+    if (!science) return;
+
+    science.classList.add('creation-category--science');
+
+    var grid = science.querySelector('.creation-grid');
+    if (!grid) return;
+
+    var desiredOrder = [
+      'The Coherent Theory of Interconnected Consciousness',
+      'A Toy Model for Engineered Space-time Contraction',
+      'A Computational Model of The Almighty'
+    ];
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll(':scope > .creation-card'));
+    cards.sort(function (a, b) {
+      var aTitle = a.querySelector('.creation-card__title');
+      var bTitle = b.querySelector('.creation-card__title');
+      var aIndex = desiredOrder.indexOf(aTitle ? aTitle.textContent.trim() : '');
+      var bIndex = desiredOrder.indexOf(bTitle ? bTitle.textContent.trim() : '');
+      if (aIndex === -1) aIndex = desiredOrder.length;
+      if (bIndex === -1) bIndex = desiredOrder.length;
+      return aIndex - bIndex;
+    });
+
+    cards.forEach(function (card, index) {
+      grid.appendChild(card);
+      var number = card.querySelector('.creation-card__number');
+      if (number && index < desiredOrder.length) {
+        number.textContent = String(index + 1).padStart(2, '0') + '.';
+      }
+    });
+  }
+
   var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
   cards.forEach(function (card) {
     var trigger = card.querySelector('.creation-card__trigger');
@@ -172,6 +211,7 @@
     });
   });
 
+  normalizeScienceIdeasOrder();
   normalizeAsenpaiMedia();
   moveExternalLinks();
   initPickYourSong();

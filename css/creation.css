@@ -243,16 +243,11 @@
 
 /* External links sit directly beneath the identity image. */
 .creation-entry__external-link {
-  grid-column: 1;
-  grid-row: 2;
-  width: 100%;
-  min-height: 0;
-  height: auto;
-  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: start;
+  width: 100%;
+  box-sizing: border-box;
   margin: var(--space-3) 0 0;
   padding: 0.7rem 1rem;
   border: 1px solid var(--rule);
@@ -262,6 +257,11 @@
   font-size: var(--step--1);
   line-height: 1.2;
   transition: border-color var(--dur-trans) var(--ease-out-soft), color var(--dur-trans) var(--ease-out-soft), background-color var(--dur-trans) var(--ease-out-soft);
+}
+
+/* When nested inside figure, use block display to stack beneath image */
+.creation-entry__image > .creation-entry__external-link {
+  display: block;
 }
 
 .creation-entry__external-link:hover {

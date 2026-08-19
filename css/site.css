@@ -390,10 +390,179 @@ p { max-width: var(--measure); }
   border: 1px solid var(--rule);
   border-radius: 4px;
   background: var(--surface-raised);
+  display: flex;
+  flex-direction: column;
 }
 .support__way .support__way__title,
 .support__way h3 { color: var(--oxblood); margin-bottom: var(--space-1); font-size: var(--step-1); font-weight: 600; line-height: 1.25; }
-.support__way p { font-size: var(--step--1); color: var(--ink-secondary); max-width: none; }
+.support__way p { font-size: var(--step--1); color: var(--ink-secondary); max-width: none; flex: 1; }
+
+/* Support actions container - aligns to bottom of card */
+.support__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: auto;
+  width: 100%;
+}
+
+.support__upi-actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-2);
+  margin-top: auto;
+  width: 100%;
+}
+
+.support__upi-actions .support__action {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+
+/* Support action buttons */
+.support__action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  background: var(--surface);
+  transition: background var(--dur-fast) var(--ease-out-soft), border-color var(--dur-fast) var(--ease-out-soft), color var(--dur-fast) var(--ease-out-soft);
+  width: 100%;
+  box-sizing: border-box;
+}
+.support__action:hover {
+  background: var(--surface-raised);
+  border-color: var(--oxblood);
+  color: var(--oxblood);
+}
+.support__action--primary {
+  background: var(--oxblood);
+  border-color: var(--oxblood);
+  color: var(--surface);
+}
+.support__action--primary:hover {
+  background: color-mix(in srgb, var(--oxblood) 85%, black);
+  border-color: color-mix(in srgb, var(--oxblood) 85%, black);
+  color: var(--surface);
+}
+.support__action--secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal[hidden] {
+  display: none;
+}
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+.modal__content {
+  position: relative;
+  background: var(--surface-raised);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: var(--space-4);
+  max-width: 90vw;
+  width: 280px;
+  box-shadow: var(--shadow-lg);
+  animation: modal-in var(--dur-fast) var(--ease-out-soft);
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+.modal__header h4 {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--ink);
+}
+.modal__close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--step-1);
+  cursor: pointer;
+  line-height: 1;
+  transition: background var(--dur-fast) var(--ease-out-soft), border-color var(--dur-fast) var(--ease-out-soft);
+}
+.modal__close:hover {
+  background: var(--surface-raised);
+  border-color: var(--oxblood);
+  color: var(--oxblood);
+}
+.upi-qr-code {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-2) 0;
+}
+.upi-qr-code img,
+.upi-qr-code canvas {
+  max-width: 100%;
+  height: auto;
+}
+.upi-qr-note {
+  font-size: var(--step--2);
+  color: var(--ink-muted);
+  text-align: center;
+  margin: 0;
+}
+
+/* Footer socials separators */
+.colophon .socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0; /* we handle spacing via separators */
+}
+.colophon .socials a {
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+.colophon .socials a:hover { color: var(--oxblood); }
+.colophon .socials__sep {
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-muted);
+  padding: 0 var(--space-2);
+  user-select: none;
+}
 
 /* =========================================================================
    FOOTER

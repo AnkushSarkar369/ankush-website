@@ -180,4 +180,65 @@
   } else {
     initExpansion();
   }
+
+  /* ---------- 6. Support section: UPI QR modal ---------- */
+  var showQrBtn = document.getElementById('show-qr-btn');
+  var qrModal = document.getElementById('upi-qr-modal');
+  var qrModalClose = qrModal ? qrModal.querySelector('.modal__close') : null;
+  var qrModalOverlay = qrModal ? qrModal.querySelector('.modal__overlay') : null;
+  var qrContainer = document.getElementById('upi-qr-code');
+
+  // UPI deep link for QR code
+  var upiDeepLink = 'upi://pay?pa=ankushisonline369%40okhdfcbank&pn=Ankush+Sarkar&tn=Thank+You%21&cu=INR';
+
+  function generateQrCode() {
+    if (!qrContainer) return;
+    qrContainer.innerHTML = '';
+    // Use a simple QR code service (Google Charts API alternative or inline generation)
+    // We'll use a lightweight approach: create an image with a QR code service
+    var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(upiDeepLink);
+    var img = document.createElement('img');
+    img.src = qrUrl;
+    img.alt = 'UPI QR Code for ankushisonline369@okhdfcbank';
+    img.width = 200;
+    img.height = 200;
+    qrContainer.appendChild(img);
+  }
+
+  function openQrModal() {
+    if (!qrModal) return;
+    qrModal.hidden = false;
+    showQrBtn.setAttribute('aria-expanded', 'true');
+    generateQrCode();
+    // Trap focus
+    qrModalClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeQrModal() {
+    if (!qrModal) return;
+    qrModal.hidden = true;
+    showQrBtn.setAttribute('aria-expanded', 'false');
+    showQrBtn.focus();
+    document.body.style.overflow = '';
+  }
+
+  if (showQrBtn) {
+    showQrBtn.addEventListener('click', openQrModal);
+  }
+
+  if (qrModalClose) {
+    qrModalClose.addEventListener('click', closeQrModal);
+  }
+
+  if (qrModalOverlay) {
+    qrModalOverlay.addEventListener('click', closeQrModal);
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && qrModal && !qrModal.hidden) {
+      closeQrModal();
+    }
+  });
 })();

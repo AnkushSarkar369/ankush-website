@@ -100,17 +100,87 @@
       try { localStorage.setItem(STORAGE_KEY, next); } catch (e) { /* ignore */ }
       syncPressed();
     });
-
-    /* If no stored choice, follow the system preference as it changes live. */
-    try {
-      var sysMQ = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-      if (sysMQ) {
-        sysMQ.addEventListener('change', function (e) {
-          if (localStorage.getItem(STORAGE_KEY)) { return; } /* user has chosen */
-          docEl.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-          syncPressed();
-        });
-      }
-    } catch (e) { /* ignore — system-tracking is a progressive enhancement */ }
   }
+
+  /* ---------- 5. Shared expansion utility -------------- */
+function setExpanded(element, open, contentId, focusTarget) {
+  // Determine which data attribute to use
+  var dataAttr;
+  if (element.hasAttribute('data-section-open')) {
+    dataAttr = 'data-section-open';
+  } else if (element.hasAttribute('data-subsection-open')) {
+    dataAttr = 'data-subsection-open';
+  } else {
+    dataAttr = 'data-open';
+  }
+  element.setAttribute(dataAttr, open ? 'true' : 'false');
+  
+  var trigger = element.querySelector('[aria-expanded]');
+  var content = contentId ? document.getElementById(contentId) : element.querySelector('[hidden]');
+  
+  if (trigger) {
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  
+  if (content) {
+    content.hidden = !open;
+    if (open && focusTarget) {
+      content.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    } else if (!open && focusTarget && trigger) {
+      trigger.focus();
+    }
+  }
+}
+
+/* Section and subsection expansion */
+function initExpansion() {
+  // Section-level expansion (Creation and Technology)
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section[data-section-open]'));
+  sections.forEach(function (section) {
+    var trigger = section.querySelector('.section__trigger');
+    if (!trigger) return;
+    var contentId = trigger.getAttribute('aria-controls');
+    
+    trigger.addEventListener('click', function () {
+      var isOpen = section.getAttribute('data-section-open') === 'true';
+      setExpanded(section, !isOpen, contentId, true);
+    });
+    
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        var isOpen = section.getAttribute('data-section-open') === 'true';
+        setExpanded(section, !isOpen, contentId, true);
+      }
+    });
+  });
+
+  // Subsection-level expansion (Creation categories and Technology categories)
+  var subsections = Array.prototype.slice.call(document.querySelectorAll('[data-subsection-open]'));
+  subsections.forEach(function (subsection) {
+    var trigger = subsection.querySelector('.subsection__trigger');
+    if (!trigger) return;
+    var contentId = trigger.getAttribute('aria-controls');
+    
+    trigger.addEventListener('click', function () {
+      var isOpen = subsection.getAttribute('data-subsection-open') === 'true';
+      setExpanded(subsection, !isOpen, contentId, true);
+    });
+    
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        var isOpen = subsection.getAttribute('data-subsection-open') === 'true';
+        setExpanded(subsection, !isOpen, contentId, true);
+      }
+    });
+  });
+}
+
+// Initialize expansion after DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initExpansion);
+} else {
+  initExpansion();
+}
 })();

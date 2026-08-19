@@ -18,7 +18,7 @@
   <link rel="preload" href="assets/fonts/newsreader-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/hanken-grotesk-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/hanken-grotesk-500-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" as="image" href="assets/img/hero.svg" />
+  <link rel="preload" as="image" href="assets/img/hero2.png" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/site.css" />
@@ -73,8 +73,8 @@
             </div>
           </div>
           <figure class="hero-figure" data-reveal data-reveal-delay="120">
-            <img src="assets/img/hero.svg" alt="A warm editorial portrait placeholder" width="800" height="1000" fetchpriority="high" />
-            <figcaption>Frontispiece — a self-portrait, to come.</figcaption>
+            <img src="assets/img/hero2.png" alt="A warm editorial portrait placeholder" width="800" height="1000" fetchpriority="high" />
+            <figcaption>Frontispiece — a self-portrait.</figcaption>
           </figure>
         </div>
       </div>
@@ -96,23 +96,35 @@
       </div>
     </section>
     <div class="threshold threshold__glyph" aria-hidden="true">· · ·</div>
-    <section class="section creation" id="creation" data-nav-target="creation">
+    <section class="section creation" id="creation" data-nav-target="creation" data-section-open="true">
       <div class="container">
         <header class="section__head">
           <span class="section__index">ii.</span>
           <div>
             <p class="eyebrow">Creation</p>
-            <h2>What I have made, and once made, in public.</h2>
+            <h2>
+              <button type="button" class="section__trigger" aria-expanded="true" aria-controls="creation-content">
+                What I have made, and once made, in public.
+              </button>
+            </h2>
             <p class="section__lede">The channels and writing I keep now, alongside the ones that have ended — part of the history even where the work is gone.</p>
           </div>
+          <span class="section__state" aria-hidden="true">+</span>
         </header>
-        <div class="creation__categories" data-creation-archive>
-          <section class="creation-category" aria-labelledby="creation-content-title">
+        <div class="section__content" id="creation-content">
+          <div class="creation__categories" data-creation-archive>
+          <section class="creation-category" aria-labelledby="creation-content-title" data-subsection-open="true">
             <header class="creation-category__head">
               <p class="creation-category__index">A.</p>
-              <h3 id="creation-content-title">Content</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="creation-content-grid">
+                  Content
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="creation-grid" role="list">
+            <div class="subsection__content" id="creation-content-grid">
+              <div class="creation-grid" role="list">
               <article class="creation-card" role="listitem" data-creation-card>
                 <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-content-01">
                   <span class="creation-card__number" aria-hidden="true">01.</span>
@@ -129,10 +141,10 @@
                     </figure>
                     <div class="creation-entry__material">
                       <p>The start of my content creation journey.</p>
-                      <p>It began around 2019–2020, when gaming content was everywhere and I wanted to try making some of it myself. A Minecraft Survival Let's Play was one of the first things I recorded, around version 1.14. I also played Happy Wheels, which also became a recurring series, and Pokémon X/Y through Citra Emulator. The setup was not exactly designed for recording: a Pentium processor, 4 GB of RAM, and a hard drive were being asked to run a game, recording software, and the operating system simultaneously.</p>
-                      <p>A lot of the process was experimentation. OBS was one of the tools I used, but I also tried other recording software, including Windows Game Bar, Bandicam, Camtasia and Icecream Screen Recorder, largely because the limiting factor was often simply how much the computer could take. Some games were playable; recording them was a different beast entirely. I also played Tekken 3 and some older Hitman games, although those were never recorded.</p>
+                      <p>It began around 2019–2020, when gaming content was everywhere and I wanted wanted to be a gamer too. A 'Minecraft Survival Let's Play Series' was one of the first things I recorded, playing around version 1.14. I also played Happy Wheels and Pokémon X/Y through Citra Emulator. The setup was not exactly designed for recording: a Pentium processor, 4 GB of RAM, and a hard drive were being asked to run a game, recording software, and the operating system simultaneously.</p>
+                      <p>A lot of the process was experimentation. OBS is by far the best tool I used, but I also tried other recording software, including Windows Game Bar, Bandicam, Camtasia and Icecream Screen Recorder, largely because the I was trying to find ways around the sillicon's capabilities. Some games were playable; recording them was a different beast entirely.</p>
                       <p>There was another recording setup that was considerably less conventional.</p>
-                      <p>My father had a Samsung Galaxy J2 with 1 GB of RAM and 8 GB of storage. When I wanted to record something like Happy Wheels, I would sometimes wait until he came home around 9 or 10 at night, quickly take the phone, find a quiet corner of the house, and try to record without anyone noticing. It was partly because I didn't want to be embarrassed about what I was doing, and partly because having other people around made recording difficult. Sometimes they would talk loudly enough for their voices to end up in the recording anyway.</p>
+                      <p>My father had a Samsung Galaxy J2. When I wanted to record something like Happy Wheels, I would sometimes wait until he came home around 9 or 10 at night, quickly take the phone, find a quiet corner of the house, and try to record without anyone noticing. It was partly because I didn't want to be embarrassed about what I was doing, and partly because having other people around made recording difficult. Sometimes they would talk loudly enough for their voices to end up in the recording anyway.</p>
                       <p>It was primitive, occasionally ridiculous, and technically rather painful. But it was the first time I was actually trying to make something and put it in front of other people.</p>
                       <p>The channel is gone now. What remains is mostly the memory of the process itself — including the hardware that was being pushed far beyond what it was really meant to do.</p>
                     </div>
@@ -156,8 +168,7 @@
                     <div class="creation-entry__material">
                       <p>Starting as a collaborative project with my neighbour-cum-elder-brother, Subhabrata Ghosh, on 13 August 2020, the idea was different from Timekeeper.</p>
                       <p>It was about commentary. We talked about things happening around us — COVID, gaming and app bans, and whatever else seemed worth discussing. The style was influenced in part by the social-commentary and reaction videos I was watching at the time, including videos by Triggered Insaan.</p>
-                      <p>It was also an experiment in making something together. The channel eventually became inactive, but it was never erased. The channel still exists, which means that unlike some of my earlier work, this particular piece of history still has a surviving public record.</p>
-                      <p>I don't need to reconstruct everything that was ever uploaded here. The channel itself is the archive.</p>
+                      <p>It was also an experiment in making something together. The channel eventually became inactive, but it was never erased. The channel still exists, which means that unlike my earlier work, this particular piece of history still has a surviving public record.</p>
                       <p><a href="https://www.youtube.com/@allrounderbuddy2351" target="_blank" rel="noopener noreferrer">Visit Allrounder Buddy</a></p>
                     </div>
                   </div>
@@ -234,10 +245,10 @@
                     </figure>
                     <div class="creation-entry__material">
                       <p>The channel that eventually became my current home on YouTube did not begin with confidence.</p>
-                      <p>After losing ASenpai, I was genuinely afraid to start again. I had seen what it felt like to build something, put time into it, watch it reach people, and then lose the entire thing in an instant. For quite a while, I simply didn't have the courage to open another channel.</p>
+                      <p>After losing ASenpai, I was genuinely afraid to start again. I had <strong>known</strong> what it felt like to build something, put time into it, watch it reach people, and then lose the entire thing in an instant. For quite a while, I simply didn't have the courage to open another channel.</p>
                       <p>Eventually, I did.</p>
                       <p>The beginning was deliberately low-stakes. I posted anime clips because I didn't want to invest much into something that I was still afraid of losing. That approach didn't last particularly well; I ended up receiving a copyright claim, which was probably a fairly efficient way of learning that "low effort" does not necessarily mean "low consequence."</p>
-                      <p>I moved toward science videos after that, putting considerably more effort into what I made. Then came another experimental phase: low-effort Shorts covering science, psychology, and my "YouTube Automation Phase".</p>
+                      <p>I moved toward science videos after that, putting considerably more effort into what I made. Then came another experimental phase: low-effort Shorts covering science, psychology, and me trying "YouTube Automation" which was rather trendy at the time.</p>
                       <p>Eventually, I stopped trying to figure out what would be easiest to make and settled into what I actually wanted to make: proper self-improvement and self-help videos.</p>
                       <p>This is now the channel I continue to build.</p>
                       <p><a href="https://www.youtube.com/@ankushsarkar369" target="_blank" rel="noopener noreferrer">Visit Ankush Sarkar</a></p>
@@ -262,8 +273,8 @@
                     <div class="creation-entry__material">
                       <p>Beyond The Boundaries was supposed to be an intellectual discussion hub.</p>
                       <p>The idea was to have conversations that could move across philosophy, literature, humanity, science and whatever else was worth thinking about, not necessarily fitting everything into one narrow subject, but exploring ideas for the sake of exploring them.</p>
-                      <p>The idea came about during a random conversation with Soumyadeep Das. At one point, we actually tried to record an episode. It was at night, and the practical realities of being two people living with their families quickly became apparent: people were calling us for dinner, interruptions kept happening, and even the internet situation of the time made recording considerably more difficult than it needed to be.</p>
-                      <p>We never actually published anything.</p>
+                      <p>The idea came about during a random conversation with Soumyadeep Das. At one point, we actually tried to record an episode. It was at night, and the practical realities of being two teenagers living with their families quickly became apparent: people were calling us for dinner, interruptions kept happening, and even the internet situation of the time made recording considerably more difficult than it needed to be.</p>
+                      <p>We never actually published anything.Part of it can be attributed to us being separated by distance, which wasn't the case with the co-founder of Allrounder Buddy.</p>
                       <p>And yet the channel still exists.</p>
                       <p>So Beyond The Boundaries occupies a slightly strange place in the archive: it is a project that never quite became a public work, but the idea itself was real, the attempt was real, and the channel remains as evidence that we intended to build it.</p>
                       <p><a href="https://www.youtube.com/@BeyondTheBoundariesForever" target="_blank" rel="noopener noreferrer">Visit Beyond The Boundaries</a></p>
@@ -283,11 +294,11 @@
                 <div class="creation-card__body" id="creation-content-06" hidden>
                   <div class="creation-entry">
                     <figure class="creation-entry__image">
-                      <img src="assets/img/creation/substack/logo.jpg" alt="Ankush's Substack" />
+                      <img src="assets/img/creation/substack/logo.png" alt="Ankush's Substack" />
                     </figure>
                     <div class="creation-entry__material">
-                      <p>Ankush's Substack began as a newsletter connected to my YouTube work. It stopped, and eventually I started it again.</p>
-                      <p>The basic idea is simple: I live my life, things happen, I think about them, and then I inevitably start trying to connect them to everything else.</p>
+                      <p>Ankush's Substack began as a newsletter connected to my YouTube work. But after a year long pause, it turned into something more personal.</p>
+                      <p>The basic idea is simple: I live my life, things happen, I think about them, and then I inevitably start trying to connect them.</p>
                       <p>I write about day-to-day events, but the writing is rarely just a record of what happened. I tend to derive philosophical frameworks from ordinary experiences, to take something that happened during the day and ask what it says about something larger.</p>
                       <p>The writing is mood-based. I don't sit down with a perfectly predetermined publishing schedule and manufacture a topic because the calendar says I should. A daily rant can suddenly become a post when I realise that it connects several things I have been thinking about.</p>
                       <p>That tendency toward connection is probably the most consistent feature of the whole thing.</p>
@@ -320,15 +331,21 @@
                   </div>
                 </div>
               </article>
+              </div>
             </div>
           </section>
-          <section class="creation-category" aria-labelledby="creation-science-title">
+          <section class="creation-category" aria-labelledby="creation-science-title" data-subsection-open="true">
             <header class="creation-category__head">
               <p class="creation-category__index">B.</p>
-              <h3 id="creation-science-title">Science &amp; Ideas</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="creation-science-grid">
+                  Science & Ideas
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="creation-grid" role="list">
-              <article class="creation-card" role="listitem" data-creation-card data-speculative>
+            <div class="subsection__content" id="creation-science-grid">
+              <div class="creation-grid" role="list">              <article class="creation-card" role="listitem" data-creation-card data-speculative>
                 <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-science-01">
                   <span class="creation-card__number" aria-hidden="true">01.</span>
                   <span class="creation-card__heading">
@@ -344,7 +361,7 @@
                     </figure>
                     <div class="creation-entry__material">
                       <p>I started thinking about this when I was 17.</p>
-                      <p>A late-night in early September, a lot of backlogs, and I was doing what I apparently deemed a reasonable use of my time while preparing for the Joint Entrance Exam: trying to understand the fundamental nature of consciousness and the universe.</p>
+                      <p>A late night in early September, a lot of backlogs, and I was doing what I apparently deemed the most reasonable use of my time while preparing for the Joint Entrance Exam: trying to understand the fundamental nature of consciousness and the universe.</p>
                       <p>I tend to approach problems by trying to find contradictions. If an idea seems incomplete, I try to push it until something breaks, and then see whether the contradiction tells me something useful.</p>
                       <p>That eventually led me to a much bigger question:</p>
                       <p><strong>What if consciousness isn't something that suddenly appears when a sufficiently complicated brain is assembled?</strong></p>
@@ -359,13 +376,13 @@
                       <p>I became particularly interested in entropy.</p>
                       <p>Instead of thinking about entropy simply as disorder increasing, I began exploring the idea of entropy as a form of <strong>optimization</strong> or informational efficiency. A floppy disk and an SD card can both store information, but one achieves enormously greater information density and efficiency than the other. That became one of the analogies I used to think about what "higher entropy" might mean in the framework I was building.</p>
                       <p>Then quantum mechanics got involved, because apparently one foundational problem wasn't enough.</p>
-                      <p>I started thinking about Feynman's path-integral formulation, where a system can be described through contributions from many possible paths. I played with the idea that the trajectories we observe could somehow emerge from the interaction of extreme possibilities. At one point I even imagined an electron taking an absurd journey across the universe and ending up on a friend's face, simply because it was a useful way of visualizing how wildly different possible paths could exist mathematically even when almost all of them contribute negligibly to what we actually observe.</p>
+                      <p>I started thinking about Feynman's path-integral formulation, where a system can be described through contributions from many possible paths. I played with the idea that the trajectories we observe could somehow emerge from the interaction of extreme possibilities. At one point I imagined an electron taking an absurd journey across the entire universe and only to end up on a friend's face, simply because it was a useful way of visualizing how wildly different possible paths could exist mathematically even when almost all of them contribute negligibly to what we actually observe.</p>
                       <p>The theory eventually became cosmological as well.</p>
                       <p>If everything possesses Φ, and if the universe itself can be thought of in terms of this spectrum, then the beginning and end of the universe become interesting in a completely different way. I explored a cyclic picture in which the universe eventually returns toward an extremely compact, highly efficient state, connecting the beginning and end through the same fundamental condition.</p>
                       <p>At that point, CTIC had stopped being a theory about consciousness in isolation.</p>
                       <p>It had become an attempt to unify consciousness, information, entropy, quantum mechanics and cosmology under one conceptual framework.</p>
                       <p>That was also the part I found most interesting: the possibility that what we call physics, chemistry and biology are not fundamentally separate worlds, but different ways of looking at the same underlying events. A falling apple can simultaneously be a problem in gravitational physics, a chemical interaction with its environment, and a biological object undergoing decay. The disciplines change; the event does not.</p>
-                      <p>The theory is raw. It is incomplete. I have not yet formalised a mathematical structure or assigned weights to the elements or conducted experiment to measure phi. Some of its assumptions are highly speculative, and it has not been established experimentally. But that wasn't really the point.</p>
+                      <p>The theory is raw. It is incomplete. I have not yet formalised a mathematical structure or assigned weights to the elements or conducted experiment to measure Φ. Some of its assumptions are highly speculative, and maybe outright wrong. But that wasn't really the point.</p>
                       <p>The interesting part was seeing how far one initial question could be pushed: from <em>what is consciousness?</em> to <em>what if consciousness is continuous?</em>, then to matter, entropy, information, quantum mechanics and eventually the universe itself.</p>
                       <p>CTIC is my attempt, at least in its current form, to make those connections coherent.</p>
                       <p><a href="#support" class="creation-entry__external-link">Request Full Work</a></p>
@@ -390,9 +407,9 @@
                     <div class="creation-entry__material">
                       <p>I have always found <em>The Almighty</em>, Yhwach's ability in <em>Bleach</em>, slightly unsatisfying when taken literally.</p>
                       <p>The idea is simple enough, as described by Tite Kubo, the author of <em>Bleach</em>: he can see all possible futures and alter them. But if you take that description completely seriously, the ability very quickly stops being interesting. If every possible future is visible and any of them can simply be selected, then there is effectively no uncertainty left, no meaningful strategy, and very little reason for a conflict to exist in the first place.</p>
-                      <p>And spoiler alert, the Still Silver Arrow, then, effectively becomes what I call BWBO [Bad writing to bail out].</p>
+                      <p>And spoiler alert, the Still Silver Arrow, then, effectively becomes what I call BWBO [bad writing to bail out].</p>
                       <p>So I tried asking a different question:</p>
-                      <p><strong>What if The Almighty were not omniscience, but an extremely powerful computational process?</strong></p>
+                      <p><strong>What if The Almighty were not both omnipotence and omniscience, but an extremely powerful computational process?</strong></p>
                       <p>Instead of imagining every possible future as something Yhwach can simply read simultaneously, I treated the future as an enormous branching state space. Every possible evolution of the universe becomes another trajectory through that space.</p>
                       <p>The problem is obvious: there are far too many of them. Or as a cursed mathematician would write: ∞=∞</p>
                       <p>Even if the future is deterministic, that does not mean that calculating every possible future is computationally feasible. So I introduced a constraint: The Almighty has finite computational resources and can only examine a limited portion of the available future space at any given moment.</p>
@@ -403,9 +420,9 @@
                       <p>That led to another interesting question: what happens when somebody interferes with the information being fed into the system?</p>
                       <p>I tried to reinterpret some of the other abilities in <em>Bleach</em> through the same framework.</p>
                       <p>Kyōka Suigetsu can be thought of as corrupting the initial state that The Almighty is working from. Ichimonji is even more interesting because it interferes with the representation and identity of things within that state. The Still Silver Arrow can instead be interpreted as temporarily suppressing the future-altering process itself, forcing Yhwach to operate without the mechanism he normally relies upon, though personally it's still BWBO.</p>
-                      <p>None of these are meant to be claims about the actual physics of the <em>Bleach</em> universe. They are attempts to see whether an ability that sounds like unrestricted omnipotence can be made computationally coherent without completely destroying the strategic structure of the story.</p>
+                      <p>None of these are meant to be claims about the actual physics of the <em>Bleach</em> universe. They are attempts to see whether an ability that sounds like unrestricted omnipotence and omniscience can be made computationally coherent without completely destroying the strategic structure of the story.</p>
                       <p>The result is a rather different interpretation of The Almighty.</p>
-                      <p>Not omnipotence.</p>
+                      <p>Not omnipotence and omniscience.</p>
                       <p>Not merely precognition.</p>
                       <p>Something closer to an <strong>algorithmic approximation of optimal causality</strong>.</p>
                       <p>The full work develops the mathematical framework behind that idea, including the future-state space, computational constraints, search strategy and optimization costs.</p>
@@ -454,12 +471,18 @@
               </article>
             </div>
           </section>
-          <section class="creation-category" aria-labelledby="creation-projects-title">
+          <section class="creation-category" aria-labelledby="creation-projects-title" data-subsection-open="true">
             <header class="creation-category__head">
               <p class="creation-category__index">C.</p>
-              <h3 id="creation-projects-title">Projects</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="creation-projects-grid">
+                  Projects
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="creation-grid" role="list">
+            <div class="subsection__content" id="creation-projects-grid">
+              <div class="creation-grid" role="list">
               <article class="creation-card" role="listitem" data-creation-card>
                 <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-project-01">
                   <span class="creation-card__number" aria-hidden="true">01.</span>
@@ -477,23 +500,23 @@
                     <div class="creation-entry__material">
                       <p>I have always preferred owning my music rather than streaming it.</p>
                       <p>There is something about having the actual file sitting there, knowing exactly what it is, where it came from, and how it is organized, that I prefer over depending on a service to decide what exists in my library.</p>
-                      <p>The collection has gone through a few phases. I started out downloading MP3s, mostly from YouTube and other websites back in 2018, without thinking too much about how they were stored, at least by my standards. Though even then, I hated the inconsistent file names or the name of websites in the file so regardless of the size of the library, I cleaned the file names by hand. It was so odd to see a fellow neighbour's 'Music' folder which had everything in one folder and horrible naming. Then I delved a bit into audio and discovered WAV, FLAC, Opus etc. At one point I deleted a few hundred old files and downloaded the better versions again, one by one.</p>
+                      <p>The collection has gone through a few phases. I started out downloading MP3s, mostly from YouTube and other websites back in 2018, and having a primitive, at least by my standards, language based folder structure. Though even then, I hated the inconsistent file names or the name of websites in the file so regardless of the size of the library, I cleaned the file names by hand. It was so odd to see a fellow neighbour's 'Music' folder which had everything in one folder and horrible naming. Then I delved a bit into audio and discovered WAV, FLAC, Opus etc. At one point I deleted a few hundred old files and downloaded the better versions again, one by one.</p>
                       <p>That was when this stopped being "few folders of music" and became an actual project.</p>
-                      <p>I've spent well over a hundred hours organizing the library and interacting with individual files. At this point I know the roughly 850 files by hand because, at some point, I've probably had to touch their metadata, rename them, reorganize them, or otherwise do something to them.</p>
+                      <p>I've spent well over half a thousand hours collecting, managing and organizing the library and interacting with individual files. At this point I know the roughly 850 files by hand because, at some point, I've probably had to touch their metadata, rename them, reorganize them, or otherwise do something to them.</p>
                       <p>And I have some rather specific ideas about metadata.</p>
                       <p>The basic rule is that <strong>one thing should do one thing</strong>.</p>
                       <p>If the filename already tells me the title, I don't need the title duplicated in the metadata. If the album is already represented by the folder structure, I don't need another redundant copy of that information floating around unnecessarily. The artist belongs in the artist tag. The folder structure handles the grouping. The filename handles the title.</p>
                       <p>I even use the composer field differently from how a conventional music library might: for anime music, it can represent the anime or show the music came from.</p>
                       <p>This might sound unnecessarily obsessive and it probably is.</p>
                       <p>But there is a reason behind it. I like systems where every piece of information has a clear purpose and where changing one thing doesn't create five redundant versions of the same thing somewhere else.</p>
-                      <p>That philosophy eventually led me to build Python tools around the collection, alongside software such as MusicBrainz Picard and various utilities for searching, cleaning and organizing the files. Eventually I decided that all of this should live in one coherent place, so the project became a GitHub archive as well.</p>
+                      <p>That philosophy eventually led me to build Python tools around the collection, alongside software such as MusicBrainz Picard, MP3Tag and various utilities for searching, cleaning and organizing the files. Eventually I decided that all of this should live in one coherent place, so the project became a GitHub archive as well.</p>
                       <p>My current audio setup is:</p>
                       <p><strong>Devices:</strong></p>
                       <p>- In Ear Monitor [IEM]: Salnotes 7Hz Zero</p>
                       <p>- Digital To Analogue Converter [DAC]: Audiocular D10</p>
                       <p><strong>Softwares:</strong></p>
                       <p>- Laptop: Fooyin/Foobar2000 [Depending on Linux/Windows]</p>
-                      <p>- Phone: Poweramp Music Player [Paid, Full Version]</p>
+                      <p>- Phone: Poweramp Music Player [Full Version]</p>
                       <p>The folder structure is therefore part of the project itself. It isn't just where the files happen to be stored; it is part of how I think about the collection.</p>
                       <p>And the music itself is probably less organized by genre or artist than you might expect.</p>
                       <p>I don't really listen to albums religiously, and I don't have a favourite artist whose entire catalogue I automatically like. A song stays because it resonates with me, whether that's because of the music, the lyrics, or simply something about the way it feels.</p>
@@ -521,12 +544,18 @@ Songs
               </article>
             </div>
           </section>
-          <section class="creation-category" aria-labelledby="creation-products-title">
+          <section class="creation-category" aria-labelledby="creation-products-title" data-subsection-open="true">
             <header class="creation-category__head">
               <p class="creation-category__index">D.</p>
-              <h3 id="creation-products-title">Products</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="creation-products-grid">
+                  Products
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="creation-grid" role="list">
+            <div class="subsection__content" id="creation-products-grid">
+              <div class="creation-grid" role="list">
               <article class="creation-card" role="listitem" data-creation-card>
                 <button class="creation-card__trigger" type="button" aria-expanded="false" aria-controls="creation-product-01">
                   <span class="creation-card__number" aria-hidden="true">01.</span>
@@ -556,8 +585,7 @@ Songs
                       <p>It's deciding what <strong>not</strong> to do.</p>
                       <p>Prioritas is my attempt to build something around that problem.</p>
                       <p>It currently exists as a project in development rather than a finished product. I haven't turned it into the polished course I eventually want it to become, but the underlying idea is one I've personally had to confront repeatedly.</p>
-                      <p>The name is intentional too.</p>
-                      <p>Prioritas is built around the idea of <strong>priority</strong> in the singular: not an endless list of equally important things, but the thing that deserves to come first.</p>
+                      <p>It is built around the idea of <strong>priority</strong> in the singular: not an endless list of equally important things, but the thing that deserves to come first.</p>
                       <p><a href="https://ankushonline.gumroad.com/l/prioritas" class="creation-entry__external-link" target="_blank" rel="noopener noreferrer">Visit Prioritas</a></p>
                     </div>
                   </div>
@@ -568,23 +596,35 @@ Songs
         </div>
       </div>
     </section>
-    <section class="section section--technology" id="technology" data-nav-target="technology">
+    <section class="section section--technology" id="technology" data-nav-target="technology" data-section-open="true">
       <div class="container">
         <header class="section__head">
           <span class="section__index">iii.</span>
           <div>
             <p class="eyebrow">Technology</p>
-            <h2>A life lived alongside machines.</h2>
+            <h2>
+              <button type="button" class="section__trigger" aria-expanded="true" aria-controls="technology-content">
+                A life lived alongside machines.
+              </button>
+            </h2>
             <p class="section__lede">From my earliest capable devices to the systems, tools, and ideas that have shaped how I learn, create, and explore.</p>
           </div>
+          <span class="section__state" aria-hidden="true">+</span>
         </header>
-        <div class="technology__categories" data-technology-archive>
-          <section class="technology-category" aria-labelledby="technology-machines-title">
+        <div class="section__content" id="technology-content">
+          <div class="technology__categories" data-technology-archive>
+          <section class="technology-category" aria-labelledby="technology-machines-title" data-subsection-open="true">
             <header class="technology-category__head">
               <p class="technology-category__index">A.</p>
-              <h3 id="technology-machines-title">The Machines</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="technology-machines-grid">
+                  The Machines
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="technology-grid" role="list">
+            <div class="subsection__content" id="technology-machines-grid">
+              <div class="technology-grid" role="list">
               <article class="technology-card" role="listitem" data-technology-card>
                 <button class="technology-card__trigger" type="button" aria-expanded="false" aria-controls="technology-machines-01">
                   <span class="technology-card__number" aria-hidden="true">01.</span>
@@ -999,7 +1039,7 @@ Songs
                               <dt>Pixel Density</dt>
                               <dd>~393 ppi</dd>
                               <dt>Refresh rate</dt>
-                              <dd>120 Hz / 144 Hz</dd>
+                              <dd>144 Hz</dd>
                               <dt>Peak brightness</dt>
                               <dd>1600 nits</dd>
                               <dt>Protection</dt>
@@ -1094,12 +1134,18 @@ Songs
               </article>
             </div>
           </section>
-          <section class="technology-category" aria-labelledby="technology-digital-infrastructure-title">
+          <section class="technology-category" aria-labelledby="technology-digital-infrastructure-title" data-subsection-open="true">
             <header class="technology-category__head">
               <p class="technology-category__index">B.</p>
-              <h3 id="technology-digital-infrastructure-title">The Digital Infrastructure</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="technology-digital-infrastructure-grid">
+                  The Digital Infrastructure
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="technology-grid" role="list">
+            <div class="subsection__content" id="technology-digital-infrastructure-grid">
+              <div class="technology-grid" role="list">
               <article class="technology-card" role="listitem" data-technology-card>
                 <button class="technology-card__trigger" type="button" aria-expanded="false" aria-controls="technology-digital-01">
                   <span class="technology-card__number" aria-hidden="true">01.</span>
@@ -1261,15 +1307,15 @@ Songs
                             </tr>
                             <tr>
                               <th scope="row">Hitman</th>
-                              <td>Various older Hitman games.</td>
+                              <td>Older Hitman games I can't recall the title of but was a good experience.</td>
                             </tr>
                             <tr>
                               <th scope="row">Minecraft</th>
-                              <td>The game I have poured the most optimization time into. Pre-Sodium / OptiFine era; later Sodium optimization stack; around 10 different optimization mods; eventually around 50–60 FPS on the latest version; 12 Render Distance; 8 Simulation Distance; BedWars and other Minecraft gameplay. The important framing is that this was being done on the Pentium machine.</td>
+                              <td>The game I have poured the most playtime, content consumption and optimization time into. The stories are endless with this one. Pre-Sodium / OptiFine era; later Sodium optimization stack; around 10 different optimization mods; eventually around 50–60 FPS on the latest version 26.2; 12 CRD; 8 CSD; BedWars is arguably the best multiplayer game mode, if you don't have crazy latency.</td>
                             </tr>
                             <tr>
                               <th scope="row">Pokémon Fire Ash</th>
-                              <td>A fan-made game. I went looking for a specific x64 executable because it allowed 60 FPS and smoother performance on the machine. In retrospect, the original executable may simply not have been compiled particularly well for this PC.</td>
+                              <td>A fan-made game. I went looking for a specific x64 executable because it allowed 60 FPS and smoother performance on my device. In retrospect, the original executable may simply not have been compiled particularly well for this PC.</td>
                             </tr>
                             <tr>
                               <th scope="row">Tekken 3</th>
@@ -1321,7 +1367,7 @@ Songs
                       
                       <section class="technology-entry__section">
                         <h4 class="technology-entry__section-title">Android — Motorola Edge 50 Fusion</h4>
-                        <p class="technology-entry__meta">8 GB physical RAM · Virtual RAM disabled</p>
+                        <p class="technology-entry__meta">Virtual RAM disabled</p>
                         <table class="technology-archive__table" aria-label="Android games on Motorola Edge 50 Fusion">
                           <tbody>
                             <tr>
@@ -1334,7 +1380,7 @@ Songs
                             </tr>
                             <tr>
                               <th scope="row">Wuthering Waves</th>
-                              <td>At maximum settings, easily 60+ FPS after an ADB configuration change.</td>
+                              <td>At maximum settings, easily 60+ FPS after cusmtom ADB configuration.</td>
                             </tr>
                             <tr>
                               <th scope="row">Other Google Play games</th>
@@ -1351,12 +1397,18 @@ Songs
               </article>
             </div>
           </section>
-          <section class="technology-category" aria-labelledby="technology-creative-masochist-title">
+          <section class="technology-category" aria-labelledby="technology-creative-masochist-title" data-subsection-open="true">
             <header class="technology-category__head">
               <p class="technology-category__index">C.</p>
-              <h3 id="technology-creative-masochist-title">The Creative Masochist</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="technology-creative-masochist-grid">
+                  The Creative Masochist
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="technology-grid" role="list">
+            <div class="subsection__content" id="technology-creative-masochist-grid">
+              <div class="technology-grid" role="list">
               <article class="technology-card" role="listitem" data-technology-card>
                 <button class="technology-card__trigger" type="button" aria-expanded="false" aria-controls="technology-creative-01">
                   <span class="technology-card__number" aria-hidden="true">01.</span>
@@ -1377,11 +1429,11 @@ Songs
                           <tbody>
                             <tr>
                               <th scope="row">Premiere Pro</th>
-                              <td>2019 → 2020 → 2021 → 2022 → 2023 → 2024 → 2025. Yes. I tried all of them. For context, the Haswell GPU in this machine supports hardware encoding in Premiere Pro up to the 2019 generation; in later versions that capability was removed for this hardware. From 2024 onward, the software also became increasingly AI-heavy, which I personally found excessive.</td>
+                              <td>2019 → 2020 → 2021 → 2022 → 2023 → 2024 → 2025. Yes. I tried all of them. For context, the Haswell GPU in the Dell Inspiron 3542 supports hardware encoding in Premiere Pro up to the 2019 generation; in later versions that capability was removed for this hardware. From 2024 onward, the software also became increasingly AI-heavy, which I personally found excessive.</td>
                             </tr>
                             <tr>
                               <th scope="row">After Effects</th>
-                              <td>AE 2022 with Sapphire and a collection of other plugins, including Deep Glow, became my go-to environment for making AMVs and even their thumbnails. At one point I had practically forgotten how to use traditional video editors. After Effects simply had features that I found missing or less convenient in conventional editors, including Premiere Pro.</td>
+                              <td>After Effects 2022 with Sapphire and a collection of other plugins, including Deep Glow, became my go-to environment for making AMVs and even their thumbnails. At one point I had practically forgotten how to use traditional video editors. After Effects simply had features that I found missing or less convenient in conventional editors, including Premiere Pro.</td>
                             </tr>
                             <tr>
                               <th scope="row">Photoshop</th>
@@ -1434,11 +1486,11 @@ Songs
                           <tbody>
                             <tr>
                               <th scope="row">FFmpeg</th>
-                              <td>The best piece of media software ever created by mankind.</td>
+                              <td>The greatest piece of media software ever created by mankind.</td>
                             </tr>
                             <tr>
                               <th scope="row">HandBrake / Shutter Encoder</th>
-                              <td>Past attempts at finding a GUI-based FFmpeg workflow, back when I was still terrified of terminals.</td>
+                              <td>Attempts at finding a GUI-based FFmpeg workflow, back when I was still terrified of terminals.</td>
                             </tr>
                             <tr>
                               <th scope="row">XMedia Recode</th>
@@ -1446,7 +1498,7 @@ Songs
                             </tr>
                             <tr>
                               <th scope="row">LosslessCut</th>
-                              <td>Used because I wanted to bypass editing videos entirely.</td>
+                              <td>Used because I wanted to bypass encoding videos entirely. Succeeded, but via ffmpeg and python, not this.</td>
                             </tr>
                             <tr>
                               <th scope="row">mpv</th>
@@ -1537,12 +1589,18 @@ Songs
               </article>
             </div>
           </section>
-          <section class="technology-category" aria-labelledby="technology-technical-optimist-title">
+          <section class="technology-category" aria-labelledby="technology-technical-optimist-title" data-subsection-open="true">
             <header class="technology-category__head">
               <p class="technology-category__index">D.</p>
-              <h3 id="technology-technical-optimist-title">The Technical Optimist</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="technology-technical-optimist-grid">
+                  The Technical Optimist
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="technology-grid" role="list">
+            <div class="subsection__content" id="technology-technical-optimist-grid">
+              <div class="technology-grid" role="list">
               <article class="technology-card" role="listitem" data-technology-card>
                 <button class="technology-card__trigger" type="button" aria-expanded="false" aria-controls="technology-technical-01">
                   <span class="technology-card__number" aria-hidden="true">01.</span>
@@ -1555,7 +1613,7 @@ Songs
                 <div class="technology-card__body" id="technology-technical-01" hidden>
                   <div class="technology-entry technology-entry--full">
                     <div class="technology-entry__material">
-                      <p>I wanted the full-resolution Planck CMB image. Just as an average person desires on a random Tuesday morning, right? Well, I guess some humans still don't understand why this is cool, so let me put it simply: we have a temperature map of our UNIVERSE when it was JUST 380,000 YEARS OLD. If you don't find that cool, I'm afraid you might be too simple-minded to understand the result of the craziness of some monkeys on a rock.</p>
+                      <p>I wanted the full-resolution Planck CMB image. Just as an average person desires on a random Tuesday morning, right? Well, I guess some humans still don't understand why this is cool, so let me put it simply: we have a temperature map of our ENITRE UNIVERSE when it was JUST 380,000 YEARS OLD. If you don't find that cool, I'm afraid you might be too simple-minded to understand the result of the craziness of some monkeys on a rock.</p>
                       
                       <p>The ESA website had an image available for download, but I noticed that the version being served wasn't the full-resolution image I was looking for. The site mentioned emailing ESA to get the full-resolution version, so I did.</p>
                       
@@ -1571,7 +1629,7 @@ Songs
                       
                       <p>I have tremendous respect for you if you understood even half the jargon.</p>
                       
-                      <p class="technology-entry__note">I also have a habit of downloading original astronomical images whenever I find them, even when the files are hundreds of megabytes or occasionally several gigabytes. Apparently liking space images wasn't enough; I wanted the original files too. Also, turns out normal picture viewers are definitely not capable of displaying such large images.</p>
+                      <p class="technology-entry__note">I also have a habit of downloading original astronomical images whenever I find them, even when the files are hundreds of megabytes or occasionally several gigabytes. Also, turns out normal picture viewers are definitely not capable of displaying such large images.</p>
                     </div>
                   </div>
                 </div>
@@ -1590,15 +1648,9 @@ Songs
                   <div class="technology-entry technology-entry--full">
                     <div class="technology-entry__material">
                       <p>For the majority of my laptop's life, 720p YouTube at 1× was noticeably lagging.</p>
-                      
                       <p>Only because I never sat down to question it.</p>
-                      
-                      <p>Until I did.</p>
-                      
-                      <p>I could have accepted that the machine was simply too old.</p>
-                      
-                      <p>Instead, I started digging through the software stack.</p>
-                      
+                      <p>Until I did.</p>                      
+                      <p>I could have accepted that the machine was simply too old. Instead, I started digging through the software stack.</p>
                       <table class="technology-archive__table" aria-label="Areas investigated for playback optimization">
                         <tbody>
                           <tr>
@@ -1607,7 +1659,7 @@ Songs
                           </tr>
                           <tr>
                             <th scope="row">Video playback</th>
-                            <td>Playback behaviour, H.264 vs H.265, AV1 and other video encodings.</td>
+                            <td>Playback behaviour, H.264 vs H.265, AV1, VP8, VP9 etc.</td>
                           </tr>
                           <tr>
                             <th scope="row">Hardware decoding</th>
@@ -1636,7 +1688,7 @@ Songs
                       
                       <p>1080p YouTube at 2× → smooth</p>
                       
-                      <p>And this was YouTube streaming, not a local video file.</p>
+                      <p>And this was YouTube streaming, not a local video file, i.e browser overhead exists.</p>
                       
                       <p class="technology-entry__note">It's amazing how far asking questions like "Why?" can take you.</p>
                     </div>
@@ -1732,12 +1784,18 @@ Songs
               </article>
             </div>
           </section>
-          <section class="technology-category" aria-labelledby="technology-personal-catalogue-title">
+          <section class="technology-category" aria-labelledby="technology-personal-catalogue-title" data-subsection-open="true">
             <header class="technology-category__head">
               <p class="technology-category__index">E.</p>
-              <h3 id="technology-personal-catalogue-title">The Personal Catalogue</h3>
+              <h3>
+                <button type="button" class="subsection__trigger" aria-expanded="true" aria-controls="technology-personal-catalogue-grid">
+                  The Personal Catalogue
+                </button>
+              </h3>
+              <span class="subsection__state" aria-hidden="true">+</span>
             </header>
-            <div class="technology-grid" role="list">
+            <div class="subsection__content" id="technology-personal-catalogue-grid">
+              <div class="technology-grid" role="list">
               <article class="technology-card" role="listitem" data-technology-card>
                 <button class="technology-card__trigger" type="button" aria-expanded="false" aria-controls="technology-personal-01">
                   <span class="technology-card__number" aria-hidden="true">01.</span>
@@ -1808,7 +1866,7 @@ Songs
                       
                       <p>"I don't want redundancy."</p>
                       
-                      <p class="technology-entry__note">"Beware about 4th-wall breaks, you have been warned."</p>
+                      <p class="technology-entry__note">Beware about 4th-wall breaks, you have been warned.</p>
                       
                       <p>If something already has a proper home, I don't want to create another copy of it somewhere else just because I happen to be building a website.</p>
                       
@@ -1838,111 +1896,301 @@ Songs
                       
                       <p>And it extends into the things I consume as well.</p>
                       
-                      <div class="catalogue-columns">
-                        <section class="catalogue-column">
-                          <h4 class="catalogue-column__title">Anime Watched List</h4>
-                          <p class="catalogue-column__subtitle">"I keep a chronological record rather than ratings or reviews. My opinions can change; the record of what I watched and when I watched it doesn't."</p>
+                      <div class="anime-catalogue">
+                          <div class="anime-catalogue__table-wrapper">
+                            <table class="anime-catalogue__table" aria-label="Anime and animated movies catalogue">
+                              <thead>
+                                <tr>
+                                  <th scope="col">
+                                    <button type="button" class="anime-catalogue__sort-btn" data-sort="no" aria-sort="ascending" aria-pressed="true">
+                                      <span class="anime-catalogue__sort-label">No.</span>
+                                      <span class="anime-catalogue__sort-indicator" aria-hidden="true"></span>
+                                    </button>
+                                  </th>
+                                  <th scope="col">
+                                    <button type="button" class="anime-catalogue__sort-btn" data-sort="name" aria-sort="none" aria-pressed="false">
+                                      <span class="anime-catalogue__sort-label">Name</span>
+                                      <span class="anime-catalogue__sort-indicator" aria-hidden="true"></span>
+                                    </button>
+                                  </th>
+                                  <th scope="col">
+                                    <button type="button" class="anime-catalogue__sort-btn" data-sort="type" aria-sort="none" aria-pressed="false">
+                                      <span class="anime-catalogue__sort-label">Type</span>
+                                      <span class="anime-catalogue__sort-indicator" aria-hidden="true"></span>
+                                    </button>
+                                  </th>
+                                  <th scope="col">
+                                    <button type="button" class="anime-catalogue__sort-btn" data-sort="language" aria-sort="none" aria-pressed="false">
+                                      <span class="anime-catalogue__sort-label">Language</span>
+                                      <span class="anime-catalogue__sort-indicator" aria-hidden="true"></span>
+                                    </button>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <!-- Childhood Classics (unnumbered) -->
+                                <tr data-chronology="0" data-type="Childhood Classic" data-language="Hindi">
+                                  <td class="anime-catalogue__no">—</td>
+                                  <td class="anime-catalogue__name">Pokémon</td>
+                                  <td class="anime-catalogue__type">Childhood Classic</td>
+                                  <td class="anime-catalogue__language">Hindi</td>
+                                </tr>
+                                <tr data-chronology="0" data-type="Childhood Classic" data-language="Hindi">
+                                  <td class="anime-catalogue__no">—</td>
+                                  <td class="anime-catalogue__name">Beyblade</td>
+                                  <td class="anime-catalogue__type">Childhood Classic</td>
+                                  <td class="anime-catalogue__language">Hindi</td>
+                                </tr>
+                                <tr data-chronology="0" data-type="Childhood Classic" data-language="Hindi">
+                                  <td class="anime-catalogue__no">—</td>
+                                  <td class="anime-catalogue__name">Shinchan</td>
+                                  <td class="anime-catalogue__type">Childhood Classic</td>
+                                  <td class="anime-catalogue__language">Hindi</td>
+                                </tr>
+                                <tr data-chronology="0" data-type="Childhood Classic" data-language="Hindi">
+                                  <td class="anime-catalogue__no">—</td>
+                                  <td class="anime-catalogue__name">Doraemon</td>
+                                  <td class="anime-catalogue__type">Childhood Classic</td>
+                                  <td class="anime-catalogue__language">Hindi</td>
+                                </tr>
+                                <!-- Chronological entries -->
+                                <tr data-chronology="1" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">01</td>
+                                  <td class="anime-catalogue__name">Death Note</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="2" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">02</td>
+                                  <td class="anime-catalogue__name">One-Punch Man</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="3" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">03</td>
+                                  <td class="anime-catalogue__name">Attack on Titan</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="4" data-type="Animation" data-language="Japanese">
+                                  <td class="anime-catalogue__no">04</td>
+                                  <td class="anime-catalogue__name">Demon Slayer</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">Japanese<span class="anime-catalogue__footnote-ref" aria-hidden="true">*</span></td>
+                                </tr>
+                                <tr data-chronology="5" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">05</td>
+                                  <td class="anime-catalogue__name">My Hero Academia</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="6" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">06</td>
+                                  <td class="anime-catalogue__name">Tokyo Ghoul</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="7" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">07</td>
+                                  <td class="anime-catalogue__name">Highschool of the Dead</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="8" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">08</td>
+                                  <td class="anime-catalogue__name">Erased</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="9" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">09</td>
+                                  <td class="anime-catalogue__name">Steins;Gate</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="10" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">10</td>
+                                  <td class="anime-catalogue__name">Naruto → Naruto Shippuden → Rock Lee and His Ninja Pals → Boruto</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="11" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">11</td>
+                                  <td class="anime-catalogue__name">Your Name.</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="12" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">12</td>
+                                  <td class="anime-catalogue__name">Weathering with You</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="13" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">13</td>
+                                  <td class="anime-catalogue__name">5 Centimeters per Second</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="14" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">14</td>
+                                  <td class="anime-catalogue__name">A Silent Voice</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="15" data-type="Animation" data-language="Japanese">
+                                  <td class="anime-catalogue__no">15</td>
+                                  <td class="anime-catalogue__name">Jujutsu Kaisen</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">Japanese</td>
+                                </tr>
+                                <tr data-chronology="16" data-type="Animation" data-language="Japanese">
+                                  <td class="anime-catalogue__no">16</td>
+                                  <td class="anime-catalogue__name">Dragon Ball</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">Japanese</td>
+                                </tr>
+                                <tr data-chronology="17" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">17</td>
+                                  <td class="anime-catalogue__name">Your Lie in April</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="18" data-type="Animation" data-language="Hindi">
+                                  <td class="anime-catalogue__no">18</td>
+                                  <td class="anime-catalogue__name">Idaten Jump</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">Hindi</td>
+                                </tr>
+                                <tr data-chronology="19" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">19</td>
+                                  <td class="anime-catalogue__name">Horimiya</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="20" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">20</td>
+                                  <td class="anime-catalogue__name">I Want to Eat Your Pancreas</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="21" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">21</td>
+                                  <td class="anime-catalogue__name">Flavors of Youth</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="22" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">22</td>
+                                  <td class="anime-catalogue__name">A Whisker Away</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="23" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">23</td>
+                                  <td class="anime-catalogue__name">The Garden of Words</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="24" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">24</td>
+                                  <td class="anime-catalogue__name">Violet Evergarden</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="25" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">25</td>
+                                  <td class="anime-catalogue__name">Clannad</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="26" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">26</td>
+                                  <td class="anime-catalogue__name">Blue Spring Ride</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="27" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">27</td>
+                                  <td class="anime-catalogue__name">Anohana: The Flower We Saw That Day</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="28" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">28</td>
+                                  <td class="anime-catalogue__name">Bleach</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="29" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">29</td>
+                                  <td class="anime-catalogue__name">Orange</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="30" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">30</td>
+                                  <td class="anime-catalogue__name">Toradora!</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="31" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">31</td>
+                                  <td class="anime-catalogue__name">Cyberpunk: Edgerunners</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="32" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">32</td>
+                                  <td class="anime-catalogue__name">Into the Forest of Fireflies' Light</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="33" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">33</td>
+                                  <td class="anime-catalogue__name">Grave of the Fireflies</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="34" data-type="Animated Movie" data-language="English">
+                                  <td class="anime-catalogue__no">34</td>
+                                  <td class="anime-catalogue__name">Suzume</td>
+                                  <td class="anime-catalogue__type">Animated Movie</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="35" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">35</td>
+                                  <td class="anime-catalogue__name">Frieren: Beyond Journey's End</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                                <tr data-chronology="36" data-type="Animation" data-language="Japanese">
+                                  <td class="anime-catalogue__no">36</td>
+                                  <td class="anime-catalogue__name">Vinland Saga</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">Japanese</td>
+                                </tr>
+                                <tr data-chronology="37" data-type="Animation" data-language="English">
+                                  <td class="anime-catalogue__no">37</td>
+                                  <td class="anime-catalogue__name">Spy × Family</td>
+                                  <td class="anime-catalogue__type">Animation</td>
+                                  <td class="anime-catalogue__language">English</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                           
-                          <details class="catalogue-list" open>
-                            <summary class="catalogue-list__summary">Childhood Classics</summary>
-                            <ul class="catalogue-list__items">
-                              <li>Pokémon · Beyblade · Shinchan · Doraemon</li>
-                            </ul>
-                          </details>
-                          
-                          <details class="catalogue-list">
-                            <summary class="catalogue-list__summary">Chronological Series</summary>
-                            <ol class="catalogue-list__items catalogue-list__items--numbered">
-                              <li>Death Note [Dub]</li>
-                              <li>One-Punch Man [Dub]</li>
-                              <li>Attack on Titan [Dub]</li>
-                              <li>Demon Slayer [S1 Dub, Then Sub]</li>
-                              <li>My Hero Academia [Dub]</li>
-                              <li>Tokyo Ghoul [Dub]</li>
-                              <li>Highschool of the Dead [Dub]</li>
-                              <li>Erased [Dub]</li>
-                              <li>Steins;Gate [Dub]</li>
-                              <li>Naruto + Naruto Shippuden + Rock Lee and His Ninja Pals + Boruto [Dub]</li>
-                              <li>Jujutsu Kaisen [Sub]</li>
-                              <li>Dragon Ball [Sub]</li>
-                              <li>Your Lie in April [Dub]</li>
-                              <li>Idaten Jump [Hindi]</li>
-                              <li>Horimiya [Dub]</li>
-                              <li>Violet Evergarden [Dub]</li>
-                              <li>Clannad [Dub]</li>
-                              <li>Blue Spring Ride [Dub]</li>
-                              <li>Anohana: The Flower We Saw That Day [Dub]</li>
-                              <li>Bleach [Dub]</li>
-                              <li>Orange [Dub]</li>
-                              <li>Toradora! [Dub]</li>
-                              <li>Cyberpunk: Edgerunners [Dub]</li>
-                              <li>Frieren: Beyond Journey's End [Dub]</li>
-                              <li>Vinland Saga [Sub]</li>
-                              <li>Spy x Family [Dub]</li>
-                            </ol>
-                          </details>
-                          
-                          <details class="catalogue-list">
-                            <summary class="catalogue-list__summary">Movies — All Dub</summary>
-                            <ol class="catalogue-list__items catalogue-list__items--numbered">
-                              <li>Your Name.</li>
-                              <li>Weathering with You</li>
-                              <li>5 Centimeters per Second</li>
-                              <li>A Silent Voice</li>
-                              <li>I Want to Eat Your Pancreas</li>
-                              <li>Flavors of Youth</li>
-                              <li>A Whisker Away</li>
-                              <li>The Garden of Words</li>
-                              <li>Into the Forest of Fireflies' Light</li>
-                              <li>Grave of the Fireflies</li>
-                              <li>Suzume</li>
-                            </ol>
-                          </details>
-                        </section>
-                        
-                        <section class="catalogue-column">
-                          <h4 class="catalogue-column__title">Books</h4>
-                          
-                          <details class="catalogue-list">
-                            <summary class="catalogue-list__summary">Alphabetical List</summary>
-                            <ul class="catalogue-list__items">
-                              <li>Atomic Habits — James Clear</li>
-                              <li>Breath — James Nestor</li>
-                              <li>Can't Hurt Me — David Goggins</li>
-                              <li>Deep Work — Cal Newport</li>
-                              <li>Ego Is the Enemy — Ryan Holiday</li>
-                              <li>Elon Musk — Ashley Vance</li>
-                              <li>Essentialism — Greg McKeown</li>
-                              <li>Effortless — Greg McKeown</li>
-                              <li>Euthyphro — Plato</li>
-                              <li>Good to Great — Jim Collins</li>
-                              <li>Make Time — Jake Knapp & John Zeratsky</li>
-                              <li>Man's Search for Meaning — Viktor Frankl</li>
-                              <li>Meditations — Marcus Aurelius</li>
-                              <li>Notes from Underground — Fyodor Dostoevsky</li>
-                              <li>Rework — Jason Fried & David Heinemeier Hansson</li>
-                              <li>Sapiens — Yuval Noah Harari</li>
-                              <li>Selected & Translated Short Stories — Rabindranath Tagore</li>
-                              <li>Steve Jobs — Walter Isaacson</li>
-                              <li>The 12 Week Year — Brian Moran</li>
-                              <li>The Compound Effect — Darren Hardy</li>
-                              <li>The Daily Stoic — Ryan Holiday</li>
-                              <li>The Diary of a Young Girl — Anne Frank</li>
-                              <li>The 4-Hour Workweek — Tim Ferriss</li>
-                              <li>The Greatness Mindset — Lewis Howes</li>
-                              <li>The Master and Margarita — Mikhail Bulgakov</li>
-                              <li>The Millionaire Fastlane — MJ DeMarco</li>
-                              <li>The Obstacle Is the Way — Ryan Holiday</li>
-                            </ul>
-                          </details>
-                        </section>
-                      </div>
+                          <p class="anime-catalogue__footnote" id="anime-footnote-demon-slayer">
+                            <span class="anime-catalogue__footnote-marker" aria-hidden="true">*</span> Demon Slayer was initially watched in English, then continued in Japanese.
+                          </p>
+                        </div>
                     </div>
                   </div>
                 </div>
               </article>
             </div>
           </section>
+          </div>
         </div>
       </div>
     </section>

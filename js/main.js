@@ -5,7 +5,7 @@
    4. Theme toggle: switch light/dark, persist the choice, default to the
       system preference. The effective theme is resolved before paint
       (inline <head> script) so there is no flash; this wires the control.
-   5. Wire the existing section/subsection disclosure controls.
+   5. Wire the existing subsection disclosure controls.
    ========================================================================= */
 (function () {
   'use strict';
@@ -101,40 +101,51 @@
     });
   }
 
-  /* ---------- 5. Section/subsection disclosure ---------- */
+  /* ---------- 5. Subsection disclosure ---------- */
   function setExpanded(element, open) {
-    var dataAttr = element.hasAttribute('data-section-open')
-      ? 'data-section-open'
-      : 'data-subsection-open';
-    var trigger = element.querySelector(':scope > .container .section__trigger, :scope > .section__trigger, :scope > .container h2 .section__trigger, :scope > .section__head .section__trigger, :scope > .creation-category__head .subsection__trigger, :scope > .technology-category__head .subsection__trigger');
+    var trigger = element.querySelector('.subsection__trigger');
     var contentId = trigger && trigger.getAttribute('aria-controls');
     var content = contentId ? document.getElementById(contentId) : null;
 
-    element.setAttribute(dataAttr, open ? 'true' : 'false');
+    element.setAttribute('data-subsection-open', open ? 'true' : 'false');
     if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
     if (content) content.hidden = !open;
   }
 
-  function bindDisclosure(element, triggerSelector) {
-    var trigger = element.querySelector(triggerSelector);
+  function bindDisclosure(element) {
+    var trigger = element.querySelector('.subsection__trigger');
     if (!trigger) return;
 
     function toggleDisclosure() {
-      var open = element.getAttribute(
-        element.hasAttribute('data-section-open') ? 'data-section-open' : 'data-subsection-open'
-      ) === 'true';
+      var open = element.getAttribute('data-subsection-open') === 'true';
       setExpanded(element, !open);
     }
 
     trigger.addEventListener('click', toggleDisclosure);
 
-    var header = trigger.closest('.section__head, .creation-category__head, .technology-category__head');
+    var header = trigger.closest('.creation-category__head, .technology-category__head');
     if (header) {
       header.addEventListener('click', function (event) {
         if (event.target.closest('button')) return;
         toggleDisclosure();
       });
     }
+  }
+
+  function removeRedundantSectionControls() {
+    document.querySelectorAll('.section[data-section-open]').forEach(function (section) {
+      var trigger = section.querySelector(':scope > .container > .section__head .section__trigger');
+      if (trigger) {
+        var heading = trigger.parentElement;
+        trigger.replaceWith(document.createTextNode(trigger.textContent.trim()));
+        if (heading) heading.normalize();
+      }
+
+      var state = section.querySelector(':scope > .container > .section__head .section__state');
+      if (state) state.remove();
+
+      section.removeAttribute('data-section-open');
+    });
   }
 
   function ensureThresholds() {
@@ -154,18 +165,10 @@
   }
 
   function initExpansion() {
-    var sectionSelectors = '.section[data-section-open]';
-    var subsectionSelectors = '[data-subsection-open]';
+    removeRedundantSectionControls();
 
-    Array.prototype.slice.call(document.querySelectorAll(sectionSelectors)).forEach(function (section) {
-      bindDisclosure(section, '.section__trigger');
-      /* The archive sections are closed by default. The nested state is kept
-         independently so reopening a section does not destroy its state. */
-      setExpanded(section, false);
-    });
-
-    Array.prototype.slice.call(document.querySelectorAll(subsectionSelectors)).forEach(function (subsection) {
-      bindDisclosure(subsection, '.subsection__trigger');
+    Array.prototype.slice.call(document.querySelectorAll('[data-subsection-open]')).forEach(function (subsection) {
+      bindDisclosure(subsection);
       setExpanded(subsection, false);
     });
 

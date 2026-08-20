@@ -102,12 +102,21 @@
   }
 
   /* ---------- 5. Subsection disclosure ---------- */
+  function beginSubsectionAnimation(el) {
+    if (el._animationTransitionHandler) {
+      el.removeEventListener('transitionend', el._animationTransitionHandler);
+      el._animationTransitionHandler = null;
+    }
+    if (el._animationFallbackTimer) {
+      window.clearTimeout(el._animationFallbackTimer);
+      el._animationFallbackTimer = null;
+    }
+    el._animationToken = (el._animationToken || 0) + 1;
+    return el._animationToken;
+  }
 
-  /* Height-measured expand/collapse. Layered on top of the existing
-     display:block/hidden disclosure — never changes the layout model
-     of the content itself. Measures actual scrollHeight so variable
-     content (images, tables, long text) is never clipped or guessed at. */
   function animateSubsectionExpand(el, reducedMotion) {
+    var token = beginSubsectionAnimation(el);
     el.hidden = false;
     if (reducedMotion) {
       el.style.maxHeight = 'none';
@@ -120,14 +129,17 @@
     el.style.maxHeight = target + 'px';
     el.classList.add('is-expanded');
     var onEnd = function (e) {
-      if (e.target !== el || e.propertyName !== 'max-height') return;
+      if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return;
       el.style.maxHeight = 'none';
+      el._animationTransitionHandler = null;
       el.removeEventListener('transitionend', onEnd);
     };
+    el._animationTransitionHandler = onEnd;
     el.addEventListener('transitionend', onEnd);
   }
 
   function animateSubsectionCollapse(el, reducedMotion) {
+    var token = beginSubsectionAnimation(el);
     if (reducedMotion) {
       el.style.maxHeight = '';
       el.classList.remove('is-expanded');
@@ -140,17 +152,27 @@
     el.classList.remove('is-expanded');
     el.style.maxHeight = '0px';
     var onEnd = function (e) {
-      if (e.target !== el || e.propertyName !== 'max-height') return;
+      if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return;
       el.hidden = true;
       el.style.maxHeight = '';
+      el._animationTransitionHandler = null;
       el.removeEventListener('transitionend', onEnd);
-    };
-    el.addEventListener('transitionend', onEnd);
-    window.setTimeout(function () {
-      if (!el.hidden) {
-        el.hidden = true;
-        el.style.maxHeight = '';
+      if (el._animationFallbackTimer) {
+        window.clearTimeout(el._animationFallbackTimer);
+        el._animationFallbackTimer = null;
       }
+    };
+    el._animationTransitionHandler = onEnd;
+    el.addEventListener('transitionend', onEnd);
+    el._animationFallbackTimer = window.setTimeout(function () {
+      if (token !== el._animationToken || el.hidden) return;
+      el.hidden = true;
+      el.style.maxHeight = '';
+      if (el._animationTransitionHandler === onEnd) {
+        el._animationTransitionHandler = null;
+        el.removeEventListener('transitionend', onEnd);
+      }
+      el._animationFallbackTimer = null;
     }, 400);
   }
 
@@ -228,8 +250,6 @@
 
     Array.prototype.slice.call(document.querySelectorAll('[data-subsection-open]')).forEach(function (subsection) {
       bindDisclosure(subsection);
-      // Initial state only: content already starts `hidden` in the markup,
-      // so just sync the ARIA/state attributes without animating.
       var trigger = subsection.querySelector('.subsection__trigger');
       var contentId = trigger && trigger.getAttribute('aria-controls');
       var content = contentId ? document.getElementById(contentId) : null;
@@ -257,14 +277,11 @@
   var qrModalOverlay = qrModal ? qrModal.querySelector('.modal__overlay') : null;
   var qrContainer = document.getElementById('upi-qr-code');
 
-  // UPI deep link for QR code
   var upiDeepLink = 'upi://pay?pa=ankushisonline369%40okhdfcbank&pn=Ankush+Sarkar&tn=Thank+You%21&cu=INR';
 
   function generateQrCode() {
     if (!qrContainer) return;
     qrContainer.innerHTML = '';
-    // Use a simple QR code service (Google Charts API alternative or inline generation)
-    // We'll use a lightweight approach: create an image with a QR code service
     var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(upiDeepLink);
     var img = document.createElement('img');
     img.src = qrUrl;
@@ -279,7 +296,6 @@
     qrModal.hidden = false;
     showQrBtn.setAttribute('aria-expanded', 'true');
     generateQrCode();
-    // Trap focus
     qrModalClose.focus();
     document.body.style.overflow = 'hidden';
   }
@@ -304,7 +320,6 @@
     qrModalOverlay.addEventListener('click', closeQrModal);
   }
 
-  // Close on Escape key
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && qrModal && !qrModal.hidden) {
       closeQrModal();

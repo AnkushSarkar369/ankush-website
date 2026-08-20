@@ -1,11 +1,8 @@
-/* main.js — no framework. Five small jobs:
+/* main.js — no framework. Four small jobs:
    1. Gate display-font text visibility until fonts are ready (no FOUT).
    2. One orchestrated entrance reveal, staggered, reduced-motion-safe.
    3. Mark the nav link for the section currently in view.
-   4. Theme toggle: switch light/dark, persist the choice, default to the
-      system preference. The effective theme is resolved before paint
-      (inline <head> script) so there is no flash; this wires the control.
-   5. Wire the existing subsection disclosure controls.
+   4. Wire the existing subsection disclosure controls.
    ========================================================================= */
 (function () {
   'use strict';
@@ -222,33 +219,6 @@
 
     sections.forEach(function (section) {
       navIO.observe(section);
-    });
-  }
-
-  var STORAGE_KEY = 'theme';
-  var toggle = document.querySelector('[data-theme-toggle]');
-
-  if (toggle) {
-    toggle.classList.remove('no-js-hidden');
-
-    function currentTheme() {
-      return docEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    }
-
-    function syncPressed() {
-      var dark = currentTheme() === 'dark';
-      toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
-      toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
-    }
-
-    syncPressed();
-    toggle.addEventListener('click', function () {
-      var next = currentTheme() === 'dark' ? 'light' : 'dark';
-      docEl.setAttribute('data-theme', next);
-      try {
-        localStorage.setItem(STORAGE_KEY, next);
-      } catch (e) {}
-      syncPressed();
     });
   }
 

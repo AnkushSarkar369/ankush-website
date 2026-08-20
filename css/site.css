@@ -2,8 +2,7 @@
    site.css — the archive: typography, structure, transitions
    Two families: Newsreader (display/serif) + Hanken Grotesk (body/UI).
    One accent (oxblood) for binding; one counterpoint (ink-teal) tinting
-   Technology. Light/cream is the primary direction; a warm dark theme is
-   a token swap on [data-theme="dark"], set before paint (see tokens.css).
+   Technology. Dark theme only — the archive by lamplight.
    ========================================================================= */
 
 /* --- Reset / box --- */
@@ -79,34 +78,6 @@ p { max-width: var(--measure); }
   padding-inline: var(--gutter);
 }
 .measure-prose { max-width: var(--measure-narrow); }
-
-/* =========================================================================
-   THEME TOGGLE
-   ========================================================================= */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.1rem;
-  height: 2.1rem;
-  padding: 0;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  color: var(--ink-secondary);
-  background: color-mix(in srgb, var(--surface-raised) 60%, transparent);
-  transition: color var(--dur-trans) var(--ease-out-soft),
-              border-color var(--dur-trans) var(--ease-out-soft),
-              background var(--dur-trans) var(--ease-out-soft);
-}
-.theme-toggle:hover { color: var(--ink-primary); border-color: var(--rule-strong); }
-.theme-toggle:active { transform: translateY(0.5px); }
-.theme-toggle:focus-visible { outline-offset: 2px; }
-.no-js-hidden { display: none; }
-.theme-toggle__icon { display: none; }
-[data-theme="light"] .theme-toggle__icon--moon { display: block; }
-[data-theme="light"] .theme-toggle__icon--sun { display: none; }
-[data-theme="dark"] .theme-toggle__icon--sun { display: block; }
-[data-theme="dark"] .theme-toggle__icon--moon { display: none; }
 
 /* =========================================================================
    NAVIGATION

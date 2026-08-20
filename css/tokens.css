@@ -1,34 +1,35 @@
 /* =========================================================================
    tokens.css — The archive's material system
-   One oxblood accent, warm oat parchment ground.
+   One oxblood accent, warm dark walnut ground.
    Every value below is referenced in index.html. No stray hex elsewhere.
+   Dark theme only — the archive by lamplight.
    ========================================================================= */
 
 :root {
-  /* --- Surfaces: the parchment, raised papers, and the deep underside --- */
-  --surface-base:    #f3ede2;   /* oat parchment — the page itself            */
-  --surface-raised:  #efe7d8;   /* a paper laid down on the parchment         */
-  --surface-underside:#1e1813;  /* near-black espresso — the dark threshold    */
+  /* --- Surfaces: dark roast. Page is warm dark; the underside stays deepest. --- */
+  --surface-base:     #261c14;  /* warm dark walnut — the page ground              */
+  --surface-raised:   #2e231a;  /* a paper lifted against the dark                */
+  --surface-underside:#160f0a;  /* the deepest threshold — available as a token     */
   --surface-elevated: var(--surface-raised);
   --surface:         var(--surface-base);
 
-  /* --- Foreground: ink hierarchy on parchment --- */
-  --ink-primary:   #241c15;    /* full-strength ink                            */
-  --ink-secondary: #5a4c3c;    /* secondary ink, warm umber                    */
-  --ink-muted:     #8a7a66;    /* captions, metadata                           */
-  --ink-on-dark:   #f0e8da;    /* type on the underside                        */
-  --ink-faint-dark:#a89682;    /* muted type on the underside                  */
+  /* --- Foreground: cream ink on dark, lifted from the same warm family --- */
+  --ink-primary:   #f2eadb;    /* full-strength cream                              */
+  --ink-secondary: #cabdaa;    /* warm taupe secondary                             */
+  --ink-muted:     #9a8b78;    /* muted warm for captions/metadata                 */
+  --ink-on-dark:   #f0e8da;    /* type on the deep underside                       */
+  --ink-faint-dark:#a89682;    /* muted type on the underside                      */
   --ink:           var(--ink-primary);
 
-  /* --- Borders: separation hierarchy (hairlines) --- */
-  --rule-faint:    rgba(36, 28, 20, 0.10);
-  --rule:          rgba(36, 28, 20, 0.18);
-  --rule-strong:   rgba(36, 28, 20, 0.32);
+  /* --- Borders: hairlines cream-on-dark, separation hierarchy --- */
+  --rule-faint:    rgba(240, 232, 218, 0.08);
+  --rule:          rgba(240, 232, 218, 0.14);
+  --rule-strong:   rgba(240, 232, 218, 0.28);
   --rule-dark:     rgba(240, 232, 218, 0.14);
 
-  /* --- Identity: one brand accent --- */
-  --oxblood:       #7a2a23;    /* spine leather, the binding                  */
-  --oxblood-deep:  #5e201a;    /* pressed/deeper state                         */
+  /* --- Identity: oxblood lit to read against dark, same hue family --- */
+  --oxblood:      #c15447;     /* oxblood under lamplight                          */
+  --oxblood-deep: #9c4439;     /* pressed/deeper state                             */
 
   /* --- Typography families --- */
   --font-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
@@ -72,45 +73,11 @@
   --shadow-lg: 0 30px 60px -32px rgba(36,28,20,0.45);
 }
 
-/* =========================================================================
-   DARK THEME — the archive by lamplight.
-   Same design system, untouched in scale/spacing/layout/motion: only the
-   material values swap. Warm surfaces are lifted out of the espresso family,
-   cream ink is lifted out of the parchment, and the oxblood accent is
-   lit just enough to read against dark while keeping the same hue family.
-   The page surface and text tokens swap together, while Technology remains
-   scoped to the same active theme rather than forcing a separate dark band.
-   Applied on <html data-theme="dark">; set before paint, no flash.
-   ========================================================================= */
-[data-theme="dark"] {
-  /* --- Surfaces: dark roast. Page is warm dark; the underside stays deepest. --- */
-  --surface-base:     #261c14;  /* warm dark walnut — the page ground              */
-  --surface-raised:   #2e231a;  /* a paper lifted against the dark                */
-  --surface-underside:#160f0a;  /* the deepest threshold — available as a token     */
-
-  /* --- Foreground: cream ink on dark, lifted from the same warm family --- */
-  --ink-primary:   #f2eadb;    /* full-strength cream                              */
-  --ink-secondary: #cabdaa;    /* warm taupe secondary                             */
-  --ink-muted:     #9a8b78;    /* muted warm for captions/metadata                 */
-  --ink-on-dark:   #f0e8da;    /* type on the deep underside (stable across themes) */
-  --ink-faint-dark:#a89682;    /* muted type on the underside (stable)             */
-
-  /* --- Borders: hairlines now cream-on-dark, same separation hierarchy --- */
-  --rule-faint:    rgba(240, 232, 218, 0.08);
-  --rule:          rgba(240, 232, 218, 0.14);
-  --rule-strong:   rgba(240, 232, 218, 0.28);
-  --rule-dark:     rgba(240, 232, 218, 0.14);
-
-  /* --- Identity: oxblood lit to read against dark, same hue family --- */
-  --oxblood:      #c15447;     /* oxblood under lamplight                          */
-  --oxblood-deep: #9c4439;     /* pressed/deeper state                         */
-}
-
-/* Technology participates in the same light/dark surface system as the rest
-   of the archive. Its component stylesheet historically used the dark-only
-   semantic tokens --surface-underside, --ink-on-dark, --ink-faint-dark and
-   --rule-dark; scope those tokens here so the existing Technology structure
-   follows the active page theme without duplicating its component CSS. */
+/* Technology participates in the same surface system as the rest
+   of the archive. Its component stylesheet uses the semantic tokens
+   --surface-underside, --ink-on-dark, --ink-faint-dark and --rule-dark;
+   scope those tokens here so the existing Technology structure
+   follows the page theme without duplicating its component CSS. */
 .section--technology {
   --surface-underside: var(--surface-base);
   --ink-on-dark: var(--ink-primary);

@@ -31,6 +31,52 @@
     }
   }
 
+  /*
+   * Footnotes live inside expandable cards. Native fragment navigation can
+   * calculate the scroll position before the card's expanded height has
+   * settled, especially when the footnote is the final element in the card.
+   * Handle these local references explicitly so the target is revealed and
+   * positioned only after its containing card has its final geometry.
+   */
+  function initInternalFootnotes() {
+    Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href || href === '#') return;
+
+      var target = document.getElementById(href.slice(1));
+      if (!target) return;
+
+      var card = target.closest('.creation-card');
+      if (!card) return;
+
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        var trigger = card.querySelector('.creation-card__trigger');
+        var isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
+
+        function scrollToTarget() {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+            });
+          });
+        }
+
+        if (!isOpen) {
+          setOpen(card, true, false);
+          scrollToTarget();
+        } else {
+          scrollToTarget();
+        }
+
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, '', href);
+        }
+      });
+    });
+  }
+
   function normalizeAsenpaiMedia() {
     var card = Array.prototype.slice.call(document.querySelectorAll('.creation-card')).find(function (candidate) {
       var title = candidate.querySelector('.creation-card__title');
@@ -285,4 +331,5 @@
   moveExternalLinks();
   normalizeCreationContent();
   initPickYourSong();
+  initInternalFootnotes();
 })();

@@ -14,21 +14,23 @@
     var body = card.querySelector('.creation-card__body');
     if (!trigger || !body) return;
 
-    DisclosureAnimation.flip(card, function () {
-      card.setAttribute('data-open', open ? 'true' : 'false');
-    });
-
-    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
     var reducedMotion = DisclosureAnimation.reducedMotion();
     var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
 
     if (open) {
       DisclosureAnimation.expand(body, reducedMotion);
-      if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
     } else {
       DisclosureAnimation.collapse(body, reducedMotion);
-      if (restoreFocus) trigger.focus();
     }
+
+    DisclosureAnimation.flip(card, function () {
+      card.setAttribute('data-open', open ? 'true' : 'false');
+    });
+
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+    if (open && restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+    if (!open && restoreFocus) trigger.focus();
   }
 
   function normalizeAsenpaiMedia() {

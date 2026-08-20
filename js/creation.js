@@ -1,23 +1,122 @@
 /* Creation archive only: accessible inline expansion. */
 (function () {
   'use strict';
+
   var archive = document.querySelector('[data-creation-archive]');
   if (!archive) return;
-  Array.prototype.slice.call(document.querySelectorAll('.creation-category')).forEach(function (category) { archive.appendChild(category); });
+
+  Array.prototype.slice.call(document.querySelectorAll('.creation-category')).forEach(function (category) {
+    archive.appendChild(category);
+  });
+
   function setOpen(card, open, restoreFocus) {
-    var trigger = card.querySelector('.creation-card__trigger'); var body = card.querySelector('.creation-card__body'); if (!trigger || !body) return;
-    DisclosureAnimation.flip(card, function () { card.setAttribute('data-open', open ? 'true' : 'false'); }); trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); var reducedMotion = DisclosureAnimation.reducedMotion(); var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
-    if (open) { DisclosureAnimation.expand(body, reducedMotion); if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior }); } else { DisclosureAnimation.collapse(body, reducedMotion); if (restoreFocus) trigger.focus(); }
+    var trigger = card.querySelector('.creation-card__trigger');
+    var body = card.querySelector('.creation-card__body');
+    if (!trigger || !body) return;
+
+    DisclosureAnimation.flip(card, function () {
+      card.setAttribute('data-open', open ? 'true' : 'false');
+    });
+
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var reducedMotion = DisclosureAnimation.reducedMotion();
+    var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
+
+    if (open) {
+      DisclosureAnimation.expand(body, reducedMotion);
+      if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+    } else {
+      DisclosureAnimation.collapse(body, reducedMotion);
+      if (restoreFocus) trigger.focus();
+    }
   }
-  function normalizeAsenpaiMedia() { var card = Array.prototype.slice.call(document.querySelectorAll('.creation-card')).find(function (candidate) { var title = candidate.querySelector('.creation-card__title'); return title && title.textContent.trim() === 'ASenpai'; }); if (!card) return; var material = card.querySelector('.creation-entry__material'); if (!material) return; var figures = Array.prototype.slice.call(material.querySelectorAll(':scope > .creation-entry__image')); var madara = null; var editing = null;
-    figures.forEach(function (figure) { var image = figure.querySelector('img'); if (!image) return; var src = image.getAttribute('src') || ''; var file = src.split('/').pop(); if (file === '5.png') { if (!madara) madara = figure; else editing = figure; } if (file === '4.png' && (image.getAttribute('alt') || '').toLowerCase().indexOf('about') !== -1) figure.remove(); });
-    function ensureCaption(figure, text) { if (!figure) return; var caption = figure.querySelector('figcaption'); if (!caption) { caption = document.createElement('figcaption'); figure.appendChild(caption); } caption.textContent = text; }
-    if (madara) { var madaraImage = madara.querySelector('img'); madaraImage.setAttribute('src', 'assets/img/creation/asenpai/4.png'); madaraImage.setAttribute('alt', 'Madara/Royalty AMV video page'); ensureCaption(madara, 'The Madara AMV before going viral.'); }
-    if (editing) { var editingImage = editing.querySelector('img'); editingImage.setAttribute('src', 'assets/img/creation/asenpai/5.png'); editingImage.setAttribute('alt', 'After Effects editing session'); ensureCaption(editing, 'An average editing timeline for an AMV.'); }
-    var captions = { '1.png': 'ASenpai.', '2.png': 'AMVs sorted by views.', '3.png': 'AMVs sorted by views.' };
-    Array.prototype.slice.call(material.querySelectorAll(':scope > .creation-entry__image')).forEach(function (figure) { var image = figure.querySelector('img'); if (!image) return; var file = (image.getAttribute('src') || '').split('/').pop(); if (captions[file]) ensureCaption(figure, captions[file]); });
+
+  function normalizeAsenpaiMedia() {
+    var card = Array.prototype.slice.call(document.querySelectorAll('.creation-card')).find(function (candidate) {
+      var title = candidate.querySelector('.creation-card__title');
+      return title && title.textContent.trim() === 'ASenpai';
+    });
+    if (!card) return;
+
+    var material = card.querySelector('.creation-entry__material');
+    if (!material) return;
+
+    var figures = Array.prototype.slice.call(material.querySelectorAll(':scope > .creation-entry__image'));
+    var madara = null;
+    var editing = null;
+
+    figures.forEach(function (figure) {
+      var image = figure.querySelector('img');
+      if (!image) return;
+      var src = image.getAttribute('src') || '';
+      var file = src.split('/').pop();
+
+      if (file === '5.png') {
+        if (!madara) madara = figure;
+        else editing = figure;
+      }
+
+      if (file === '4.png' && (image.getAttribute('alt') || '').toLowerCase().indexOf('about') !== -1) {
+        figure.remove();
+      }
+    });
+
+    function ensureCaption(figure, text) {
+      if (!figure) return;
+      var caption = figure.querySelector('figcaption');
+      if (!caption) {
+        caption = document.createElement('figcaption');
+        figure.appendChild(caption);
+      }
+      caption.textContent = text;
+    }
+
+    if (madara) {
+      var madaraImage = madara.querySelector('img');
+      madaraImage.setAttribute('src', 'assets/img/creation/asenpai/4.png');
+      madaraImage.setAttribute('alt', 'Madara/Royalty AMV video page');
+      ensureCaption(madara, 'The Madara AMV before going viral.');
+    }
+
+    if (editing) {
+      var editingImage = editing.querySelector('img');
+      editingImage.setAttribute('src', 'assets/img/creation/asenpai/5.png');
+      editingImage.setAttribute('alt', 'After Effects editing session');
+      ensureCaption(editing, 'An average editing timeline for an AMV.');
+    }
+
+    var captions = {
+      '1.png': 'ASenpai.',
+      '2.png': 'AMVs sorted by views.',
+      '3.png': 'AMVs sorted by views.'
+    };
+
+    Array.prototype.slice.call(material.querySelectorAll(':scope > .creation-entry__image')).forEach(function (figure) {
+      var image = figure.querySelector('img');
+      if (!image) return;
+      var file = (image.getAttribute('src') || '').split('/').pop();
+      if (captions[file]) ensureCaption(figure, captions[file]);
+    });
   }
-  function moveExternalLinks() { Array.prototype.slice.call(document.querySelectorAll('.creation-entry__material > p > a')).forEach(function (link) { var entry = link.closest('.creation-entry'); var logo = entry && entry.querySelector(':scope > .creation-entry__image'); var wrapper = link.parentElement; if (!entry || !logo || !wrapper) return; link.classList.add('creation-entry__external-link'); var identity = document.createElement('div'); identity.className = 'creation-entry__identity'; entry.insertBefore(identity, logo); identity.appendChild(logo); identity.appendChild(link); wrapper.remove(); }); }
+
+  function moveExternalLinks() {
+    Array.prototype.slice.call(document.querySelectorAll('.creation-entry__material > p > a')).forEach(function (link) {
+      var entry = link.closest('.creation-entry');
+      var logo = entry && entry.querySelector(':scope > .creation-entry__image');
+      var wrapper = link.parentElement;
+      if (!entry || !logo || !wrapper) return;
+
+      link.classList.add('creation-entry__external-link');
+
+      var identity = document.createElement('div');
+      identity.className = 'creation-entry__identity';
+      entry.insertBefore(identity, logo);
+      identity.appendChild(logo);
+      identity.appendChild(link);
+      wrapper.remove();
+    });
+  }
+
   function normalizeCreationContent() {
     var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
     var musicCard = cards.find(function (card) {
@@ -44,31 +143,146 @@
 
     var entry = musicCard.querySelector('.creation-entry');
     var material = entry && entry.querySelector(':scope > .creation-entry__material');
-    var image = entry && entry.querySelector(':scope > .creation-entry__image');
-    if (!entry || !material || !image) return;
+    var identity = entry && entry.querySelector(':scope > .creation-entry__identity');
+    if (!entry || !material || !identity) return;
 
-    var githubLink = entry.querySelector('a[href="https://github.com/AnkushSarkar369/Music-Collection-Organiser"]');
-    var directory = material.querySelector('.creation-entry__tree');
-    var pickSong = material.querySelector('.creation-entry__pick-song');
+    var githubLink = identity.querySelector(':scope > .creation-entry__external-link');
+    var directory = material.querySelector(':scope > .creation-entry__tree');
+    var pickSong = material.querySelector(':scope > p > .creation-entry__pick-song');
     var pickSongWrapper = pickSong && pickSong.parentElement;
-    var pickedSong = material.querySelector('.creation-entry__picked-song');
+    var pickedSong = material.querySelector(':scope > .creation-entry__picked-song');
 
     if (githubLink && directory && pickSongWrapper) {
       githubLink.textContent = 'Visit Music Collection Organiser on GitHub';
-      var sideMaterial = image.querySelector(':scope > .creation-entry__material');
+
+      var sideMaterial = identity.querySelector(':scope > .creation-entry__material');
       if (!sideMaterial) {
         sideMaterial = document.createElement('div');
         sideMaterial.className = 'creation-entry__material';
-        image.appendChild(sideMaterial);
+        identity.appendChild(sideMaterial);
       }
-      sideMaterial.appendChild(githubLink);
+
       sideMaterial.appendChild(directory);
       sideMaterial.appendChild(pickSongWrapper);
       if (pickedSong) sideMaterial.appendChild(pickedSong);
     }
   }
-  function initPickYourSong() { var pickButton = document.querySelector('.creation-entry__pick-song'); if (!pickButton) return; var outputEl = pickButton.closest('.creation-entry__material').querySelector('.creation-entry__picked-song'); if (!outputEl) return; var songList = null; function loadSongList() { return fetch('assets/song-list.txt').then(function (response) { if (!response.ok) throw new Error('Failed to load song list'); return response.text(); }).then(function (text) { var lines = text.split('\n').map(function (line) { return line.trim(); }).filter(function (line) { return line.length > 0; }); if (lines.length === 0) throw new Error('Song list is empty'); return lines; }).catch(function (err) { outputEl.hidden = false; outputEl.textContent = 'Unable to load song list: ' + err.message; outputEl.style.color = 'var(--color-error, #c00)'; return null; }); } pickButton.addEventListener('click', function () { if (!songList) { pickButton.disabled = true; pickButton.textContent = 'Loading...'; loadSongList().then(function (lines) { songList = lines; pickButton.disabled = false; pickButton.textContent = 'Pick Your Song'; if (songList) pickRandomSong(); }); } else pickRandomSong(); }); function pickRandomSong() { if (!songList || songList.length === 0) return; var randomIndex = Math.floor(Math.random() * songList.length); var selected = songList[randomIndex]; outputEl.hidden = false; outputEl.textContent = 'Your song: ' + selected; outputEl.style.color = ''; } }
-  function normalizeScienceIdeasOrder() { var categories = Array.prototype.slice.call(document.querySelectorAll('.creation-category')); var science = categories.find(function (category) { var heading = category.querySelector('.creation-category__head h3'); return heading && heading.textContent.trim() === 'Science & Ideas'; }); if (!science) return; science.classList.add('creation-category--science'); var grid = science.querySelector('.creation-grid'); if (!grid) return; var desiredOrder = ['The Coherent Theory of Interconnected Consciousness', 'A Toy Model for Engineered Space-time Contraction', 'A Computational Model of The Almighty']; var cards = Array.prototype.slice.call(grid.querySelectorAll(':scope > .creation-card')); cards.sort(function (a, b) { var aTitle = a.querySelector('.creation-card__title'); var bTitle = b.querySelector('.creation-card__title'); var aIndex = desiredOrder.indexOf(aTitle ? aTitle.textContent.trim() : ''); var bIndex = desiredOrder.indexOf(bTitle ? bTitle.textContent.trim() : ''); if (aIndex === -1) aIndex = desiredOrder.length; if (bIndex === -1) bIndex = desiredOrder.length; return aIndex - bIndex; }); cards.forEach(function (card, index) { grid.appendChild(card); var number = card.querySelector('.creation-card__number'); if (number && index < desiredOrder.length) number.textContent = String(index + 1).padStart(2, '0') + '.'; }); }
-  var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card')); cards.forEach(function (card) { var trigger = card.querySelector('.creation-card__trigger'); if (!trigger) return; card.setAttribute('data-creation-card', ''); trigger.addEventListener('click', function () { setOpen(card, trigger.getAttribute('aria-expanded') !== 'true', false); }); card.addEventListener('keydown', function (event) { if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') { event.preventDefault(); setOpen(card, false, true); } }); });
-  normalizeScienceIdeasOrder(); normalizeAsenpaiMedia(); moveExternalLinks(); normalizeCreationContent(); initPickYourSong();
+
+  function initPickYourSong() {
+    var pickButton = document.querySelector('.creation-entry__pick-song');
+    if (!pickButton) return;
+
+    var entry = pickButton.closest('.creation-entry');
+    var outputEl = entry && entry.querySelector('.creation-entry__picked-song');
+    if (!outputEl) return;
+
+    var songList = null;
+
+    function loadSongList() {
+      return fetch('assets/song-list.txt')
+        .then(function (response) {
+          if (!response.ok) throw new Error('Failed to load song list');
+          return response.text();
+        })
+        .then(function (text) {
+          var lines = text.split('\n')
+            .map(function (line) { return line.trim(); })
+            .filter(function (line) { return line.length > 0; });
+          if (lines.length === 0) throw new Error('Song list is empty');
+          return lines;
+        })
+        .catch(function (err) {
+          outputEl.hidden = false;
+          outputEl.textContent = 'Unable to load song list: ' + err.message;
+          outputEl.style.color = 'var(--color-error, #c00)';
+          return null;
+        });
+    }
+
+    pickButton.addEventListener('click', function () {
+      if (!songList) {
+        pickButton.disabled = true;
+        pickButton.textContent = 'Loading...';
+        loadSongList().then(function (lines) {
+          songList = lines;
+          pickButton.disabled = false;
+          pickButton.textContent = 'Pick Your Song';
+          if (songList) pickRandomSong();
+        });
+      } else {
+        pickRandomSong();
+      }
+    });
+
+    function pickRandomSong() {
+      if (!songList || songList.length === 0) return;
+      var randomIndex = Math.floor(Math.random() * songList.length);
+      var selected = songList[randomIndex];
+      outputEl.hidden = false;
+      outputEl.textContent = 'Your song: ' + selected;
+      outputEl.style.color = '';
+    }
+  }
+
+  function normalizeScienceIdeasOrder() {
+    var categories = Array.prototype.slice.call(document.querySelectorAll('.creation-category'));
+    var science = categories.find(function (category) {
+      var heading = category.querySelector('.creation-category__head h3');
+      return heading && heading.textContent.trim() === 'Science & Ideas';
+    });
+    if (!science) return;
+
+    science.classList.add('creation-category--science');
+    var grid = science.querySelector('.creation-grid');
+    if (!grid) return;
+
+    var desiredOrder = [
+      'The Coherent Theory of Interconnected Consciousness',
+      'A Toy Model for Engineered Space-time Contraction',
+      'A Computational Model of The Almighty'
+    ];
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll(':scope > .creation-card'));
+    cards.sort(function (a, b) {
+      var aTitle = a.querySelector('.creation-card__title');
+      var bTitle = b.querySelector('.creation-card__title');
+      var aIndex = desiredOrder.indexOf(aTitle ? aTitle.textContent.trim() : '');
+      var bIndex = desiredOrder.indexOf(bTitle ? bTitle.textContent.trim() : '');
+      if (aIndex === -1) aIndex = desiredOrder.length;
+      if (bIndex === -1) bIndex = desiredOrder.length;
+      return aIndex - bIndex;
+    });
+
+    cards.forEach(function (card, index) {
+      grid.appendChild(card);
+      var number = card.querySelector('.creation-card__number');
+      if (number && index < desiredOrder.length) {
+        number.textContent = String(index + 1).padStart(2, '0') + '.';
+      }
+    });
+  }
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.creation-card'));
+  cards.forEach(function (card) {
+    var trigger = card.querySelector('.creation-card__trigger');
+    if (!trigger) return;
+
+    card.setAttribute('data-creation-card', '');
+    trigger.addEventListener('click', function () {
+      setOpen(card, trigger.getAttribute('aria-expanded') !== 'true', false);
+    });
+
+    card.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        event.preventDefault();
+        setOpen(card, false, true);
+      }
+    });
+  });
+
+  normalizeScienceIdeasOrder();
+  normalizeAsenpaiMedia();
+  moveExternalLinks();
+  normalizeCreationContent();
+  initPickYourSong();
 })();

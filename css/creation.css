@@ -66,28 +66,18 @@
   transform: rotate(45deg);
   color: var(--oxblood);
 }
-
-/* Animated expansion using grid-template-rows */
 .subsection__content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-trans) var(--ease-out-soft),
-              opacity var(--dur-trans) var(--ease-out-soft);
   overflow: hidden;
-  opacity: 0;
+  max-height: 0;
+  opacity: 0.7;
+  transition: max-height var(--dur-trans) var(--ease-out-soft),
+              opacity var(--dur-trans) var(--ease-out-soft);
 }
 .subsection__content.is-expanded {
-  grid-template-rows: 1fr;
   opacity: 1;
 }
-
-/* Fallback for no-JS / initial render */
-.no-js .subsection__content,
-.subsection__content.no-js-expanded {
-  display: block;
-  grid-template-rows: none;
-  opacity: 1;
-  overflow: visible;
+.subsection__content[hidden] {
+  display: none;
 }
 
 .creation-grid {
@@ -95,11 +85,6 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 0 var(--space-4);
   align-items: start;
-}
-
-/* Allow grid-template-rows: 0fr to collapse fully */
-.creation-grid > * {
-  min-height: 0;
 }
 
 .creation-card {
@@ -173,28 +158,21 @@
   color: var(--oxblood);
 }
 
-/* Animated expansion using grid-template-rows */
 .creation-card__body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--dur-trans) var(--ease-out-soft),
-              opacity var(--dur-trans) var(--ease-out-soft);
+  display: block;
   overflow: hidden;
-  opacity: 0;
+  max-height: 0;
+  opacity: 0.7;
   border-top: 1px solid var(--rule-faint);
+  transition: max-height var(--dur-trans) var(--ease-out-soft),
+              opacity var(--dur-trans) var(--ease-out-soft);
 }
 .creation-card__body.is-expanded {
-  grid-template-rows: 1fr;
   opacity: 1;
 }
 
-/* Fallback for no-JS / initial render */
-.no-js .creation-card__body,
-.creation-card__body.no-js-expanded {
-  display: block;
-  grid-template-rows: none;
-  opacity: 1;
-  overflow: visible;
+.creation-card__body[hidden] {
+  display: none;
 }
 
 .creation-entry {
@@ -203,7 +181,6 @@
   gap: var(--space-5);
   padding: var(--space-5) 0 var(--space-6);
   align-items: start;
-  min-height: 0;
 }
 
 .creation-entry > .creation-entry__image {
@@ -416,12 +393,6 @@
   }
   .subsection__content,
   .creation-card__body {
-    grid-template-rows: 0fr;
-    opacity: 0;
-  }
-  .subsection__content.is-expanded,
-  .creation-card__body.is-expanded {
-    grid-template-rows: 1fr;
     opacity: 1;
   }
 }

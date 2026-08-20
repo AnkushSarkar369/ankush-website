@@ -102,6 +102,58 @@
   }
 
   /* ---------- 5. Subsection disclosure ---------- */
+
+  /* Height-measured expand/collapse. Layered on top of the existing
+     display:block/hidden disclosure — never changes the layout model
+     of the content itself. Measures actual scrollHeight so variable
+     content (images, tables, long text) is never clipped or guessed at. */
+  function animateSubsectionExpand(el, reducedMotion) {
+    el.hidden = false;
+    if (reducedMotion) {
+      el.style.maxHeight = 'none';
+      el.classList.add('is-expanded');
+      return;
+    }
+    el.style.maxHeight = '0px';
+    el.offsetHeight;
+    var target = el.scrollHeight;
+    el.style.maxHeight = target + 'px';
+    el.classList.add('is-expanded');
+    var onEnd = function (e) {
+      if (e.target !== el || e.propertyName !== 'max-height') return;
+      el.style.maxHeight = 'none';
+      el.removeEventListener('transitionend', onEnd);
+    };
+    el.addEventListener('transitionend', onEnd);
+  }
+
+  function animateSubsectionCollapse(el, reducedMotion) {
+    if (reducedMotion) {
+      el.style.maxHeight = '';
+      el.classList.remove('is-expanded');
+      el.hidden = true;
+      return;
+    }
+    var current = el.scrollHeight;
+    el.style.maxHeight = current + 'px';
+    el.offsetHeight;
+    el.classList.remove('is-expanded');
+    el.style.maxHeight = '0px';
+    var onEnd = function (e) {
+      if (e.target !== el || e.propertyName !== 'max-height') return;
+      el.hidden = true;
+      el.style.maxHeight = '';
+      el.removeEventListener('transitionend', onEnd);
+    };
+    el.addEventListener('transitionend', onEnd);
+    window.setTimeout(function () {
+      if (!el.hidden) {
+        el.hidden = true;
+        el.style.maxHeight = '';
+      }
+    }, 400);
+  }
+
   function setExpanded(element, open) {
     var trigger = element.querySelector('.subsection__trigger');
     var contentId = trigger && trigger.getAttribute('aria-controls');
@@ -109,29 +161,13 @@
 
     element.setAttribute('data-subsection-open', open ? 'true' : 'false');
     if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (content) {
-      if (open) {
-        content.removeAttribute('hidden');
-        // Force reflow to ensure transition runs
-        content.offsetHeight;
-        content.classList.add('is-expanded');
-      } else {
-        content.classList.remove('is-expanded');
-        // Set hidden after transition for accessibility
-        // Use opacity transitionend as the primary indicator since grid-template-rows may not fire reliably
-        var onTransitionEnd = function(e) {
-          if (e.propertyName === 'opacity' || e.propertyName === 'grid-template-rows') {
-            content.setAttribute('hidden', '');
-            content.removeEventListener('transitionend', onTransitionEnd);
-          }
-        };
-        content.addEventListener('transitionend', onTransitionEnd);
-        // Fallback timeout in case transitionend doesn't fire
-        setTimeout(function() {
-          content.setAttribute('hidden', '');
-          content.removeEventListener('transitionend', onTransitionEnd);
-        }, 500);
-      }
+    if (!content) return;
+
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (open) {
+      animateSubsectionExpand(content, reducedMotion);
+    } else {
+      animateSubsectionCollapse(content, reducedMotion);
     }
   }
 
@@ -192,21 +228,16 @@
 
     Array.prototype.slice.call(document.querySelectorAll('[data-subsection-open]')).forEach(function (subsection) {
       bindDisclosure(subsection);
-      // Initialize to match HTML initial state (open = true based on data-subsection-open="true")
+      // Initial state only: content already starts `hidden` in the markup,
+      // so just sync the ARIA/state attributes without animating.
       var trigger = subsection.querySelector('.subsection__trigger');
       var contentId = trigger && trigger.getAttribute('aria-controls');
       var content = contentId ? document.getElementById(contentId) : null;
-      var initiallyOpen = subsection.getAttribute('data-subsection-open') === 'true';
-      
-      if (trigger) trigger.setAttribute('aria-expanded', initiallyOpen ? 'true' : 'false');
+      subsection.setAttribute('data-subsection-open', 'false');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
       if (content) {
-        if (initiallyOpen) {
-          content.removeAttribute('hidden');
-          content.classList.add('is-expanded');
-        } else {
-          content.setAttribute('hidden', '');
-          content.classList.remove('is-expanded');
-        }
+        content.hidden = true;
+        content.classList.remove('is-expanded');
       }
     });
 

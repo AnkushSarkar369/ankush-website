@@ -5,6 +5,57 @@
   var archive = document.querySelector('[data-technology-archive]');
   if (!archive) return;
 
+  /* Height-measured expand/collapse. Layered on top of the existing
+     display:block/hidden disclosure — never changes the layout model
+     of the content itself. Measures actual scrollHeight so variable
+     content (images, tables, long text) is never clipped or guessed at. */
+  function animateExpand(el, reducedMotion) {
+    el.hidden = false;
+    if (reducedMotion) {
+      el.style.maxHeight = 'none';
+      el.classList.add('is-expanded');
+      return;
+    }
+    el.style.maxHeight = '0px';
+    el.offsetHeight;
+    var target = el.scrollHeight;
+    el.style.maxHeight = target + 'px';
+    el.classList.add('is-expanded');
+    var onEnd = function (e) {
+      if (e.target !== el || e.propertyName !== 'max-height') return;
+      el.style.maxHeight = 'none';
+      el.removeEventListener('transitionend', onEnd);
+    };
+    el.addEventListener('transitionend', onEnd);
+  }
+
+  function animateCollapse(el, reducedMotion) {
+    if (reducedMotion) {
+      el.style.maxHeight = '';
+      el.classList.remove('is-expanded');
+      el.hidden = true;
+      return;
+    }
+    var current = el.scrollHeight;
+    el.style.maxHeight = current + 'px';
+    el.offsetHeight;
+    el.classList.remove('is-expanded');
+    el.style.maxHeight = '0px';
+    var onEnd = function (e) {
+      if (e.target !== el || e.propertyName !== 'max-height') return;
+      el.hidden = true;
+      el.style.maxHeight = '';
+      el.removeEventListener('transitionend', onEnd);
+    };
+    el.addEventListener('transitionend', onEnd);
+    window.setTimeout(function () {
+      if (!el.hidden) {
+        el.hidden = true;
+        el.style.maxHeight = '';
+      }
+    }, 400);
+  }
+
   var cards = Array.prototype.slice.call(document.querySelectorAll('.technology-card'));
   cards.forEach(function (card) {
     var trigger = card.querySelector('.technology-card__trigger');
@@ -27,32 +78,14 @@
     if (!trigger || !body) return;
     card.setAttribute('data-open', open ? 'true' : 'false');
     trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    
-    // Check reduced motion preference for scroll behavior
-    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
-    
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
+
     if (open) {
-      body.removeAttribute('hidden');
-      // Force reflow to ensure transition runs
-      body.offsetHeight;
-      body.classList.add('is-expanded');
+      animateExpand(body, reducedMotion);
       if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
     } else {
-      body.classList.remove('is-expanded');
-      // Set hidden after transition for accessibility
-      var onTransitionEnd = function(e) {
-        if (e.propertyName === 'opacity' || e.propertyName === 'grid-template-rows') {
-          body.setAttribute('hidden', '');
-          body.removeEventListener('transitionend', onTransitionEnd);
-        }
-      };
-      body.addEventListener('transitionend', onTransitionEnd);
-      // Fallback timeout in case transitionend doesn't fire
-      setTimeout(function() {
-        body.setAttribute('hidden', '');
-        body.removeEventListener('transitionend', onTransitionEnd);
-      }, 500);
+      animateCollapse(body, reducedMotion);
       if (restoreFocus) trigger.focus();
     }
   }

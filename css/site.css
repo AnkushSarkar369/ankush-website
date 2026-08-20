@@ -170,8 +170,8 @@ p { max-width: var(--measure); }
 }
 .nav__links a:hover { color: var(--ink-primary); }
 .nav__links a:hover::after { right: 0; }
-.nav__links a[aria-current="page"] { color: var(--oxblood); }
-.nav__links a[aria-current="page"]::after { right: 0; }
+.nav__links a[aria-current="location"] { color: var(--oxblood); }
+.nav__links a[aria-current="location"]::after { right: 0; }
 .skip {
   position: absolute;
   left: 1rem; top: -3rem;

@@ -10,6 +10,7 @@
   --surface-raised:  #efe7d8;   /* a paper laid down on the parchment         */
   --surface-underside:#1e1813;  /* near-black espresso — the dark threshold    */
   --surface-elevated: var(--surface-raised);
+  --surface:         var(--surface-base);
 
   /* --- Foreground: ink hierarchy on parchment --- */
   --ink-primary:   #241c15;    /* full-strength ink                            */
@@ -34,6 +35,7 @@
   --font-body:    'Hanken Grotesk', 'Hanken Grotesk Fallback', system-ui, sans-serif;
 
   /* --- Modular type scale (1.250 major third) on a fluid root --- */
+  --step--2: clamp(0.69rem, 0.66rem + 0.16vw, 0.78rem);  /* fine print          */
   --step--1: clamp(0.83rem, 0.79rem + 0.20vw, 0.92rem);  /* meta / captions    */
   --step-0:  clamp(1.00rem, 0.94rem + 0.30vw, 1.14rem);  /* body                */
   --step-1:  clamp(1.25rem, 1.15rem + 0.50vw, 1.55rem);  /* subheads            */

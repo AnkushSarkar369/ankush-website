@@ -115,9 +115,13 @@
   function updateButtonStates(activeButton, direction) {
     sortButtons.forEach(function (btn) {
       var isActive = btn === activeButton;
+      var header = btn.closest('th');
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       btn.removeAttribute('aria-sort');
-      if (isActive) btn.setAttribute('aria-sort', direction);
+      if (header) {
+        header.removeAttribute('aria-sort');
+        if (isActive) header.setAttribute('aria-sort', direction);
+      }
     });
   }
 

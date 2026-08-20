@@ -160,10 +160,12 @@
 
   if (document.fonts && document.fonts.load) {
     Promise.all([
+      document.fonts.load('300 1em "Newsreader"'),
       document.fonts.load('400 1em "Newsreader"'),
       document.fonts.load('500 1em "Newsreader"'),
       document.fonts.load('400 1em "Hanken Grotesk"'),
-      document.fonts.load('500 1em "Hanken Grotesk"')
+      document.fonts.load('500 1em "Hanken Grotesk"'),
+      document.fonts.load('600 1em "Hanken Grotesk"')
     ]).then(revealFonts).catch(revealFonts);
   }
 
@@ -209,7 +211,7 @@
         if (!entry.isIntersecting) return;
         var id = entry.target.getAttribute('data-nav-target');
         links.forEach(function (a) {
-          if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'page');
+          if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'location');
           else a.removeAttribute('aria-current');
         });
       });
@@ -347,6 +349,7 @@
   var qrModalOverlay = qrModal ? qrModal.querySelector('.modal__overlay') : null;
   var qrContainer = document.getElementById('upi-qr-code');
   var upiDeepLink = 'upi://pay?pa=ankushisonline369%40okhdfcbank&pn=Ankush+Sarkar&tn=Thank+You%21&cu=INR';
+  var qrModalPreviousFocus = null;
 
   function generateQrCode() {
     if (!qrContainer) return;
@@ -360,8 +363,36 @@
     qrContainer.appendChild(img);
   }
 
+  function getModalFocusableElements() {
+    if (!qrModal) return [];
+    return Array.prototype.slice.call(qrModal.querySelectorAll(
+      'a[href], area[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (element) {
+      return element.getClientRects().length > 0;
+    });
+  }
+
+  function trapQrModalFocus(event) {
+    if (event.key !== 'Tab' || !qrModal || qrModal.hidden) return;
+
+    var focusable = getModalFocusableElements();
+    if (!focusable.length) return;
+
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   function openQrModal() {
     if (!qrModal) return;
+    qrModalPreviousFocus = document.activeElement;
     qrModal.hidden = false;
     showQrBtn.setAttribute('aria-expanded', 'true');
     generateQrCode();
@@ -373,7 +404,11 @@
     if (!qrModal) return;
     qrModal.hidden = true;
     showQrBtn.setAttribute('aria-expanded', 'false');
-    showQrBtn.focus();
+    var restoreTarget = qrModalPreviousFocus && typeof qrModalPreviousFocus.focus === 'function'
+      ? qrModalPreviousFocus
+      : showQrBtn;
+    qrModalPreviousFocus = null;
+    restoreTarget.focus();
     document.body.style.overflow = '';
   }
 
@@ -382,5 +417,20 @@
   if (qrModalOverlay) qrModalOverlay.addEventListener('click', closeQrModal);
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && qrModal && !qrModal.hidden) closeQrModal();
+    else trapQrModalFocus(e);
   });
+
+  function initializeAnimeSortHeaders() {
+    var sortButtons = Array.prototype.slice.call(document.querySelectorAll('.anime-catalogue__sort-btn'));
+    sortButtons.forEach(function (button) {
+      var header = button.closest('th');
+      if (!header) return;
+
+      var sort = button.getAttribute('aria-sort');
+      button.removeAttribute('aria-sort');
+      if (sort) header.setAttribute('aria-sort', sort);
+    });
+  }
+
+  initializeAnimeSortHeaders();
 })();

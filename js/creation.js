@@ -15,11 +15,32 @@
     if (!trigger || !body) return;
     card.setAttribute('data-open', open ? 'true' : 'false');
     trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    
+    // Check reduced motion preference for scroll behavior
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+    
     if (open) {
-      body.hidden = false;
-      if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      body.removeAttribute('hidden');
+      // Force reflow to ensure transition runs
+      body.offsetHeight;
+      body.classList.add('is-expanded');
+      if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
     } else {
-      body.hidden = true;
+      body.classList.remove('is-expanded');
+      // Set hidden after transition for accessibility
+      var onTransitionEnd = function(e) {
+        if (e.propertyName === 'opacity' || e.propertyName === 'grid-template-rows') {
+          body.setAttribute('hidden', '');
+          body.removeEventListener('transitionend', onTransitionEnd);
+        }
+      };
+      body.addEventListener('transitionend', onTransitionEnd);
+      // Fallback timeout in case transitionend doesn't fire
+      setTimeout(function() {
+        body.setAttribute('hidden', '');
+        body.removeEventListener('transitionend', onTransitionEnd);
+      }, 500);
       if (restoreFocus) trigger.focus();
     }
   }

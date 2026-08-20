@@ -109,7 +109,30 @@
 
     element.setAttribute('data-subsection-open', open ? 'true' : 'false');
     if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (content) content.hidden = !open;
+    if (content) {
+      if (open) {
+        content.removeAttribute('hidden');
+        // Force reflow to ensure transition runs
+        content.offsetHeight;
+        content.classList.add('is-expanded');
+      } else {
+        content.classList.remove('is-expanded');
+        // Set hidden after transition for accessibility
+        // Use opacity transitionend as the primary indicator since grid-template-rows may not fire reliably
+        var onTransitionEnd = function(e) {
+          if (e.propertyName === 'opacity' || e.propertyName === 'grid-template-rows') {
+            content.setAttribute('hidden', '');
+            content.removeEventListener('transitionend', onTransitionEnd);
+          }
+        };
+        content.addEventListener('transitionend', onTransitionEnd);
+        // Fallback timeout in case transitionend doesn't fire
+        setTimeout(function() {
+          content.setAttribute('hidden', '');
+          content.removeEventListener('transitionend', onTransitionEnd);
+        }, 500);
+      }
+    }
   }
 
   function bindDisclosure(element) {
@@ -169,7 +192,22 @@
 
     Array.prototype.slice.call(document.querySelectorAll('[data-subsection-open]')).forEach(function (subsection) {
       bindDisclosure(subsection);
-      setExpanded(subsection, false);
+      // Initialize to match HTML initial state (open = true based on data-subsection-open="true")
+      var trigger = subsection.querySelector('.subsection__trigger');
+      var contentId = trigger && trigger.getAttribute('aria-controls');
+      var content = contentId ? document.getElementById(contentId) : null;
+      var initiallyOpen = subsection.getAttribute('data-subsection-open') === 'true';
+      
+      if (trigger) trigger.setAttribute('aria-expanded', initiallyOpen ? 'true' : 'false');
+      if (content) {
+        if (initiallyOpen) {
+          content.removeAttribute('hidden');
+          content.classList.add('is-expanded');
+        } else {
+          content.setAttribute('hidden', '');
+          content.classList.remove('is-expanded');
+        }
+      }
     });
 
     ensureThresholds();

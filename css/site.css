@@ -395,7 +395,7 @@ p { max-width: var(--measure); }
 }
 .support__way .support__way__title,
 .support__way h3 { color: var(--oxblood); margin-bottom: var(--space-1); font-size: var(--step-1); font-weight: 600; line-height: 1.25; }
-.support__way p { font-size: var(--step--1); color: var(--ink-secondary); max-width: none; flex: 1; }
+.support__way p { font-size: var(--step--1); color: var(--ink-secondary); max-width: none; flex: 1; margin-bottom: var(--space-2); }
 
 /* Support actions container - aligns to bottom of card */
 .support__actions {

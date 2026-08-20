@@ -69,8 +69,28 @@
   transform: rotate(45deg);
   color: var(--oxblood);
 }
-.subsection__content[hidden] {
-  display: none;
+
+/* Animated expansion using grid-template-rows */
+.subsection__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-trans) var(--ease-out-soft),
+              opacity var(--dur-trans) var(--ease-out-soft);
+  overflow: hidden;
+  opacity: 0;
+}
+.subsection__content.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+/* Fallback for no-JS / initial render */
+.no-js .subsection__content,
+.subsection__content.no-js-expanded {
+  display: block;
+  grid-template-rows: none;
+  opacity: 1;
+  overflow: visible;
 }
 
 .technology-grid {
@@ -78,6 +98,11 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 0 var(--space-4);
   align-items: start;
+}
+
+/* Allow grid-template-rows: 0fr to collapse fully */
+.technology-grid > * {
+  min-height: 0;
 }
 
 .technology-card {
@@ -154,14 +179,28 @@
   color: var(--oxblood);
 }
 
+/* Animated expansion using grid-template-rows */
 .technology-card__body {
-  display: block;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-trans) var(--ease-out-soft),
+              opacity var(--dur-trans) var(--ease-out-soft);
   overflow: hidden;
+  opacity: 0;
   border-top: 1px solid var(--rule-dark);
 }
+.technology-card__body.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
 
-.technology-card__body[hidden] {
-  display: none;
+/* Fallback for no-JS / initial render */
+.no-js .technology-card__body,
+.technology-card__body.no-js-expanded {
+  display: block;
+  grid-template-rows: none;
+  opacity: 1;
+  overflow: visible;
 }
 
 .technology-entry {
@@ -170,6 +209,7 @@
   gap: var(--space-5);
   padding: var(--space-5) 0 var(--space-6);
   align-items: start;
+  min-height: 0;
 }
 
 .technology-entry > .technology-entry__image {
@@ -606,8 +646,20 @@
 
 @media (prefers-reduced-motion: reduce) {
   .technology-card__state,
-  .technology-card__trigger {
+  .technology-card__trigger,
+  .subsection__content,
+  .technology-card__body {
     transition: none;
+  }
+  .subsection__content,
+  .technology-card__body {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  .subsection__content.is-expanded,
+  .technology-card__body.is-expanded {
+    grid-template-rows: 1fr;
+    opacity: 1;
   }
 }
 

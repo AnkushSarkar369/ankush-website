@@ -390,13 +390,26 @@
     else trapQrModalFocus(e);
   });
 
-  function initInternalDisclosureLinks() {
-    /* Collect every collapsible ancestor of a target, innermost first, as
-       { trigger, body } pairs, expanding outward: card body, then the
-       subsection content that contains it. Both layers use the same
-       max-height disclosure animation, and either (or both) may be
-       collapsed when a footnote link is clicked. */
-    function getDisclosureAncestors(target) {
+  /* asterisk_note — generic footnote navigation for content that lives
+     inside one or more collapsible disclosure layers (subsection content
+     and/or creation/technology cards). A click must fully settle every
+     animation those layers can trigger before scrolling, because a card's
+     expand can drive TWO independent transitions on TWO different
+     elements: the card body's max-height growth, and the card's own FLIP
+     transform (DisclosureAnimation.flip), used to reposition the card
+     smoothly when sibling heights change. Waiting only on the body's
+     max-height transitionend is not sufficient — the card can still be
+     mid-flip when that fires, moving the target after scrollIntoView was
+     already called. This function waits on every transition each layer
+     can produce (or a timeout fallback, whichever settles last) before
+     advancing, and only scrolls once the entire chain is idle. */
+  function initAsteriskNotes() {
+    var FALLBACK_MS = 500;
+
+    /* Collect every collapsible ancestor of target, innermost first:
+       { trigger, body, card } where `card` is set only for card layers
+       (the element the FLIP transform runs on), null for subsections. */
+    function getDisclosureLayers(target) {
       var layers = [];
       var node = target;
 
@@ -405,7 +418,7 @@
         if (card) {
           var cardTrigger = card.querySelector('.creation-card__trigger, .technology-card__trigger');
           var cardBody = card.querySelector('.creation-card__body, .technology-card__body');
-          if (cardTrigger && cardBody) layers.push({ trigger: cardTrigger, body: cardBody });
+          if (cardTrigger && cardBody) layers.push({ trigger: cardTrigger, body: cardBody, card: card });
           node = card.parentElement;
           continue;
         }
@@ -415,7 +428,7 @@
           var subTrigger = subsection.querySelector('.subsection__trigger');
           var subContentId = subTrigger && subTrigger.getAttribute('aria-controls');
           var subContent = subContentId ? document.getElementById(subContentId) : null;
-          if (subTrigger && subContent) layers.push({ trigger: subTrigger, body: subContent });
+          if (subTrigger && subContent) layers.push({ trigger: subTrigger, body: subContent, card: null });
           node = subsection.parentElement;
           continue;
         }
@@ -426,31 +439,69 @@
       return layers;
     }
 
-    Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).forEach(function (link) {
+    /* Wait for every transition a single layer's expand can produce
+       (body max-height, plus card transform if this is a card layer),
+       each independently, plus a shared fallback timer. Calls `done`
+       exactly once, after all of them have either fired or timed out. */
+    function waitForLayerSettle(layer, done) {
+      var pending = 1; /* body max-height */
+      if (layer.card) pending += 1; /* card flip transform */
+
+      var finished = false;
+      var fallback = window.setTimeout(finishAll, FALLBACK_MS);
+
+      function finishAll() {
+        if (finished) return;
+        finished = true;
+        window.clearTimeout(fallback);
+        layer.body.removeEventListener('transitionend', onBodyEnd);
+        if (layer.card) layer.card.removeEventListener('transitionend', onCardEnd);
+        done();
+      }
+
+      function settle() {
+        pending -= 1;
+        if (pending <= 0) finishAll();
+      }
+
+      function onBodyEnd(e) {
+        if (e.target === layer.body && e.propertyName === 'max-height') settle();
+      }
+
+      function onCardEnd(e) {
+        if (e.target === layer.card && e.propertyName === 'transform') settle();
+      }
+
+      layer.body.addEventListener('transitionend', onBodyEnd);
+      if (layer.card) layer.card.addEventListener('transitionend', onCardEnd);
+    }
+
+    Array.prototype.slice.call(document.querySelectorAll('.asterisk-note__link')).forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href || href === '#') return;
 
       var target = document.getElementById(href.slice(1));
       if (!target) return;
 
-      var layers = getDisclosureAncestors(target);
-      if (!layers.length) return;
+      var layers = getDisclosureLayers(target);
 
       link.addEventListener('click', function (event) {
         event.preventDefault();
 
         var scrollToTarget = function () {
+          /* Double rAF: one to let the browser paint the now-settled
+             layout, one more before reading/using it for scrollIntoView,
+             so we never scroll against a stale layout pass. */
           requestAnimationFrame(function () {
-            target.scrollIntoView({ block: 'start', behavior: DisclosureAnimation.reducedMotion() ? 'auto' : 'smooth' });
+            requestAnimationFrame(function () {
+              target.scrollIntoView({ block: 'start', behavior: DisclosureAnimation.reducedMotion() ? 'auto' : 'smooth' });
+            });
           });
         };
 
-        /* Expand every collapsed layer, outermost first, and sequentially:
-           the inner card's expand must not start until the outer subsection
-           has finished, since the outer's own max-height calculation (and
-           the inner card's usable width/visibility) depend on it already
-           being open. Each layer waits for its own transitionend (or a
-           timeout fallback) before the next one starts. */
+        /* Expand every collapsed layer, outermost first: the inner
+           card's own expand assumes the outer subsection is already
+           open (visible, non-zero width) before it starts. */
         var toExpand = layers
           .slice()
           .reverse()
@@ -463,21 +514,10 @@
           }
 
           var layer = toExpand[index];
-          layer.trigger.click();
-
-          var settled = false;
-          var finish = function () {
-            if (settled) return;
-            settled = true;
-            layer.body.removeEventListener('transitionend', onEnd);
+          waitForLayerSettle(layer, function () {
             expandNext(index + 1);
-          };
-          var onEnd = function (transitionEvent) {
-            if (transitionEvent.target === layer.body && transitionEvent.propertyName === 'max-height') finish();
-          };
-
-          layer.body.addEventListener('transitionend', onEnd);
-          window.setTimeout(finish, 450);
+          });
+          layer.trigger.click();
         };
 
         expandNext(0);
@@ -501,6 +541,6 @@
     });
   }
 
-  initInternalDisclosureLinks();
+  initAsteriskNotes();
   initializeAnimeSortHeaders();
 })();

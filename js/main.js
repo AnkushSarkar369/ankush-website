@@ -391,6 +391,41 @@
   });
 
   function initInternalDisclosureLinks() {
+    /* Collect every collapsible ancestor of a target, innermost first, as
+       { trigger, body } pairs, expanding outward: card body, then the
+       subsection content that contains it. Both layers use the same
+       max-height disclosure animation, and either (or both) may be
+       collapsed when a footnote link is clicked. */
+    function getDisclosureAncestors(target) {
+      var layers = [];
+      var node = target;
+
+      while (node) {
+        var card = node.closest ? node.closest('.creation-card, .technology-card') : null;
+        if (card) {
+          var cardTrigger = card.querySelector('.creation-card__trigger, .technology-card__trigger');
+          var cardBody = card.querySelector('.creation-card__body, .technology-card__body');
+          if (cardTrigger && cardBody) layers.push({ trigger: cardTrigger, body: cardBody });
+          node = card.parentElement;
+          continue;
+        }
+
+        var subsection = node.closest ? node.closest('[data-subsection-open]') : null;
+        if (subsection) {
+          var subTrigger = subsection.querySelector('.subsection__trigger');
+          var subContentId = subTrigger && subTrigger.getAttribute('aria-controls');
+          var subContent = subContentId ? document.getElementById(subContentId) : null;
+          if (subTrigger && subContent) layers.push({ trigger: subTrigger, body: subContent });
+          node = subsection.parentElement;
+          continue;
+        }
+
+        node = null;
+      }
+
+      return layers;
+    }
+
     Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href || href === '#') return;
@@ -398,12 +433,8 @@
       var target = document.getElementById(href.slice(1));
       if (!target) return;
 
-      var card = target.closest('.creation-card, .technology-card');
-      if (!card) return;
-
-      var trigger = card.querySelector('.creation-card__trigger, .technology-card__trigger');
-      var body = card.querySelector('.creation-card__body, .technology-card__body');
-      if (!trigger || !body) return;
+      var layers = getDisclosureAncestors(target);
+      if (!layers.length) return;
 
       link.addEventListener('click', function (event) {
         event.preventDefault();
@@ -414,25 +445,42 @@
           });
         };
 
-        if (trigger.getAttribute('aria-expanded') !== 'true') {
-          trigger.click();
+        /* Expand every collapsed layer, outermost first, and sequentially:
+           the inner card's expand must not start until the outer subsection
+           has finished, since the outer's own max-height calculation (and
+           the inner card's usable width/visibility) depend on it already
+           being open. Each layer waits for its own transitionend (or a
+           timeout fallback) before the next one starts. */
+        var toExpand = layers
+          .slice()
+          .reverse()
+          .filter(function (layer) { return layer.trigger.getAttribute('aria-expanded') !== 'true'; });
+
+        var expandNext = function (index) {
+          if (index >= toExpand.length) {
+            scrollToTarget();
+            return;
+          }
+
+          var layer = toExpand[index];
+          layer.trigger.click();
 
           var settled = false;
           var finish = function () {
             if (settled) return;
             settled = true;
-            body.removeEventListener('transitionend', onEnd);
-            scrollToTarget();
+            layer.body.removeEventListener('transitionend', onEnd);
+            expandNext(index + 1);
           };
           var onEnd = function (transitionEvent) {
-            if (transitionEvent.target === body && transitionEvent.propertyName === 'max-height') finish();
+            if (transitionEvent.target === layer.body && transitionEvent.propertyName === 'max-height') finish();
           };
 
-          body.addEventListener('transitionend', onEnd);
+          layer.body.addEventListener('transitionend', onEnd);
           window.setTimeout(finish, 450);
-        } else {
-          scrollToTarget();
-        }
+        };
+
+        expandNext(0);
 
         if (window.history && window.history.pushState) {
           window.history.pushState(null, '', href);

@@ -13,15 +13,15 @@
     var reducedMotion = DisclosureAnimation.reducedMotion();
     var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
 
+    DisclosureAnimation.flip(card, function () {
+      card.setAttribute('data-open', open ? 'true' : 'false');
+    });
+
     if (open) {
       DisclosureAnimation.expand(body, reducedMotion);
     } else {
       DisclosureAnimation.collapse(body, reducedMotion);
     }
-
-    DisclosureAnimation.flip(card, function () {
-      card.setAttribute('data-open', open ? 'true' : 'false');
-    });
 
     trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 

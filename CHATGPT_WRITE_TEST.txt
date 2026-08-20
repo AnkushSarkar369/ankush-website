@@ -1,2 +1,0 @@
-Temporary harmless write-access test.
-This file can be deleted after confirming repository write access.

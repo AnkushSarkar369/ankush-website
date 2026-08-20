@@ -939,18 +939,168 @@
   margin-right: var(--space-1);
 }
 
+/* =========================================================================
+   Book Catalogue Table
+   ========================================================================= */
+
+.book-catalogue {
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+}
+
+.book-catalogue__table thead th {
+  cursor: pointer;
+  user-select: none;
+}
+
+.book-catalogue__table thead th:focus-within {
+  outline: none;
+}
+
+.book-catalogue__sort-btn {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  padding: var(--space-1) 0;
+  border: none;
+  background: transparent;
+  color: var(--ink-muted);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step--1);
+  font-weight: 500;
+  line-height: 1.4;
+  width: 100%;
+  text-align: left;
+  transition: color var(--dur-micro) var(--ease-out-soft);
+}
+
+.book-catalogue__sort-btn:hover {
+  color: var(--oxblood);
+}
+
+.book-catalogue__sort-btn:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.book-catalogue__sort-btn[aria-pressed="true"] {
+  color: var(--oxblood);
+}
+
+.book-catalogue__sort-indicator {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step--1);
+  color: var(--oxblood);
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-out-soft);
+  flex-shrink: 0;
+}
+
+.book-catalogue__sort-btn[aria-pressed="true"] .book-catalogue__sort-indicator {
+  opacity: 1;
+}
+
+.book-catalogue__sort-btn[aria-sort="ascending"] .book-catalogue__sort-indicator::before {
+  content: "▲";
+}
+
+.book-catalogue__sort-btn[aria-sort="descending"] .book-catalogue__sort-indicator::before {
+  content: "▼";
+}
+
+.book-catalogue__sort-btn[aria-sort="none"] .book-catalogue__sort-indicator::before {
+  content: "";
+}
+
+.book-catalogue__table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.book-catalogue__table {
+  width: 100%;
+  min-width: 38rem;
+  border-collapse: collapse;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+.book-catalogue__table thead {
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.book-catalogue__table th {
+  text-align: left;
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  font-weight: 500;
+  color: var(--ink-muted);
+  font-size: var(--step--1);
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.book-catalogue__table th:not(:last-child) {
+  padding-right: var(--space-4);
+}
+
+.book-catalogue__table td {
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  vertical-align: top;
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.book-catalogue__table td:not(:last-child) {
+  padding-right: var(--space-4);
+}
+
+.book-catalogue__table tbody tr:last-child td {
+  border-bottom: 1px solid var(--rule-faint);
+}
+
+.book-catalogue__table tbody tr:hover {
+  background: var(--surface-raised);
+}
+
+.book-catalogue__no {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--oxblood);
+  white-space: nowrap;
+  min-width: 2.5rem;
+}
+
+.book-catalogue__name {
+  font-weight: 500;
+  color: var(--ink-primary);
+  max-width: 22rem;
+}
+
+.book-catalogue__author {
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
 /* Responsive adjustments */
 @media (max-width: 63.999rem) {
-  .anime-catalogue__table {
+  .anime-catalogue__table,
+  .book-catalogue__table {
     min-width: 34rem;
     font-size: var(--step-0);
   }
   
-  .anime-catalogue__name {
+  .anime-catalogue__name,
+  .book-catalogue__name {
     max-width: 18rem;
   }
   
-  .anime-catalogue__sort-btn {
+  .anime-catalogue__sort-btn,
+  .book-catalogue__sort-btn {
     padding: var(--space-1) 0;
     font-size: var(--step--1);
   }
@@ -958,11 +1108,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .anime-catalogue__sort-btn,
-  .anime-catalogue__sort-indicator {
+  .anime-catalogue__sort-indicator,
+  .book-catalogue__sort-btn,
+  .book-catalogue__sort-indicator {
     transition: none;
   }
   
-  .anime-catalogue__table tbody tr:hover {
+  .anime-catalogue__table tbody tr:hover,
+  .book-catalogue__table tbody tr:hover {
     background: none;
   }
 }

@@ -150,3 +150,103 @@
 
   sortRows('no', 'ascending');
 })();
+
+(function () {
+  'use strict';
+
+  var table = document.querySelector('.book-catalogue__table');
+  if (!table) return;
+
+  var tbody = table.querySelector('tbody');
+  var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+  var sortButtons = Array.prototype.slice.call(document.querySelectorAll('.book-catalogue__sort-btn'));
+  var currentSort = 'no';
+  var currentDirection = 'ascending';
+
+  var rowData = rows.map(function (row, index) {
+    return {
+      element: row,
+      chronology: parseInt(row.getAttribute('data-chronology'), 10) || 0,
+      author: row.getAttribute('data-author') || '',
+      name: row.querySelector('.book-catalogue__name')
+        ? row.querySelector('.book-catalogue__name').textContent.trim()
+        : '',
+      originalIndex: index
+    };
+  });
+
+  function sortRows(sortKey, direction) {
+    var sorted = rowData.slice().sort(function (a, b) {
+      var valA;
+      var valB;
+
+      switch (sortKey) {
+        case 'no':
+          valA = a.chronology;
+          valB = b.chronology;
+          break;
+        case 'name':
+          valA = a.name.toLowerCase();
+          valB = b.name.toLowerCase();
+          break;
+        case 'author':
+          valA = a.author.toLowerCase();
+          valB = b.author.toLowerCase();
+          break;
+        default:
+          valA = a.chronology;
+          valB = b.chronology;
+      }
+
+      var cmp = 0;
+      if (valA < valB) cmp = -1;
+      else if (valA > valB) cmp = 1;
+      if (cmp === 0 && sortKey !== 'no') cmp = a.chronology - b.chronology;
+      if (cmp === 0) cmp = a.originalIndex - b.originalIndex;
+
+      return direction === 'ascending' ? cmp : -cmp;
+    });
+
+    sorted.forEach(function (item) {
+      tbody.appendChild(item.element);
+    });
+  }
+
+  function updateButtonStates(activeButton, direction) {
+    sortButtons.forEach(function (btn) {
+      var isActive = btn === activeButton;
+      var header = btn.closest('th');
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      btn.removeAttribute('aria-sort');
+      if (header) {
+        header.removeAttribute('aria-sort');
+        if (isActive) header.setAttribute('aria-sort', direction);
+      }
+    });
+  }
+
+  sortButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var sortKey = btn.getAttribute('data-sort');
+      var direction = 'ascending';
+
+      if (sortKey === currentSort) {
+        direction = currentDirection === 'ascending' ? 'descending' : 'ascending';
+      }
+
+      currentSort = sortKey;
+      currentDirection = direction;
+      sortRows(sortKey, direction);
+      updateButtonStates(btn, direction);
+    });
+
+    btn.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        btn.click();
+      }
+    });
+  });
+
+  sortRows('no', 'ascending');
+})();

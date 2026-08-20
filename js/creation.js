@@ -43,20 +43,27 @@
     if (title) title.textContent = 'Music Collection Organiser';
 
     var entry = musicCard.querySelector('.creation-entry');
-    var material = entry && entry.querySelector('.creation-entry__material');
+    var material = entry && entry.querySelector(':scope > .creation-entry__material');
     if (!entry || !material) return;
 
     var githubLink = entry.querySelector('a[href="https://github.com/AnkushSarkar369/Music-Collection-Organiser"]');
     var directory = material.querySelector(':scope > .creation-entry__tree');
     var pickSong = material.querySelector(':scope > p > .creation-entry__pick-song');
+    var pickSongWrapper = pickSong && pickSong.parentElement;
+    var pickedSong = material.querySelector(':scope > .creation-entry__picked-song');
 
-    if (githubLink) {
+    if (githubLink && directory && pickSongWrapper) {
       githubLink.textContent = 'Visit Music Collection Organiser on GitHub';
-      material.insertBefore(githubLink, directory || material.firstChild);
-    }
-
-    if (directory && pickSong) {
-      material.insertBefore(pickSong.parentElement, directory.nextSibling);
+      var sideMaterial = entry.querySelector(':scope > .creation-entry__image .creation-entry__material');
+      if (!sideMaterial) {
+        sideMaterial = document.createElement('div');
+        sideMaterial.className = 'creation-entry__material';
+        entry.querySelector(':scope > .creation-entry__image').appendChild(sideMaterial);
+      }
+      sideMaterial.appendChild(githubLink);
+      sideMaterial.appendChild(directory);
+      sideMaterial.appendChild(pickSongWrapper);
+      if (pickedSong) sideMaterial.appendChild(pickedSong);
     }
   }
   function initPickYourSong() { var pickButton = document.querySelector('.creation-entry__pick-song'); if (!pickButton) return; var outputEl = pickButton.closest('.creation-entry__material').querySelector('.creation-entry__picked-song'); if (!outputEl) return; var songList = null; function loadSongList() { return fetch('assets/song-list.txt').then(function (response) { if (!response.ok) throw new Error('Failed to load song list'); return response.text(); }).then(function (text) { var lines = text.split('\n').map(function (line) { return line.trim(); }).filter(function (line) { return line.length > 0; }); if (lines.length === 0) throw new Error('Song list is empty'); return lines; }).catch(function (err) { outputEl.hidden = false; outputEl.textContent = 'Unable to load song list: ' + err.message; outputEl.style.color = 'var(--color-error, #c00)'; return null; }); } pickButton.addEventListener('click', function () { if (!songList) { pickButton.disabled = true; pickButton.textContent = 'Loading...'; loadSongList().then(function (lines) { songList = lines; pickButton.disabled = false; pickButton.textContent = 'Pick Your Song'; if (songList) pickRandomSong(); }); } else pickRandomSong(); }); function pickRandomSong() { if (!songList || songList.length === 0) return; var randomIndex = Math.floor(Math.random() * songList.length); var selected = songList[randomIndex]; outputEl.hidden = false; outputEl.textContent = 'Your song: ' + selected; outputEl.style.color = ''; } }

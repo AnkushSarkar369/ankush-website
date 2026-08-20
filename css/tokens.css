@@ -9,6 +9,7 @@
   --surface-base:    #f3ede2;   /* oat parchment — the page itself            */
   --surface-raised:  #efe7d8;   /* a paper laid down on the parchment         */
   --surface-underside:#1e1813;  /* near-black espresso — the dark threshold    */
+  --surface-elevated: var(--surface-raised);
 
   /* --- Foreground: ink hierarchy on parchment --- */
   --ink-primary:   #241c15;    /* full-strength ink                            */
@@ -16,6 +17,7 @@
   --ink-muted:     #8a7a66;    /* captions, metadata                           */
   --ink-on-dark:   #f0e8da;    /* type on the underside                        */
   --ink-faint-dark:#a89682;    /* muted type on the underside                  */
+  --ink:           var(--ink-primary);
 
   /* --- Borders: separation hierarchy (hairlines) --- */
   --rule-faint:    rgba(36, 28, 20, 0.10);
@@ -61,6 +63,11 @@
   --dur-entry: 0.9s;
   --dur-micro: 0.18s;
   --dur-trans: 0.28s;
+  --dur-fast: var(--dur-micro);
+
+  /* --- Shape & elevation --- */
+  --radius-2: 4px;
+  --shadow-lg: 0 30px 60px -32px rgba(36,28,20,0.45);
 }
 
 /* =========================================================================

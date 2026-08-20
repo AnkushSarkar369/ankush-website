@@ -627,7 +627,7 @@ p { max-width: var(--measure); }
   font-style: italic;
   font-family: var(--font-display);
   line-height: 1.5;
-  scroll-margin-top: 2rem;
+  scroll-margin-top: 20rem;
 }
 
 .asterisk-note__marker {

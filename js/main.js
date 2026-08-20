@@ -20,6 +20,10 @@
         window.clearTimeout(el._animationFallbackTimer);
         el._animationFallbackTimer = null;
       }
+      if (el._animationFrame) {
+        window.cancelAnimationFrame(el._animationFrame);
+        el._animationFrame = null;
+      }
       el._animationToken = (el._animationToken || 0) + 1;
       return el._animationToken;
     },
@@ -38,21 +42,32 @@
         return;
       }
 
+      /* Establish the collapsed state first. The target height must be
+         measured only after any card/grid mutation in the same click has
+         settled, otherwise the measured height can belong to the old
+         layout and exceed the final content height. */
       el.style.maxHeight = '0px';
+      el.classList.remove('is-expanded');
       el.offsetHeight;
-      var target = el.scrollHeight;
-      el.style.maxHeight = target + 'px';
-      el.classList.add('is-expanded');
 
-      var onEnd = function (e) {
-        if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return;
-        el.style.maxHeight = 'none';
-        el._animationTransitionHandler = null;
-        el.removeEventListener('transitionend', onEnd);
-      };
+      el._animationFrame = window.requestAnimationFrame(function () {
+        el._animationFrame = null;
+        if (token !== el._animationToken) return;
 
-      el._animationTransitionHandler = onEnd;
-      el.addEventListener('transitionend', onEnd);
+        var target = el.scrollHeight;
+        el.style.maxHeight = target + 'px';
+        el.classList.add('is-expanded');
+
+        var onEnd = function (e) {
+          if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return;
+          el.style.maxHeight = 'none';
+          el._animationTransitionHandler = null;
+          el.removeEventListener('transitionend', onEnd);
+        };
+
+        el._animationTransitionHandler = onEnd;
+        el.addEventListener('transitionend', onEnd);
+      });
     },
 
     collapse: function (el, reducedMotion) {

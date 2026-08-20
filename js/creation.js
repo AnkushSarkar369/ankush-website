@@ -3,41 +3,11 @@
   'use strict';
   var archive = document.querySelector('[data-creation-archive]');
   if (!archive) return;
-  function beginAnimation(el) {
-    if (el._animationTransitionHandler) { el.removeEventListener('transitionend', el._animationTransitionHandler); el._animationTransitionHandler = null; }
-    if (el._animationFallbackTimer) { window.clearTimeout(el._animationFallbackTimer); el._animationFallbackTimer = null; }
-    el._animationToken = (el._animationToken || 0) + 1;
-    return el._animationToken;
-  }
-  function animateExpand(el, reducedMotion) {
-    var token = beginAnimation(el); el.hidden = false;
-    if (reducedMotion) { el.style.maxHeight = 'none'; el.classList.add('is-expanded'); return; }
-    el.style.maxHeight = '0px'; el.offsetHeight; var target = el.scrollHeight; el.style.maxHeight = target + 'px'; el.classList.add('is-expanded');
-    var onEnd = function (e) { if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return; el.style.maxHeight = 'none'; el._animationTransitionHandler = null; el.removeEventListener('transitionend', onEnd); };
-    el._animationTransitionHandler = onEnd; el.addEventListener('transitionend', onEnd);
-  }
-  function animateCollapse(el, reducedMotion) {
-    var token = beginAnimation(el);
-    if (reducedMotion) { el.style.maxHeight = ''; el.classList.remove('is-expanded'); el.hidden = true; return; }
-    var current = el.scrollHeight; el.style.maxHeight = current + 'px'; el.offsetHeight; el.classList.remove('is-expanded'); el.style.maxHeight = '0px';
-    var onEnd = function (e) { if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return; el.hidden = true; el.style.maxHeight = ''; el._animationTransitionHandler = null; el.removeEventListener('transitionend', onEnd); if (el._animationFallbackTimer) { window.clearTimeout(el._animationFallbackTimer); el._animationFallbackTimer = null; } };
-    el._animationTransitionHandler = onEnd; el.addEventListener('transitionend', onEnd);
-    el._animationFallbackTimer = window.setTimeout(function () { if (token !== el._animationToken || el.hidden) return; el.hidden = true; el.style.maxHeight = ''; if (el._animationTransitionHandler === onEnd) { el._animationTransitionHandler = null; el.removeEventListener('transitionend', onEnd); } el._animationFallbackTimer = null; }, 400);
-  }
   Array.prototype.slice.call(document.querySelectorAll('.creation-category')).forEach(function (category) { archive.appendChild(category); });
-  function flipCardPosition(card, mutate) {
-    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (reducedMotion) { mutate(); return; }
-    if (card._flipTransitionHandler) { card.removeEventListener('transitionend', card._flipTransitionHandler); card._flipTransitionHandler = null; }
-    if (card._flipFrame) { window.cancelAnimationFrame(card._flipFrame); card._flipFrame = null; }
-    card._flipToken = (card._flipToken || 0) + 1; var token = card._flipToken;
-    var first = card.getBoundingClientRect(); mutate(); var last = card.getBoundingClientRect(); var dx = first.left - last.left; var dy = first.top - last.top; if (!dx && !dy) return;
-    card.style.transition = 'none'; card.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)'; card.offsetHeight;
-    card._flipFrame = requestAnimationFrame(function () { card._flipFrame = null; if (token !== card._flipToken) return; card.style.transition = 'transform var(--dur-trans) var(--ease-out-soft)'; card.style.transform = ''; var onEnd = function (e) { if (token !== card._flipToken || e.target !== card || e.propertyName !== 'transform') return; card.style.transition = ''; card._flipTransitionHandler = null; card.removeEventListener('transitionend', onEnd); }; card._flipTransitionHandler = onEnd; card.addEventListener('transitionend', onEnd); });
-  }
   function setOpen(card, open, restoreFocus) {
     var trigger = card.querySelector('.creation-card__trigger'); var body = card.querySelector('.creation-card__body'); if (!trigger || !body) return;
-    flipCardPosition(card, function () { card.setAttribute('data-open', open ? 'true' : 'false'); }); trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
-    if (open) { animateExpand(body, reducedMotion); if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior }); } else { animateCollapse(body, reducedMotion); if (restoreFocus) trigger.focus(); }
+    DisclosureAnimation.flip(card, function () { card.setAttribute('data-open', open ? 'true' : 'false'); }); trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); var reducedMotion = DisclosureAnimation.reducedMotion(); var scrollBehavior = reducedMotion ? 'auto' : 'smooth';
+    if (open) { DisclosureAnimation.expand(body, reducedMotion); if (restoreFocus) body.scrollIntoView({ block: 'nearest', behavior: scrollBehavior }); } else { DisclosureAnimation.collapse(body, reducedMotion); if (restoreFocus) trigger.focus(); }
   }
   function normalizeAsenpaiMedia() { var card = Array.prototype.slice.call(document.querySelectorAll('.creation-card')).find(function (candidate) { var title = candidate.querySelector('.creation-card__title'); return title && title.textContent.trim() === 'ASenpai'; }); if (!card) return; var material = card.querySelector('.creation-entry__material'); if (!material) return; var figures = Array.prototype.slice.call(material.querySelectorAll(':scope > .creation-entry__image')); var madara = null; var editing = null;
     figures.forEach(function (figure) { var image = figure.querySelector('img'); if (!image) return; var src = image.getAttribute('src') || ''; var file = src.split('/').pop(); if (file === '5.png') { if (!madara) madara = figure; else editing = figure; } if (file === '4.png' && (image.getAttribute('alt') || '').toLowerCase().indexOf('about') !== -1) figure.remove(); });

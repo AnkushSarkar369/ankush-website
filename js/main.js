@@ -10,6 +10,129 @@
 (function () {
   'use strict';
   var docEl = document.documentElement;
+
+  /* Shared disclosure animation machinery. */
+  var DisclosureAnimation = window.DisclosureAnimation = {
+    begin: function (el) {
+      if (el._animationTransitionHandler) {
+        el.removeEventListener('transitionend', el._animationTransitionHandler);
+        el._animationTransitionHandler = null;
+      }
+      if (el._animationFallbackTimer) {
+        window.clearTimeout(el._animationFallbackTimer);
+        el._animationFallbackTimer = null;
+      }
+      el._animationToken = (el._animationToken || 0) + 1;
+      return el._animationToken;
+    },
+
+    reducedMotion: function () {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    },
+
+    expand: function (el, reducedMotion) {
+      var token = this.begin(el);
+      el.hidden = false;
+      if (reducedMotion) {
+        el.style.maxHeight = 'none';
+        el.classList.add('is-expanded');
+        return;
+      }
+      el.style.maxHeight = '0px';
+      el.offsetHeight;
+      var target = el.scrollHeight;
+      el.style.maxHeight = target + 'px';
+      el.classList.add('is-expanded');
+      var onEnd = function (e) {
+        if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return;
+        el.style.maxHeight = 'none';
+        el._animationTransitionHandler = null;
+        el.removeEventListener('transitionend', onEnd);
+      };
+      el._animationTransitionHandler = onEnd;
+      el.addEventListener('transitionend', onEnd);
+    },
+
+    collapse: function (el, reducedMotion) {
+      var token = this.begin(el);
+      if (reducedMotion) {
+        el.style.maxHeight = '';
+        el.classList.remove('is-expanded');
+        el.hidden = true;
+        return;
+      }
+      var current = el.scrollHeight;
+      el.style.maxHeight = current + 'px';
+      el.offsetHeight;
+      el.classList.remove('is-expanded');
+      el.style.maxHeight = '0px';
+      var onEnd = function (e) {
+        if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return;
+        el.hidden = true;
+        el.style.maxHeight = '';
+        el._animationTransitionHandler = null;
+        el.removeEventListener('transitionend', onEnd);
+        if (el._animationFallbackTimer) {
+          window.clearTimeout(el._animationFallbackTimer);
+          el._animationFallbackTimer = null;
+        }
+      };
+      el._animationTransitionHandler = onEnd;
+      el.addEventListener('transitionend', onEnd);
+      el._animationFallbackTimer = window.setTimeout(function () {
+        if (token !== el._animationToken || el.hidden) return;
+        el.hidden = true;
+        el.style.maxHeight = '';
+        if (el._animationTransitionHandler === onEnd) {
+          el._animationTransitionHandler = null;
+          el.removeEventListener('transitionend', onEnd);
+        }
+        el._animationFallbackTimer = null;
+      }, 400);
+    },
+
+    flip: function (card, mutate) {
+      var reducedMotion = this.reducedMotion();
+      if (reducedMotion) {
+        mutate();
+        return;
+      }
+      if (card._flipTransitionHandler) {
+        card.removeEventListener('transitionend', card._flipTransitionHandler);
+        card._flipTransitionHandler = null;
+      }
+      if (card._flipFrame) {
+        window.cancelAnimationFrame(card._flipFrame);
+        card._flipFrame = null;
+      }
+      card._flipToken = (card._flipToken || 0) + 1;
+      var token = card._flipToken;
+      var first = card.getBoundingClientRect();
+      mutate();
+      var last = card.getBoundingClientRect();
+      var dx = first.left - last.left;
+      var dy = first.top - last.top;
+      if (!dx && !dy) return;
+      card.style.transition = 'none';
+      card.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+      card.offsetHeight;
+      card._flipFrame = requestAnimationFrame(function () {
+        card._flipFrame = null;
+        if (token !== card._flipToken) return;
+        card.style.transition = 'transform var(--dur-trans) var(--ease-out-soft)';
+        card.style.transform = '';
+        var onEnd = function (e) {
+          if (token !== card._flipToken || e.target !== card || e.propertyName !== 'transform') return;
+          card.style.transition = '';
+          card._flipTransitionHandler = null;
+          card.removeEventListener('transitionend', onEnd);
+        };
+        card._flipTransitionHandler = onEnd;
+        card.addEventListener('transitionend', onEnd);
+      });
+    }
+  };
+
   docEl.classList.add('fonts-pending');
   function revealFonts() { docEl.classList.remove('fonts-pending'); docEl.classList.add('fonts-ready'); }
   if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('400 1em "Newsreader"'),document.fonts.load('500 1em "Newsreader"'),document.fonts.load('400 1em "Hanken Grotesk"'),document.fonts.load('500 1em "Hanken Grotesk"')]).then(revealFonts).catch(revealFonts);
@@ -22,10 +145,7 @@
   if (sections.length && links.length && 'IntersectionObserver' in window) { var navIO = new IntersectionObserver(function (entries) { entries.forEach(function (entry) { if (!entry.isIntersecting) return; var id = entry.target.getAttribute('data-nav-target'); links.forEach(function (a) { if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }); }); }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 }); sections.forEach(function (section) { navIO.observe(section); }); }
   var STORAGE_KEY = 'theme'; var toggle = document.querySelector('[data-theme-toggle]');
   if (toggle) { toggle.classList.remove('no-js-hidden'); function currentTheme() { return docEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; } function syncPressed() { var dark = currentTheme() === 'dark'; toggle.setAttribute('aria-pressed', dark ? 'true' : 'false'); toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme'); } syncPressed(); toggle.addEventListener('click', function () { var next = currentTheme() === 'dark' ? 'light' : 'dark'; docEl.setAttribute('data-theme', next); try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {} syncPressed(); }); }
-  function beginSubsectionAnimation(el) { if (el._animationTransitionHandler) { el.removeEventListener('transitionend', el._animationTransitionHandler); el._animationTransitionHandler = null; } if (el._animationFallbackTimer) { window.clearTimeout(el._animationFallbackTimer); el._animationFallbackTimer = null; } el._animationToken = (el._animationToken || 0) + 1; return el._animationToken; }
-  function animateSubsectionExpand(el, reducedMotion) { var token = beginSubsectionAnimation(el); el.hidden = false; if (reducedMotion) { el.style.maxHeight = 'none'; el.classList.add('is-expanded'); return; } el.style.maxHeight = '0px'; el.offsetHeight; var target = el.scrollHeight; el.style.maxHeight = target + 'px'; el.classList.add('is-expanded'); var onEnd = function (e) { if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return; el.style.maxHeight = 'none'; el._animationTransitionHandler = null; el.removeEventListener('transitionend', onEnd); }; el._animationTransitionHandler = onEnd; el.addEventListener('transitionend', onEnd); }
-  function animateSubsectionCollapse(el, reducedMotion) { var token = beginSubsectionAnimation(el); if (reducedMotion) { el.style.maxHeight = ''; el.classList.remove('is-expanded'); el.hidden = true; return; } var current = el.scrollHeight; el.style.maxHeight = current + 'px'; el.offsetHeight; el.classList.remove('is-expanded'); el.style.maxHeight = '0px'; var onEnd = function (e) { if (token !== el._animationToken || e.target !== el || e.propertyName !== 'max-height') return; el.hidden = true; el.style.maxHeight = ''; el._animationTransitionHandler = null; el.removeEventListener('transitionend', onEnd); if (el._animationFallbackTimer) { window.clearTimeout(el._animationFallbackTimer); el._animationFallbackTimer = null; } }; el._animationTransitionHandler = onEnd; el.addEventListener('transitionend', onEnd); el._animationFallbackTimer = window.setTimeout(function () { if (token !== el._animationToken || el.hidden) return; el.hidden = true; el.style.maxHeight = ''; if (el._animationTransitionHandler === onEnd) { el._animationTransitionHandler = null; el.removeEventListener('transitionend', onEnd); } el._animationFallbackTimer = null; }, 400); }
-  function setExpanded(element, open) { var trigger = element.querySelector('.subsection__trigger'); var contentId = trigger && trigger.getAttribute('aria-controls'); var content = contentId ? document.getElementById(contentId) : null; element.setAttribute('data-subsection-open', open ? 'true' : 'false'); if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); if (!content) return; var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (open) animateSubsectionExpand(content, reducedMotion); else animateSubsectionCollapse(content, reducedMotion); }
+  function setExpanded(element, open) { var trigger = element.querySelector('.subsection__trigger'); var contentId = trigger && trigger.getAttribute('aria-controls'); var content = contentId ? document.getElementById(contentId) : null; element.setAttribute('data-subsection-open', open ? 'true' : 'false'); if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); if (!content) return; var reducedMotion = DisclosureAnimation.reducedMotion(); if (open) DisclosureAnimation.expand(content, reducedMotion); else DisclosureAnimation.collapse(content, reducedMotion); }
   function bindDisclosure(element) { var trigger = element.querySelector('.subsection__trigger'); if (!trigger) return; function toggleDisclosure() { var open = element.getAttribute('data-subsection-open') === 'true'; setExpanded(element, !open); } trigger.addEventListener('click', toggleDisclosure); var header = trigger.closest('.creation-category__head, .technology-category__head'); if (header) header.addEventListener('click', function (event) { if (event.target.closest('button')) return; toggleDisclosure(); }); }
   function ensureSubsectionLabel(element) {
     var labelId = element.getAttribute('aria-labelledby');

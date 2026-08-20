@@ -68,10 +68,13 @@
   /* FLIP the card itself when opening/closing changes its grid position
      (two-column grid -> full-width row via `grid-column` on [data-open]).
      grid-column can't be CSS-transitioned, so we measure the before/after
-     rects and animate a transform between them instead. Only engages when
-     the card's position actually changes; a no-op otherwise. Leaves the
-     body's own max-height/opacity animation untouched — this only moves
-     the card as a whole. */
+     rects and animate a transform between them instead. Only translate is
+     animated -- width changes are applied instantly (no scaleX), since
+     scaling a card with real text/content inside visibly stretches and
+     squeezes it, which reads as distorted rather than smooth. Only
+     engages when the card's position actually changes; a no-op
+     otherwise. Leaves the body's own max-height/opacity animation
+     untouched -- this only moves the card as a whole. */
   function flipCardPosition(card, mutate) {
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) {
@@ -83,14 +86,10 @@
     var last = card.getBoundingClientRect();
     var dx = first.left - last.left;
     var dy = first.top - last.top;
-    var sx = first.width / last.width;
-    if (!dx && !dy && sx === 1) return; // position/size unchanged, nothing to animate
+    if (!dx && !dy) return; // position unchanged, nothing to animate
 
     card.style.transition = 'none';
-    card.style.transformOrigin = 'top left';
-    card.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scaleX(' + sx + ')';
-    // Force reflow so the browser registers the starting transform
-    // before we clear it on the next frame.
+    card.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
     card.offsetHeight;
     requestAnimationFrame(function () {
       card.style.transition = 'transform var(--dur-trans) var(--ease-out-soft)';
@@ -98,7 +97,6 @@
       var onEnd = function (e) {
         if (e.target !== card || e.propertyName !== 'transform') return;
         card.style.transition = '';
-        card.style.transformOrigin = '';
         card.removeEventListener('transitionend', onEnd);
       };
       card.addEventListener('transitionend', onEnd);

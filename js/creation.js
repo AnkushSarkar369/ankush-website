@@ -44,21 +44,22 @@
 
     var entry = musicCard.querySelector('.creation-entry');
     var material = entry && entry.querySelector(':scope > .creation-entry__material');
-    if (!entry || !material) return;
+    var image = entry && entry.querySelector(':scope > .creation-entry__image');
+    if (!entry || !material || !image) return;
 
     var githubLink = entry.querySelector('a[href="https://github.com/AnkushSarkar369/Music-Collection-Organiser"]');
-    var directory = material.querySelector(':scope > .creation-entry__tree');
-    var pickSong = material.querySelector(':scope > p > .creation-entry__pick-song');
+    var directory = material.querySelector('.creation-entry__tree');
+    var pickSong = material.querySelector('.creation-entry__pick-song');
     var pickSongWrapper = pickSong && pickSong.parentElement;
-    var pickedSong = material.querySelector(':scope > .creation-entry__picked-song');
+    var pickedSong = material.querySelector('.creation-entry__picked-song');
 
     if (githubLink && directory && pickSongWrapper) {
       githubLink.textContent = 'Visit Music Collection Organiser on GitHub';
-      var sideMaterial = entry.querySelector(':scope > .creation-entry__image .creation-entry__material');
+      var sideMaterial = image.querySelector(':scope > .creation-entry__material');
       if (!sideMaterial) {
         sideMaterial = document.createElement('div');
         sideMaterial.className = 'creation-entry__material';
-        entry.querySelector(':scope > .creation-entry__image').appendChild(sideMaterial);
+        image.appendChild(sideMaterial);
       }
       sideMaterial.appendChild(githubLink);
       sideMaterial.appendChild(directory);

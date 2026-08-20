@@ -390,6 +390,57 @@
     else trapQrModalFocus(e);
   });
 
+  function initInternalDisclosureLinks() {
+    Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href || href === '#') return;
+
+      var target = document.getElementById(href.slice(1));
+      if (!target) return;
+
+      var card = target.closest('.creation-card, .technology-card');
+      if (!card) return;
+
+      var trigger = card.querySelector('.creation-card__trigger, .technology-card__trigger');
+      var body = card.querySelector('.creation-card__body, .technology-card__body');
+      if (!trigger || !body) return;
+
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        var scrollToTarget = function () {
+          requestAnimationFrame(function () {
+            target.scrollIntoView({ block: 'start', behavior: DisclosureAnimation.reducedMotion() ? 'auto' : 'smooth' });
+          });
+        };
+
+        if (trigger.getAttribute('aria-expanded') !== 'true') {
+          trigger.click();
+
+          var settled = false;
+          var finish = function () {
+            if (settled) return;
+            settled = true;
+            body.removeEventListener('transitionend', onEnd);
+            scrollToTarget();
+          };
+          var onEnd = function (transitionEvent) {
+            if (transitionEvent.target === body && transitionEvent.propertyName === 'max-height') finish();
+          };
+
+          body.addEventListener('transitionend', onEnd);
+          window.setTimeout(finish, 450);
+        } else {
+          scrollToTarget();
+        }
+
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, '', href);
+        }
+      });
+    });
+  }
+
   function initializeAnimeSortHeaders() {
     var sortButtons = Array.prototype.slice.call(document.querySelectorAll('.anime-catalogue__sort-btn'));
     sortButtons.forEach(function (button) {
@@ -402,5 +453,6 @@
     });
   }
 
+  initInternalDisclosureLinks();
   initializeAnimeSortHeaders();
 })();

@@ -72,11 +72,52 @@
     });
   });
 
+  /* FLIP the card itself when opening/closing changes its grid position
+     (two-column grid -> full-width row via `grid-column` on [data-open]).
+     grid-column can't be CSS-transitioned, so we measure the before/after
+     rects and animate a transform between them instead. Only engages when
+     the card's position actually changes; a no-op otherwise. Leaves the
+     body's own max-height/opacity animation untouched — this only moves
+     the card as a whole. */
+  function flipCardPosition(card, mutate) {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) {
+      mutate();
+      return;
+    }
+    var first = card.getBoundingClientRect();
+    mutate();
+    var last = card.getBoundingClientRect();
+    var dx = first.left - last.left;
+    var dy = first.top - last.top;
+    var sx = first.width / last.width;
+    if (!dx && !dy && sx === 1) return; // position/size unchanged, nothing to animate
+
+    card.style.transition = 'none';
+    card.style.transformOrigin = 'top left';
+    card.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) scaleX(' + sx + ')';
+    card.offsetHeight;
+    requestAnimationFrame(function () {
+      card.style.transition = 'transform var(--dur-trans) var(--ease-out-soft)';
+      card.style.transform = '';
+      var onEnd = function (e) {
+        if (e.target !== card || e.propertyName !== 'transform') return;
+        card.style.transition = '';
+        card.style.transformOrigin = '';
+        card.removeEventListener('transitionend', onEnd);
+      };
+      card.addEventListener('transitionend', onEnd);
+    });
+  }
+
   function setOpen(card, open, restoreFocus) {
     var trigger = card.querySelector('.technology-card__trigger');
     var body = card.querySelector('.technology-card__body');
     if (!trigger || !body) return;
-    card.setAttribute('data-open', open ? 'true' : 'false');
+
+    flipCardPosition(card, function () {
+      card.setAttribute('data-open', open ? 'true' : 'false');
+    });
     trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var scrollBehavior = reducedMotion ? 'auto' : 'smooth';

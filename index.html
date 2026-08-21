@@ -309,7 +309,7 @@
                 <div class="creation-card__body" id="creation-content-07" hidden>
                   <div class="creation-entry">
                     <figure class="creation-entry__image">
-                      <img src="assets/img/creation/ankush369sarkar/logo.jpg" alt="@ankush369sarkar" />
+                      <img src="assets/img/creation/ankush369sarkar/logo.png" alt="@ankush369sarkar" />
                     </figure>
                     <div class="creation-entry__material">
                       <p>This is my short-form outlet.</p>
@@ -2402,22 +2402,62 @@ Songs
       <span class="name">Ankush Sarkar</span>
       <nav class="socials" aria-label="Elsewhere">
         <a href="https://www.chess.com/member/ankush369sarkar" target="_blank" rel="noopener noreferrer">Chess</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
         <a href="https://github.com/AnkushSarkar369" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
         <a href="https://www.instagram.com/ankush_sarkar_2007/" target="_blank" rel="noopener noreferrer">Instagram — Personal</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
         <a href="https://www.instagram.com/ankush369sarkar/" target="_blank" rel="noopener noreferrer">Instagram — Public</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
         <a href="https://www.kaggle.com/ankushs369" target="_blank" rel="noopener noreferrer">Kaggle</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
+        <a href="https://lichess.org/@/AnkushSarkar369" target="_blank" rel="noopener noreferrer">Lichess</a>
         <a href="https://www.skool.com/@ankush-sarkar-6114" target="_blank" rel="noopener noreferrer">Skool</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
         <a href="https://substack.com/@ankushsarkar" target="_blank" rel="noopener noreferrer">Substack</a>
-        <span class="socials__sep" aria-hidden="true">·</span>
         <a href="https://www.youtube.com/@ankushsarkar369" target="_blank" rel="noopener noreferrer">YouTube</a>
       </nav>
-      <span class="legal">An evolving archive · <span class="num">2026</span></span>
+      <span class="legal">An evolving archive · <span class="num" id="date"></span></span>
+      <script>
+        const days = [
+          "Sunday", "Monday", "Tuesday", "Wednesday",
+          "Thursday", "Friday", "Saturday"
+        ];
+
+        const months = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+
+        function ordinal(n) {
+          if (n >= 11 && n <= 13) return "th";
+
+          switch (n % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+          }
+        }
+
+        function updateDateTime() {
+          const now = new Date();
+
+          const day = days[now.getDay()];
+          const date = now.getDate();
+          const month = months[now.getMonth()];
+          const year = now.getFullYear();
+
+          // Format time in Indian Standard Time
+          const time = new Intl.DateTimeFormat("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+          }).format(now).toUpperCase();
+
+          document.getElementById("date").textContent =
+            `${day}, ${date}${ordinal(date)} of ${month}, ${year} · ${time} IST`;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+      </script>
     </div>
   </footer>
 </body>

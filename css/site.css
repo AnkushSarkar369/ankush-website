@@ -509,12 +509,11 @@ p { max-width: var(--measure); }
   margin: 0;
 }
 
-/* Footer socials separators */
+/* Footer socials — grid layout */
 .colophon .socials {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0; /* we handle spacing via separators */
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--space-2) var(--space-5);
 }
 .colophon .socials a {
   font-size: var(--step--1);
@@ -525,14 +524,17 @@ p { max-width: var(--measure); }
   white-space: nowrap;
 }
 .colophon .socials a:hover { color: var(--oxblood); }
-.colophon .socials__sep {
-  font-size: var(--step--1);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--ink-muted);
-  padding: 0 var(--space-2);
-  user-select: none;
+
+@media (min-width: 46rem) {
+  .colophon .socials {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .colophon .socials {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* =========================================================================
@@ -553,12 +555,6 @@ p { max-width: var(--measure); }
   gap: var(--space-3);
 }
 .colophon .name { font-family: var(--font-display); font-size: var(--step-2); font-weight: 500; }
-.colophon .socials { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-.colophon .socials a {
-  font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase;
-  font-weight: 500; color: var(--ink-secondary); white-space: nowrap;
-}
-.colophon .socials a:hover { color: var(--oxblood); }
 .colophon .legal { font-size: var(--step--1); color: var(--ink-muted); }
 
 /* =========================================================================

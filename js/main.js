@@ -558,4 +558,15 @@
 
   initAsteriskNotes();
   initializeAnimeSortHeaders();
+
+  /* Two isolated text replacements requested for the archive. */
+  var aboutLine = document.querySelector('.about__body > p:last-child');
+  if (aboutLine && aboutLine.textContent.trim() === 'Transcendence through Evolution.') {
+    aboutLine.innerHTML = '<strong>Multiple</strong> dimensions. <strong>Converging</strong> directions.<br><em>Transcendence through Evolution.</em>';
+  }
+
+  var identityEmail = document.querySelector('.site-footer .identity a.email[href="mailto:workingankush369@gmail.com"]');
+  if (identityEmail && identityEmail.textContent.trim() === 'workingankush369@gmail.com') {
+    identityEmail.textContent = 'Write a letter, without needing an envelope';
+  }
 })();

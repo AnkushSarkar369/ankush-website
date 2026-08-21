@@ -1,8 +1,8 @@
 /* =========================================================================
    tokens.css — The archive's material system
    One oxblood accent, warm dark walnut ground.
-   Every value below is referenced in index.html. No stray hex elsewhere.
-   Dark theme only — the archive by lamplight.
+   Design tokens (color, type, spacing, motion) consumed by the other
+   stylesheets in this project. Dark theme only — the archive by lamplight.
    ========================================================================= */
 
 :root {
@@ -24,12 +24,10 @@
   /* --- Borders: hairlines cream-on-dark, separation hierarchy --- */
   --rule-faint:    rgba(240, 232, 218, 0.08);
   --rule:          rgba(240, 232, 218, 0.14);
-  --rule-strong:   rgba(240, 232, 218, 0.28);
   --rule-dark:     rgba(240, 232, 218, 0.14);
 
   /* --- Identity: oxblood lit to read against dark, same hue family --- */
   --oxblood:      #c15447;     /* oxblood under lamplight                          */
-  --oxblood-deep: #9c4439;     /* pressed/deeper state                             */
 
   /* --- Typography families --- */
   --font-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;

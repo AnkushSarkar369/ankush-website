@@ -603,15 +603,6 @@
   margin-bottom: var(--space-3);
 }
 
-.technology-entry__note {
-  color: var(--ink-faint-dark);
-  font-size: var(--step--1);
-  font-style: italic;
-  margin-top: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule-faint);
-}
-
 .technology-entry__closing {
   color: var(--ink-faint-dark);
   font-size: var(--step--1);
